@@ -12,7 +12,7 @@ db_params = {
 
 
 if __name__ == "__main__":
-    with open("create_tables_1st_iteration.sql", "r", encoding="utf-8") as f:
+    with open("create_user_question_tables.sql", "r", encoding="utf-8") as f:
         sql_script = f.read()
     try:
         with psycopg.connect(**db_params) as conn:

@@ -17,6 +17,7 @@ class SessionState:
 
 state = SessionState()
 
+
 # Agent 1 : Analyse le document et génère des questions/réponses
 def question_answer_generation(document_text: str,
                                n_questions: int) -> List[Dict]:
@@ -101,20 +102,22 @@ def state_manager(command: str) -> Dict:
         return {"error": "Commande inconnue"}
 
 
-# Définition du graphe LangGraph
-workflow = StateGraph(MessagesState)
+if __name__ == "__main__":
 
-# Ajout des nœuds (agents)
-workflow.add_node("analyzer", document_analyzer)
-workflow.add_node("tutor", tutor)
-workflow.add_node("state_manager", state_manager)
+    # Définition du graphe LangGraph
+    workflow = StateGraph(MessagesState)
 
-# Définition des transitions
-workflow.add_edge("analyzer", "tutor")
-workflow.add_edge("tutor", "state_manager")
+    # Ajout des nœuds (agents)
+    workflow.add_node("analyzer", question_answer_generation)
+    workflow.add_node("tutor", tutor)
+    workflow.add_node("state_manager", state_manager)
 
-# Point d'entrée
-workflow.set_entry_point("analyzer")
+    # Définition des transitions
+    workflow.add_edge("analyzer", "tutor")
+    workflow.add_edge("tutor", "state_manager")
 
-# Compilation du graphe
-app = workflow.compile()
+    # Point d'entrée
+    workflow.set_entry_point("analyzer")
+
+    # Compilation du graphe
+    app = workflow.compile()
