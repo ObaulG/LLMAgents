@@ -12,7 +12,7 @@ from agents.qa_agent import get_qa_agent, QuestionRequestInput, QuestionAnswerLi
 from database import get_db_connection, save_question_to_db, get_questions_by_document_id, get_chunks_for_document
 
 # Constantes
-DOCUMENT_ID = "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56.pdf"
+DOCUMENT_ID = "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56"
 DIFFICULTY_LEVEL = 3  # Niveau de difficulté par défaut
 
 models_evaluator = ["ministral-3b-latest",

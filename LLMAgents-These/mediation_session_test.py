@@ -91,17 +91,17 @@ def ask_question_and_evaluate(
         cosine_sim = calculate_cosine_similarity(question, user_answer)
 
         # Afficher les résultats
-        console.print(f"\n[bold green]Note:[/bold green] {evaluation.score}/10")
+        console.print(f"\n[bold green]Note:[/bold green] {evaluation.score_cossim}/10")
         console.print(f"[bold green]Commentaire:[/bold green] {evaluation.feedback}")
         console.print(f"[bold green]Similarité cosinus:[/bold green] {cosine_sim}")
 
         # Si la réponse est acceptable (note >= 7), retourner les résultats
-        if evaluation.score >= 7:
+        if evaluation.score_cossim >= 7:
             result = {
                 "question": question,
                 "expected_answer": expected_answer,
                 "user_answer": user_answer,
-                "score": evaluation.score,
+                "score": evaluation.score_cossim,
                 "feedback": evaluation.feedback,
                 "cosine_similarity": cosine_sim,
             }
@@ -117,7 +117,7 @@ def ask_question_and_evaluate(
         "question": question,
         "expected_answer": expected_answer,
         "user_answer": user_answer,
-        "score": evaluation.score,
+        "score": evaluation.score_cossim,
         "feedback": evaluation.feedback,
         "cosine_similarity": cosine_sim,
     }

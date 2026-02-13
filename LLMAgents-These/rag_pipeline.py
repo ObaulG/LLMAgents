@@ -2,6 +2,8 @@ import os
 import time
 from typing import Dict, Optional, List, Literal
 
+import torch
+from langchain_ollama import ChatOllama
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import AIMessage, BaseMessage
 from langchain_google_genai import ChatGoogleGenerativeAI  # Exemple pour Gemini (à installer si nécessaire)
@@ -9,6 +11,7 @@ from langchain_mistralai import ChatMistralAI, MistralAIEmbeddings
 from pydantic import BaseModel, Field
 import rank_bm25
 import database
+import pynvml
 
 # Listes des modèles (déjà définies)
 MISTRAL_MODELS = [
@@ -19,7 +22,7 @@ GEMINI_MODELS = [
     "gemini-2.5-flash-lite", "gemini-2.5-flash", "gemma-3-1b", "gemma-3-2b",
     "gemma-3-4b", "gemma-3-12b", "gemma-3-27b", "gemini-2.5-flash-live", "gemini-2.0-flash-live"
 ]
-
+OLLAMA_MODELS = ["ministral-3:3b", "cas/ministral-8b-instruct-2410_q4km"]
 
 class RetrievalResult(BaseModel):
     """Modèle Pydantic pour décrire le résultat d'une requête RAG."""
@@ -33,7 +36,8 @@ class RetrievalResult(BaseModel):
 class RAGSource(BaseModel):
     """Modèle pour une source de document"""
     content: str = Field(..., description="Contenu du document")
-    score: float = Field(..., description="Score de pertinence")
+    score_cossim: Optional[float] = Field(..., description="Score de similarité cosinus obtenu")
+    score_bm25: Optional[float] = Field(..., description="Score BM25 obtenu")
     metadata: Dict = Field(..., description="Métadonnées du document (titre, source, etc.)")
 
 class RAGPipeline:
@@ -70,6 +74,10 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
         self.embedder_name = "mistral-embed"
         self.db_connection_factory = database.get_db_connection
 
+        # En effectuant le RAG avec k documents,
+        # on multiplie le nombre de documents à collecter
+        # avant de les reclasser
+        self.rag_rerank_ndocs_coeff = 8.0
         print("\n" + "=" * 60)
         print("Système RAG basique initialisé...")
         print("=" * 60 + "\n")
@@ -77,7 +85,7 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
     async def query_simple(self,
                            prompt: str,
                            model: str,
-                           **kwargs) -> tuple[BaseMessage, float]:
+                           **kwargs) -> tuple[BaseMessage, float, float]:
         """Asynchronously queries a language model (LLM) with a given prompt and returns its response along with processing time.
 
         Args:
@@ -87,12 +95,14 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
                       These can include parameters like temperature, max_tokens, etc.
 
         Returns:
-            tuple[BaseMessage, float]:
+            tuple[BaseMessage, float, float]:
                 - BaseMessage: The response object returned by the language model.
                 - float: The processing time (in seconds) taken by the LLM to generate the response.
+                - float: The estimated energy consumption of the LLM request (local only) in Wh.
         """
-        answer, total_time = await self._invoke_llm(model, prompt)
-        return answer, total_time
+        answer, total_time, consumed_energy_Wh = await self._invoke_llm(model, prompt)
+
+        return answer, total_time, consumed_energy_Wh
 
 
     async def query_rag(self,
@@ -110,10 +120,10 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
         """
         if not (final_prompt or sources):
             final_prompt, sources = await self.rag_preprocess(prompt, reranking, k)
+            print("preprocess done")
+        answer, total_time, consumed_energy_Wh = await self.query_simple(final_prompt, model, **kwargs)
 
-        answer, total_time = await self.query_simple(final_prompt, model, **kwargs)
-
-        return answer, sources, total_time
+        return answer, sources, total_time, consumed_energy_Wh
     def _init_llm_instances(self):
         MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
         GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
@@ -139,6 +149,18 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
                 print(f"Modèle Gemini '{model_name}' initialisé avec succès.")
             except Exception as e:
                 print(f"Erreur lors de l'initialisation du modèle Gemini '{model_name}': {e}")
+        for model_name in OLLAMA_MODELS:
+            try:
+                llm = ChatOllama(
+                    model=model_name,
+                    temperature=0.7,
+                    base_url="http://localhost:11434"  # URL par défaut de l'API Ollama
+                )
+                self.dict_llm[model_name] = llm
+                print(f"Modèle Ollama '{model_name}' initialisé avec succès.")
+            except Exception as e:
+                print(f"Erreur lors de l'initialisation du modèle Ollama '{model_name}': {e}")
+        print(self.dict_llm)
 
     def _get_prompt_embeddings(self, prompt: str) -> list[float]:
         """
@@ -186,10 +208,10 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
         aconn = await database.get_db_connection()
         print(aconn)
         try:
-            results = await database.get_top_k_similar_chunks(aconn,
-                                                              embedding=prompt_embeddings,
-                                                              model_name=self.embedder_name,
-                                                              k=k)
+            results = await database.get_top_k_similar_chunks_cossim(aconn,
+                                                                     embedding=prompt_embeddings,
+                                                                     model_name=self.embedder_name,
+                                                                     k=k)
 
             rag_sources = []
             for row in results:
@@ -212,7 +234,8 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
 
                 rag_source = RAGSource(
                     content=row["content"],
-                    score=row["similarity"],
+                    score_cossim=row["similarity"],
+                    score_bm25=None,
                     metadata=metadata
                 )
                 rag_sources.append(rag_source)
@@ -249,8 +272,6 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
             b: Paramètre de pondération de la longueur du document. Par défaut, 0.75.
             delta: Paramètre spécifique à BM25+ pour ajuster la normalisation de longueur.
                    Par défaut, 0.5.
-
-
         """
         if not sources:
             return
@@ -278,10 +299,11 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
 
         # Trier par score décroissant
         sources.sort(key=lambda x: x.score_bm25, reverse=True)
+
         return
 
     async def rag_preprocess(self,
-                       prompt: str, *
+                       prompt: str,
                        reranking: Optional[str],
                        k: int = 3, ) -> tuple[str, List[RAGSource]]:
         """
@@ -301,14 +323,14 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
         try:
             # 1. Transforme le prompt en embeddings
             prompt_embeddings = self._get_prompt_embeddings(prompt)
-            print("prompt_embeddings done")
-            # 2. Recherche les 10*k chunks les plus pertinents
-            top_k_chunks = await self._retrieve_top_k_chunks_from_db(prompt_embeddings, 10*k)
-            print("top_k_chunks done")
+            # 2. Recherche les 3*k chunks les plus pertinents
+            top_k_chunks = await self._retrieve_top_k_chunks_from_db(prompt_embeddings,
+                                                                     self.rag_rerank_ndocs_coeff*k)
             # 3. Reranking pour garder k chunks
             print("reranking: {}".format(reranking))
             if reranking:
                 self.rerank(top_k_chunks, prompt, k, method=reranking)
+                print(top_k_chunks)
             print("reranking done")
             augmented_prompt = self._build_augmented_prompt(prompt, top_k_chunks[:k])
             return augmented_prompt, top_k_chunks[:k]
@@ -319,8 +341,19 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
         """
         Encapsule ainvoke, en ajoutant le temps d'execution.
         """
+        print("calling", model)
+        consumed_energy = 0
         start = time.time()
+        if model in OLLAMA_MODELS:
+            pynvml.nvmlInit()
+            handle = pynvml.nvmlDeviceGetHandleByIndex(0)
+            power = pynvml.nvmlDeviceGetPowerUsage(handle)
+            # en mJ
+            start_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
         answer = await self.dict_llm[model].ainvoke(prompt)
-        total_time = time.time() - start
-
-        return answer, total_time
+        elapsed_time = time.time() - start
+        if model in OLLAMA_MODELS:
+            torch.cuda.synchronize()
+            consumed_energy = (pynvml.nvmlDeviceGetTotalEnergyConsumption(handle) - start_energy)/(1000*3600)
+            print(consumed_energy, "Wh")
+        return answer, elapsed_time, consumed_energy

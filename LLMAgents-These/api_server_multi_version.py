@@ -413,7 +413,7 @@ async def query_rag(request: QueryRequest):
         sources = [
             Source(
                 content=result.text,
-                score=result.score,
+                score=result.score_cossim,
                 metadata=result.metadata
             )
             for result in retrieval_results

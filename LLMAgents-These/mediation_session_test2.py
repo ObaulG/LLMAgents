@@ -95,7 +95,7 @@ async def simulate_cultural_mediation_session(
                 logger.info(f"\nScore: {evaluation.score}/10")
                 logger.info(f"Feedback: {evaluation.feedback}")
 
-            score = sum([evaluation.score for evaluation in evaluations])/len(evaluators)
+            score = sum([evaluation.score for evaluation in evaluations]) / len(evaluators)
             print(f"Score agrégé: {score}")
             if score >= min_score_threshold:
                 correct_answers += 1

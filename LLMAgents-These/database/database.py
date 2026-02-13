@@ -155,6 +155,7 @@ async def get_question_by_id(question_id, conn):
                 "validated_by": result[5],
             }
         return None
+
 async def get_chunks_for_document(document_id: str, conn):
     """Récupère tous les chunks d'un document depuis la base de données."""
     async with conn.cursor() as cur:
@@ -181,7 +182,7 @@ async def get_chunks_by_question_id(question_id: int, conn):
                  "num_page": row[2],
                  "position_in_page": row[3]} for row in rows]  # Convertit chaque ligne en dictionnaire
 
-async def get_top_k_similar_chunks(conn, embedding: list[float], model_name: str, k=3):
+async def get_top_k_similar_chunks_cossim(conn, embedding: list[float], model_name: str, k=3):
     """
     Récupère les k meilleurs documents en fonction de la similarité cosinus avec un embedding donné.
 
@@ -225,6 +226,35 @@ async def get_top_k_similar_chunks(conn, embedding: list[float], model_name: str
         results = [dict(zip(column_names, row)) for row in rows]
         return results
 
+async def get_top_k_similar_chunks_cossim_python(conn, embedding: list[float], model_name: str, k=3):
+    """
+    Récupère les k meilleurs documents en fonction de la similarité cosinus avec un embedding donné.
+    La comparaison est effectuée directement sur Python et non par Postgres.
+    Args:
+        conn: Connexion à la base de données PostgreSQL.
+        embedding (list): Embedding de référence sous forme de liste.
+        model_name (str): Nom du modèle d'embedding utilisé.
+        k (int): Nombre de documents similaires à retourner.
+
+    Returns:
+        list: Liste des k meilleurs documents avec leur score de similarité.
+    """
+
+    async with conn.cursor() as cur:
+        # On va récupérer les informations des chunks pour pouvoir réaliser
+        # les calculs
+        query = """
+                SELECT c.chunk_id, \
+                       c.document_id, \
+                       c.content, \
+                       c.num_page, \
+                       ce.embeddings
+                FROM chunk_embeddings ce \
+                         JOIN \
+                     chunks c ON ce.chunk_id = c.chunk_id
+                WHERE ce.model_name = %s
+
+                """
 async def save_question_to_db(
     question: str,
     answer: str,
@@ -465,6 +495,38 @@ async def get_document_data_from_chunk_id(chunk_id: str, conn) -> Optional[Dict]
             }
         
         return None
+
+async def get_all_documents(conn) -> List[Dict]:
+    """
+    Récupère tous les documents de la base de données.
+
+    Args:
+        conn: Connexion à la base de données.
+
+    Returns:
+        List[Dict]: Liste de tous les documents avec leurs métadonnées.
+    """
+    async with conn.cursor() as cur:
+        await cur.execute("""
+            SELECT document_id, file_name, file_path, file_size, created_at, updated_at
+            FROM documents
+            ORDER BY created_at DESC
+        """)
+        
+        results = await cur.fetchall()
+        
+        documents = []
+        for result in results:
+            documents.append({
+                "document_id": result[0],
+                "file_name": result[1],
+                "file_path": result[2],
+                "file_size": result[3],
+                "created_at": result[4],
+                "updated_at": result[5]
+            })
+        
+        return documents
 
 async def delete_questions_for_pages_1_to_12(
     conn,

@@ -13,52 +13,79 @@
 
     <div class="container">
         <div class="header">
-            <h1>🗣️ Chatbot RAG v0.1</h1>
-            <p>Obtenez des réponses à partir de documents de la M3C</p>
+            <div class="header-main">
+                <h1>🤖 Chatbot RAG M3C</h1>
+                <p class="subtitle">Système de Questions/Réponses sur documents</p>
+            </div>
+            <div class="header-nav">
+                <a href="example_frontend.html" class="nav-link active">Interface Standard</a>
+                <span class="nav-separator">|</span>
+                <a href="pdf_chat_interface.html" class="nav-link">Interface PDF+Chat</a>
+            </div>
         </div>
 
         <div class="settings">
-            <label>
-                <input type="checkbox" id="useRAG" checked>
-                RAG
-            </label>
-            <label>
-                <input type="checkbox" id="useReranking" checked>
-                Reranking
-            </label>
-            <label>
-                <input type="checkbox" id="useOntology" checked>
-                Ontologie
-            </label>
-
-            <label>
-                (RAG) Nb sources:
-                <input type="number" id="numSources" value="3" min="1" max="10">
-            </label>
-
-            <label for="model-select" >Modèle de langage</label>
-            <select id="model-select" name="models" multiple>
-            <optgroup label="Mistral">
-                <option value="ministral-3b-2410">ministral-3b-2410</option>
-                <option value="ministral-8b-2410">ministral-8b-2410</option>
-                <option value="open-mistral-7b">open-mistral-7b</option>
-                <option value="open-mistral-nemo">open-mistral-nemo</option>
-                <option value="mistral-tiny">mistral-tiny</option>
-                <option value="mistral-small">mistral-small</option>
-                <option value="mistral-medium">mistral-medium</option>
-                <option value="mistral-large-2411">mistral-large-2411</option>
-            </optgroup>
-            <optgroup label="Gemini">
-                <option value="gemini-2.0-flash-lite">gemini-2.0-flash-lite</option>
-                <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite</option>
-            </optgroup>
-            <optgroup label="Gemma">
-                <option value="gemma-3-1b-it">gemma-3-1b-it</option>
-                <option value="gemma-3-4b-it">gemma-3-4b-it</option>
-                <option value="gemma-3-12b-it">gemma-3-12b-it</option>
-                <option value="gemma-3-27b-it">gemma-3-27b-it</option>
-            </optgroup>
-            </select>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <label class="setting-checkbox">
+                        <input type="checkbox" id="useRAG" checked>
+                        <span class="setting-label">RAG</span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label class="setting-checkbox">
+                        <input type="checkbox" id="useReranking" checked>
+                        <span class="setting-label">Reranking</span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label class="setting-checkbox">
+                        <input type="checkbox" id="useOntology" checked>
+                        <span class="setting-label">Ontologie</span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label class="setting-label">
+                        Nb sources:
+                        <input type="number" id="numSources" value="3" min="1" max="10" class="setting-input">
+                    </label>
+                </div>
+            </div>
+            
+            <div class="model-selector">
+                <label for="model-select" class="model-selector-label">Modèle de langage</label>
+                <div class="model-select-container">
+                    <select id="model-select" name="models" multiple class="model-select">
+                    <optgroup label="Local">
+                        <option value="ministral-3:3b">ministral-3b</option>
+                        <option value="cas/ministral-8b-instruct-2410_q4km">ministral-8b-q4km</option>
+                    </optgroup>
+                    <optgroup label="Mistral">
+                        <option value="ministral-3b-2410">ministral-3b-2410</option>
+                        <option value="ministral-8b-2410">ministral-8b-2410</option>
+                        <option value="open-mistral-7b">open-mistral-7b</option>
+                        <option value="open-mistral-nemo">open-mistral-nemo</option>
+                        <option value="mistral-tiny">mistral-tiny</option>
+                        <option value="mistral-small">mistral-small</option>
+                        <option value="mistral-medium">mistral-medium</option>
+                        <option value="mistral-large-2411">mistral-large-2411</option>
+                    </optgroup>
+                    <optgroup label="Gemini">
+                        <option value="gemini-2.0-flash-lite">gemini-2.0-flash-lite</option>
+                        <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite</option>
+                    </optgroup>
+                    <optgroup label="Gemma">
+                        <option value="gemma-3-1b-it">gemma-3-1b-it</option>
+                        <option value="gemma-3-4b-it">gemma-3-4b-it</option>
+                        <option value="gemma-3-12b-it">gemma-3-12b-it</option>
+                        <option value="gemma-3-27b-it">gemma-3-27b-it</option>
+                    </optgroup>
+                    </select>
+                    <div class="selected-models" id="selectedModels">
+                        <span class="selected-model-badge">Aucun modèle sélectionné</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="chat-container" id="chatContainer">
@@ -99,6 +126,33 @@
         const questionInput = document.getElementById('questionInput');
         const sendButton = document.getElementById('sendButton');
         const loading = document.getElementById('loading');
+        const modelSelect = document.getElementById('model-select');
+        const selectedModelsDisplay = document.getElementById('selectedModels');
+        
+        // Fonction pour mettre à jour l'affichage des modèles sélectionnés
+        function updateSelectedModels() {
+            const selectedOptions = Array.from(modelSelect.selectedOptions);
+            const badgesContainer = selectedModelsDisplay;
+            
+            if (selectedOptions.length === 0) {
+                badgesContainer.innerHTML = '<span class="selected-model-badge">Aucun modèle sélectionné</span>';
+                return;
+            }
+            
+            badgesContainer.innerHTML = '';
+            selectedOptions.forEach(option => {
+                const badge = document.createElement('span');
+                badge.className = 'selected-model-badge';
+                badge.textContent = option.text;
+                badgesContainer.appendChild(badge);
+            });
+        }
+        
+        // Initialiser l'affichage des modèles au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            updateSelectedModels();
+            modelSelect.addEventListener('change', updateSelectedModels);
+        });
 
         async function sendQuestion() {
             const question = questionInput.value.trim();
@@ -377,11 +431,12 @@
             const totalTime = response.total_time;
             const inputTokens = response.metadata.token_usage.input_tokens;
             const outputTokens = response.metadata.token_usage.output_tokens;
-
+            const consumed_energy_Wh = response.metadata.consumed_energy_Wh;
             header.innerHTML = `
                 <strong>Modèle :</strong> ${model} |
                 <strong>Temps :</strong> ${totalTime.toFixed(2)} sec |
                 <strong>Tokens :</strong> ${inputTokens} (in) / ${outputTokens} (out)
+                <strong>Energie :</strong> ${consumed_energy_Wh.toFixed(3)} Wh |
             `;
 
             return header;
@@ -470,7 +525,7 @@
                 documentTitle = source.metadata.document_data.file_name;
             }
 
-            sourceHeader.textContent = `${index + 1}. ${documentTitle} (page ${pageNumber}) (score: ${source.score.toFixed(3)})`;
+            sourceHeader.textContent = `${index + 1}. ${documentTitle} (page ${pageNumber}) (score: ${source.score_cossim.toFixed(3)})`;
 
             return sourceHeader;
         }

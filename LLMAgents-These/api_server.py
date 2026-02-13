@@ -13,6 +13,8 @@ from fastapi.responses import FileResponse
 from langchain_core.messages import BaseMessage
 
 from pydantic import BaseModel, Field, ConfigDict
+from typing import Optional, List, Dict, Tuple
+from datetime import datetime
 
 from dotenv import load_dotenv
 from starlette.responses import JSONResponse
@@ -22,11 +24,13 @@ from question_session import SessionManager, SessionResponse, EvaluateRequest, U
 from helper import calculate_cosine_similarity
 from agents.qa_agent import get_qa_agent
 from agents.answer_evaluator_agent import get_evaluator_agent
+from database.database import get_db_connection, get_all_documents
 
 import asyncio
 if hasattr(asyncio, 'WindowsSelectorEventLoopPolicy'):
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
+import torch
 
 import uvicorn
 
@@ -75,6 +79,21 @@ class QueryCompareResponse(BaseModel):
     metadata: Dict = Field(..., description="Métadonnées de la requête")
     timestamp: str = Field(..., description="Horodatage de la réponse")
 
+class DocumentResponse(BaseModel):
+    """Modèle de réponse pour un document"""
+    document_id: str = Field(..., description="Identifiant du document")
+    file_name: str = Field(..., description="Nom du fichier")
+    file_path: str = Field(..., description="Chemin du fichier")
+    file_size: int = Field(..., description="Taille du fichier en octets")
+    created_at: str = Field(..., description="Date de création")
+    updated_at: str = Field(..., description="Date de mise à jour")
+
+class DocumentsListResponse(BaseModel):
+    """Modèle de réponse pour la liste des documents"""
+    documents: List[DocumentResponse] = Field(..., description="Liste des documents")
+    count: int = Field(..., description="Nombre total de documents")
+    timestamp: str = Field(..., description="Horodatage de la réponse")
+
 
 class HealthResponse(BaseModel):
     """Modèle de réponse pour le health check"""
@@ -98,11 +117,7 @@ async def lifespan(app: FastAPI):
     # Shutdown (si nécessaire)
     pass
 
-
 # === APPLICATION FASTAPI ===
-
-
-
 app = FastAPI(
     title="API Chatbot RAG M3C v0.1",
     description="API REST pour interroger le système RAG sur un corpus de documents extraits de la M3C",
@@ -124,10 +139,7 @@ app.add_middleware(
     allow_headers=["*"],  # Headers autorisés
 )
 
-
 # === INITIALISATION DU RAG ===
-
-
 def initialize_rag():
     """
     Initialise le pipeline RAG au démarrage du serveur
@@ -238,13 +250,13 @@ async def query_simple(request: QueryRequest):
     try:
         print(f"\n[{datetime.now().isoformat()}] Nouvelle requête: {request.question}\n Modèle: {request.models[0]}")
 
-        answer, total_time = await rag_pipeline.query_simple(
+        answer, total_time, consumed_energy_Wh = await rag_pipeline.query_simple(
             prompt=request.question,
             model=request.models[0]
         )
 
         # Construire la réponse
-        response = _build_query_simple_response(request, answer, total_time)
+        response = _build_query_simple_response(request, answer, total_time, consumed_energy_Wh)
         print(f"[{datetime.now().isoformat()}] Réponse générée")
 
         return response
@@ -282,7 +294,7 @@ async def query_rag(request: QueryRequest):
         )
     try:
         print(f"\n[{datetime.now().isoformat()}] Nouvelle requête: {request.question}")
-        answer, retrieval_results, total_time = await rag_pipeline.query_rag(
+        answer, retrieval_results, total_time, consumed_energy_Wh = await rag_pipeline.query_rag(
             prompt=request.question,
             model=request.models[0],
             k=request.k,
@@ -296,7 +308,7 @@ async def query_rag(request: QueryRequest):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Erreur lors du traitement de la requête: {str(e)}"
         )
-    response = _build_query_rag_response(request, answer, retrieval_results, total_time)
+    response = _build_query_rag_response(request, answer, retrieval_results, total_time, consumed_energy_Wh)
 
     return response
 
@@ -310,10 +322,13 @@ async def query_compare(request: QueryRequest):
     """
     time_start = time.time()
     final_prompt, best_documents, scores = request.question, None, None
+
+    reranking = "bm25+" if request.use_reranking else None
     if request.use_rag:
-        final_prompt, best_documents = await rag_pipeline.rag_preprocess(request.question,
-                                                               request.use_reranking,
-                                                                         request.k)
+        final_prompt, best_documents = await rag_pipeline.rag_preprocess(prompt=request.question,
+                                                                         reranking=reranking,
+                                                                         k=request.k)
+        print(best_documents)
     # we keep the query_simple function to get the answer
     tasks = [
         rag_pipeline.query_simple(
@@ -331,14 +346,14 @@ async def query_compare(request: QueryRequest):
     # so we duplicate the models list to keep the list
     responses_list = []
     model_temp_list = request.models[::]
-    for i, (answer, total_time) in enumerate(answers):
+    for i, (answer, total_time, consumed_energy_Wh) in enumerate(answers):
         # and assign a list with 1 element
         request.models = [model_temp_list[i]]
 
         if request.use_rag:
-            responses_list.append(_build_query_rag_response(request, answer, best_documents, total_time))
+            responses_list.append(_build_query_rag_response(request, answer, best_documents, total_time, consumed_energy_Wh))
         else:
-            responses_list.append(_build_query_simple_response(request, answer, total_time))
+            responses_list.append(_build_query_simple_response(request, answer, total_time, consumed_energy_Wh))
     print(f"[{datetime.now().isoformat()}] Réponses générées pour tous les modèles")
     return QueryCompareResponse(
         responses=responses_list,
@@ -405,7 +420,7 @@ async def submit_answer(
         question=question.question_text,
         expected_answer=expected_answer,
         user_answer=user_answer,
-        score=evaluation.score,
+        score=evaluation.score_cossim,
         feedback=evaluation.feedback,
         cosine_similarity=cosine_sim,
         timestamp=datetime.now().isoformat(),
@@ -413,7 +428,7 @@ async def submit_answer(
     session_manager.add_response(session_id, user_response)
 
     return {
-        "score": evaluation.score,
+        "score": evaluation.score_cossim,
         "feedback": evaluation.feedback,
         "cosine_similarity": cosine_sim,
     }
@@ -475,11 +490,54 @@ async def export_session(session_id: str):
 
 @app.get("/get_pdf")
 async def get_pdf(source_file: str):
-    file_path = f"documents/test-m3c/{source_file}"
+    file_path = f"C:/Users/xenyi/Documents/Ressources-Pro/Thèse/M3C-documents/{source_file}"
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="Fichier non trouvé")
 
     return FileResponse(file_path, media_type="application/pdf")
+
+@app.get("/api/documents", response_model=DocumentsListResponse, tags=["Documents"])
+async def get_documents_list():
+    """
+    Récupère la liste de tous les documents disponibles dans la base de données.
+    
+    Returns:
+        DocumentsListResponse: Liste des documents avec leurs métadonnées
+    """
+    try:
+        # Connexion à la base de données
+        conn = await get_db_connection()
+        
+        # Récupérer tous les documents
+        documents = await get_all_documents(conn)
+        
+        # Fermer la connexion
+        await conn.close()
+        
+        # Construire la réponse
+        document_responses = []
+        for doc in documents:
+            document_responses.append(DocumentResponse(
+                document_id=doc["document_id"],
+                file_name=doc["file_name"],
+                file_path=doc["file_path"],
+                file_size=doc["file_size"],
+                created_at=str(doc["created_at"]),
+                updated_at=str(doc["updated_at"])
+            ))
+        
+        return DocumentsListResponse(
+            documents=document_responses,
+            count=len(document_responses),
+            timestamp=datetime.now().isoformat()
+        )
+        
+    except Exception as e:
+        print(f"[{datetime.now().isoformat()}] ERREUR lors de la récupération des documents: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Erreur lors de la récupération des documents: {str(e)}"
+        )
 
 
 async def _rag_preprocess(request: QueryRequest)-> tuple[str, List[RAGSource]]:
@@ -487,20 +545,22 @@ async def _rag_preprocess(request: QueryRequest)-> tuple[str, List[RAGSource]]:
     final_prompt, best_documents = request.question, None, None
     if request.use_rag:
         final_prompt, best_documents = await rag_pipeline.rag_preprocess(request.question,
-                                                                   request.use_reranking,
+                                                                request.use_reranking,
                                                                          request.k)
     return final_prompt, best_documents
 
 def _build_query_simple_response(request: QueryRequest,
                                  answer: BaseMessage,
-                                 total_time: float) -> QueryResponse:
+                                 total_time: float,
+                                 consumed_energy_Wh: float) -> QueryResponse:
     response = QueryResponse(
         answer=answer.content,
         total_time=total_time,
         metadata={
             "model": request.models[0],
             "k": request.k,
-            "token_usage": answer.usage_metadata
+            "token_usage": answer.usage_metadata,
+            "consumed_energy_Wh": consumed_energy_Wh
         },
         timestamp=datetime.now().isoformat()
     )
@@ -513,7 +573,8 @@ def _build_query_simple_response(request: QueryRequest,
 def _build_query_rag_response(request: QueryRequest,
                               answer: BaseMessage,
                               retrieval_results: list[RAGSource],
-                              total_time: float,):
+                              total_time: float,
+                              consumed_energy_Wh: float) -> QueryResponse:
     # useful data :
     # response_metadata={
     # 'token_usage': {'prompt_tokens': 944,
@@ -541,7 +602,8 @@ def _build_query_rag_response(request: QueryRequest,
             "use_reranking": request.use_reranking,
             "include_quantitative": request.include_quantitative,
             "num_sources": len(retrieval_results),
-            "token_usage": answer.usage_metadata
+            "token_usage": answer.usage_metadata,
+            "consumed_energy_Wh": consumed_energy_Wh
         },
         timestamp=datetime.now().isoformat()
     )
@@ -570,7 +632,7 @@ if __name__ == "__main__":
     print("Event loop policy:", asyncio.get_event_loop_policy())
     print("Event loop type:", type(asyncio.get_event_loop()))
     print("=" * 60 + "\n")
-
+    print(torch.cuda.is_available())
     uvicorn.run(
         "api_server:app",
         host=host,

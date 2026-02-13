@@ -43,6 +43,7 @@ system_prompt_generator = SystemPromptGenerator(
         "Questions should not be trivial, the visitor should not answer immediately",
         "Questions should be directly justified by the text",
         "If an information is not clearly present, don't invent it and adapt the question",
+        "No questions about who wrote a certain book",
         "Questions and answers in French"
     ],
 )
