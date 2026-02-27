@@ -137,7 +137,10 @@ async def insert_embedding_model(conn, model_name, description, dimension):
             print(f"Erreur lors de l'insertion du modèle {model_name}: {e}")
             return False
 
-async def get_question_by_id(question_id, conn):
+async def get_question_by_id(conn,
+                             question_id: int,
+                             include_answers: bool = False) -> dict:
+    question_data = {}
     async with conn.cursor() as cur:
         await cur.execute("""
             SELECT q.question_id, q.content, q.status, q.difficulty_level, q.created_by, q.validated_by
@@ -145,16 +148,61 @@ async def get_question_by_id(question_id, conn):
             WHERE q.question_id = %s
         """, (question_id,))
         result = await cur.fetchone()
-        if result is not None:
-            return {
-                "question_id": result[0],
-                "content": result[1],
-                "status": result[2],
-                "difficulty_level": result[3],
-                "created_by": result[4],
-                "validated_by": result[5],
-            }
-        return None
+        question_data["question_id"] = result[0]
+        question_data["content"] = result[1]
+        question_data["status"] = result[2]
+        question_data["difficulty_level"] = result[3]
+        question_data["created_by"] = result[4]
+        question_data["validated_by"] = result[5]
+
+        if include_answers:
+            # Récupérer les réponses associées
+            await cur.execute("""
+                              SELECT content, created_by
+                              FROM question_answers
+                              WHERE question_id = %s
+                              """, (question_id,))
+            answer_rows = await cur.fetchall()
+            question_data["answers"] = [{"content": answer[0],
+                                         "created_by": answer[1]}
+                                        for answer in answer_rows]
+        return question_data
+
+async def get_questions_by_ids(question_ids: list[str], conn) -> list[dict]:
+    """
+    Récupère les questions correspondant à une liste d'IDs.
+
+    Args:
+        question_ids: Liste des IDs des questions à récupérer.
+        conn: Connexion à la base de données.
+
+    Returns:
+        Liste de dictionnaires représentant les questions trouvées.
+        Retourne une liste vide si aucune question n'est trouvée.
+    """
+    if not question_ids:
+        return []
+
+    query = """
+        SELECT q.question_id, q.content, q.status, q.difficulty_level, q.created_by, q.validated_by
+        FROM questions q
+        WHERE q.question_id = ANY(%s)
+    """
+    async with conn.cursor() as cur:
+        await cur.execute(query, (question_ids,))
+        rows = await cur.fetchall()
+
+    return [
+        {
+            "question_id": row[0],
+            "content": row[1],
+            "status": row[2],
+            "difficulty_level": row[3],
+            "created_by": row[4],
+            "validated_by": row[5],
+        }
+        for row in rows
+    ]
 
 async def get_chunks_for_document(document_id: str, conn):
     """Récupère tous les chunks d'un document depuis la base de données."""
@@ -164,6 +212,7 @@ async def get_chunks_for_document(document_id: str, conn):
             FROM chunks
             WHERE document_id = %s
         """, (document_id,))
+
         return await cur.fetchall()
 
 async def get_chunks_by_question_id(question_id: int, conn):
@@ -172,7 +221,7 @@ async def get_chunks_by_question_id(question_id: int, conn):
     """
     async with conn.cursor() as cur:
         await cur.execute("""
-            SELECT c.chunk_id, c.content, c.num_page, c.position_in_page
+            SELECT c.chunk_id, c.content, c.num_page, c.position_in_page, qc.question_id
             FROM chunks c
             JOIN question_chunks qc ON c.chunk_id = qc.chunk_id
             WHERE qc.question_id = %s""", (question_id,))
@@ -180,7 +229,45 @@ async def get_chunks_by_question_id(question_id: int, conn):
         return [{"chunk_id": row[0],
                  "content": row[1],
                  "num_page": row[2],
-                 "position_in_page": row[3]} for row in rows]  # Convertit chaque ligne en dictionnaire
+                 "position_in_page": row[3],
+                 "question_id": row[4]} for row in rows]
+
+
+async def get_chunks_by_question_ids(question_ids: list[int], conn):
+    """
+    Récupère les chunks associés à une liste de questions via la table question_chunks.
+
+    Args:
+        question_ids: Liste des identifiants de questions.
+        conn: Connexion à la base de données.
+
+    Returns:
+        Liste de dictionnaires représentant les chunks associés à chaque question.
+    """
+    if not question_ids:
+        return []
+
+    async with conn.cursor() as cur:
+        # Utilisation de ANY pour filtrer sur plusieurs question_id
+        await cur.execute("""
+            SELECT c.chunk_id, c.content, c.num_page, c.position_in_page, qc.question_id
+            FROM chunks c
+            JOIN question_chunks qc ON c.chunk_id = qc.chunk_id
+            WHERE qc.question_id = ANY(%s)
+        """, (question_ids,))
+
+        rows = await cur.fetchall()
+        return [
+            {
+                "chunk_id": row[0],
+                "content": row[1],
+                "num_page": row[2],
+                "position_in_page": row[3],
+                "question_id": row[4]
+            }
+            for row in rows
+        ]
+
 
 async def get_top_k_similar_chunks_cossim(conn, embedding: list[float], model_name: str, k=3):
     """

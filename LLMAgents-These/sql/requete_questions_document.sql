@@ -1,7 +1,7 @@
 WITH filtered_chunks AS (
         SELECT chunk_id
         FROM chunks
-        WHERE document_id = '8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56'
+        WHERE document_id = 'dbd5f14a9e6545880b0cd505583ea7d1fe1e8b3d'
     )
     SELECT
         q.question_id,

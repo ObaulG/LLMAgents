@@ -5,6 +5,7 @@ from psycopg2.extras import execute_values
 from langchain_mistralai import ChatMistralAI, MistralAIEmbeddings
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from transformers import AutoTokenizer
 
 # Configuration de la base de données
 DB_CONFIG= {
@@ -14,10 +15,8 @@ DB_CONFIG= {
     "password": "postgres",
 }
 
-# Configuration du modèle
-CHUNK_SIZE_BASE = 800
-DOCUMENTS_PATH = "documents"
-rag_locations = ["documents/test-m3c"]
+CHUNK_CHAR_SIZE = 2700
+DOCUMENTS_PATH = "C:\\Users\\xenyi\\Documents\\Ressources-Pro\\Thèse\\M3C-documents"
 
 # Initialisation des modèles
 llm = ChatMistralAI(
@@ -48,16 +47,16 @@ def insert_document(conn, document_id, file_name, file_path, file_size):
         return cur.fetchone()[0]
 
 # Fonction pour insérer une stratégie de chunking
-def insert_chunking_strategy(conn, name, description, method, chunk_size, overlap, embedding_model):
+def insert_chunking_strategy(conn, name, description, method, chunk_size, char_size, overlap):
     with conn.cursor() as cur:
         cur.execute(
             """
-            INSERT INTO chunking_strategies (name, description, method, chunk_size, overlap, embedding_model)
+            INSERT INTO chunking_strategies (name, description, method, chunk_size, char_size, overlap)
             VALUES (%s, %s, %s, %s, %s, %s)
             ON CONFLICT (name) DO NOTHING
             RETURNING strategy_id;
             """,
-            (name, description, method, chunk_size, overlap, embedding_model),
+            (name, description, method, chunk_size, char_size, overlap),
         )
         return cur.fetchone()[0]
 
@@ -67,7 +66,7 @@ def insert_chunks(conn, chunks_data):
         execute_values(
             cur,
             """
-            INSERT INTO chunks (chunk_id, document_id, strategy_id, content, num_page, position_in_page, token_count, metadata)
+            INSERT INTO chunks (chunk_id, document_id, strategy_id, content, num_page, position_in_page, token_count, character_count, metadata)
             VALUES %s
             ON CONFLICT (chunk_id) DO NOTHING;
             """,
@@ -80,7 +79,7 @@ def insert_embeddings(conn, embeddings_data):
         execute_values(
             cur,
             """
-            INSERT INTO chunk_embeddings (chunk_id, embedding)
+            INSERT INTO chunk_embeddings (chunk_id, embedding, model_name)
             VALUES %s
             ON CONFLICT (chunk_id) DO NOTHING;
             """,
@@ -88,6 +87,12 @@ def insert_embeddings(conn, embeddings_data):
         )
 
 if __name__ == '__main__':
+    FILES_TO_EMBED = [
+        "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56.pdf",
+        "dbd5f14a9e6545880b0cd505583ea7d1fe1e8b3d.pdf"
+    ]
+    tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-Instruct-v0.2")
+
     # Vérification de la taille des embeddings
     embed_test = embedder.embed_documents(["get embed size"])
     embedding_size = len(embed_test[0])
@@ -99,83 +104,80 @@ if __name__ == '__main__':
     # Insertion de la stratégie de chunking
     strategy_id = insert_chunking_strategy(
         conn=conn,
-        name="800_tokens_overlap_100",
-        description="Stratégie de découpage en chunks de 800 tokens avec un overlap de 100 tokens",
-        method="tokens",
-        chunk_size=800,
-        overlap=100,
-        embedding_model="mistral-embed",
+        name="2700_char_overlap_400",
+        description="Stratégie de découpage en chunks de 2700 caractères avec 400 caractères d'overlap",
+        method="characters",
+        char_size=CHUNK_CHAR_SIZE,
+        chunk_size=0,
+        overlap=400
     )
     print(f"Stratégie de chunking insérée avec l'ID: {strategy_id}")
 
     # Initialisation du text splitter
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=CHUNK_SIZE_BASE,
-        chunk_overlap=100,
+        chunk_size=CHUNK_CHAR_SIZE,
+        chunk_overlap=400,
     )
 
     documents_created = 0
-    for f in rag_locations:
-        loc = os.path.join(os.getcwd(), f)
-        files = os.listdir(loc)
-        for d in files:
-            path = os.path.join(loc, d)
-            if os.path.isdir(path):
-                continue
+    for file_name in FILES_TO_EMBED:
+        path = os.path.join(DOCUMENTS_PATH, file_name)
+        print(f"Chargement de {path}")
+        loader = PyPDFLoader(path)
 
-            print(f"Chargement de {d}")
-            loader = PyPDFLoader(path)
+        try:
+            documents = loader.load()
+        except Exception as e:
+            print(f"Erreur lors du chargement de {path}: {e}")
+            continue
 
-            try:
-                documents = loader.load()
-            except Exception as e:
-                print(f"Erreur lors du chargement de {d}: {e}")
-                continue
+        # Découpage en chunks
+        texts = text_splitter.split_documents(documents)
+        print(f"{file_name} découpé en {len(texts)} chunks")
 
-            # Découpage en chunks
-            texts = text_splitter.split_documents(documents)
-            print(f"{d} découpé en {len(texts)} chunks")
+        # Insertion du document
+        file_size = os.path.getsize(path)
+        document_id = os.path.splitext(file_name)[0]
+        #insert_document(conn, document_id, d, path, file_size)
 
-            # Insertion du document
-            file_size = os.path.getsize(path)
-            document_id = os.path.splitext(d)[0]
-            insert_document(conn, document_id, d, path, file_size)
+        # Préparation des données pour les chunks
+        chunks_data = []
+        embeddings_data = []
+        for i, text in enumerate(texts):
+            chunk_id = f"{document_id}-{strategy_id}-{i}"
+            content = text.page_content
+            num_page = text.metadata.get("page", 0)
+            position_in_page = i  # Simplification
+            tokens = tokenizer.tokenize(text.page_content)
+            token_count = len(tokens)+2
+            character_count = len(text.page_content)
+            metadata = json.dumps({
+                "source": document_id,
+                "page": num_page,
+                "position": position_in_page,
+            })
 
-            # Préparation des données pour les chunks
-            chunks_data = []
-            embeddings_data = []
-            for i, text in enumerate(texts):
-                chunk_id = f"{document_id}-{i}"
-                content = text.page_content
-                num_page = text.metadata.get("page", 0)
-                position_in_page = i  # Simplification
-                token_count = len(text.page_content.split())  # Approximation
-                metadata = json.dumps({
-                    "source": d,
-                    "page": num_page,
-                    "position": position_in_page,
-                })
+            chunks_data.append((
+                chunk_id,
+                document_id,
+                strategy_id,
+                content,
+                num_page,
+                position_in_page,
+                token_count,
+                character_count,
+                metadata,
+            ))
 
-                chunks_data.append((
-                    chunk_id,
-                    document_id,
-                    strategy_id,
-                    content,
-                    num_page,
-                    position_in_page,
-                    token_count,
-                    metadata,
-                ))
+            # Génération de l'embedding
+            embedding = embedder.embed_documents([content])[0]
+            embeddings_data.append((chunk_id, embedding, "mistral-embed"))
 
-                # Génération de l'embedding
-                embedding = embedder.embed_documents([content])[0]
-                embeddings_data.append((chunk_id, embedding))
+        # Insertion des chunks et des embeddings
+        insert_chunks(conn, chunks_data)
+        insert_embeddings(conn, embeddings_data)
 
-            # Insertion des chunks et des embeddings
-            insert_chunks(conn, chunks_data)
-            insert_embeddings(conn, embeddings_data)
-
-            print(f"{len(texts)} chunks et embeddings insérés pour {d}")
+        print(f"{len(texts)} chunks et embeddings insérés pour {document_id}")
 
     # Validation des insertions
     conn.commit()

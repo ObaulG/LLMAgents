@@ -46,7 +46,7 @@ async def simulate_cultural_mediation_session(
         #    nb_limit=num_questions
         #)
         questions_ids = [370, 364, 519, 786, 115]
-        questions = [await get_question_by_id(id, conn) for id in questions_ids]
+        questions = [await get_question_by_id(conn, id) for id in questions_ids]
         if not questions:
             logger.warning(f"Aucune question trouvée pour le document {document_id}.")
             return
@@ -54,7 +54,6 @@ async def simulate_cultural_mediation_session(
         print(questions)
         # evaluator = get_evaluator_agent()
         evaluators = [get_evaluator_agent(model) for model in models_evaluator]
-        print(evaluators)
         correct_answers = 0
 
         for i, question in enumerate(questions, 1):
@@ -76,11 +75,11 @@ async def simulate_cultural_mediation_session(
             for chunk in chunks:
                 logger.info(f"\nExtrait de la page {chunk['num_page']} (position {chunk['position_in_page']}):")
 
-
             # Demander la réponse de l'utilisateur
             user_answer = input("Votre réponse: ").strip()
 
             # Évaluer la réponse
+            # note: la réponse n'était même pas récupérée en fait...aya
             expected_answer = question['answers'][0]['content'] if question.get('answers') else "Réponse non disponible"
             evaluation_input = EvaluateRequestInput(
                 question=question['content'],

@@ -61,7 +61,8 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
 ### Réponse
 """
 
-    def __init__(self):
+    def __init__(self,
+                 load_local:bool = False):
         """
         Initialise le pipeline RAG v1
         """
@@ -69,7 +70,7 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
         print("INITIALISATION RAG v1 (BASIQUE)")
         print("=" * 60)
         self.dict_llm: dict[str, BaseChatModel] = {}
-        self._init_llm_instances()
+        self._init_llm_instances(load_local=True)
         self.embedder = MistralAIEmbeddings(model="mistral-embed")
         self.embedder_name = "mistral-embed"
         self.db_connection_factory = database.get_db_connection
@@ -124,7 +125,7 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
         answer, total_time, consumed_energy_Wh = await self.query_simple(final_prompt, model, **kwargs)
 
         return answer, sources, total_time, consumed_energy_Wh
-    def _init_llm_instances(self):
+    def _init_llm_instances(self, load_local:bool = False):
         MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
         GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
         for model_name in MISTRAL_MODELS:
@@ -149,6 +150,9 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
                 print(f"Modèle Gemini '{model_name}' initialisé avec succès.")
             except Exception as e:
                 print(f"Erreur lors de l'initialisation du modèle Gemini '{model_name}': {e}")
+
+        if not load_local:
+            return
         for model_name in OLLAMA_MODELS:
             try:
                 llm = ChatOllama(

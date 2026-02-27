@@ -22,9 +22,10 @@ CREATE TABLE chunking_strategies (
     description TEXT,                          -- Description de la stratégie
     method VARCHAR(50) NOT NULL,               -- Méthode de découpage : "tokens", "sentence", "paragraph", "page", "chapter"
     chunk_size INT,                            -- Taille du chunk (pour les méthodes "tokens" ou "sentence")
-    overlap INT,                               -- Taille de l'overlap (pour les méthodes "tokens" ou "sentence")
+    char_size INT,
+    overlap INT,                               -- Taille de l'overlap (pour les méthodes "tokens", "character ou "sentence")
     created_at TIMESTAMP DEFAULT NOW(),        -- Date de création
-    CONSTRAINT valid_method CHECK (method IN ('tokens', 'sentence', 'paragraph', 'page', 'chapter')),
+    CONSTRAINT valid_method CHECK (method IN ('tokens', 'characters','sentence', 'paragraph', 'page', 'chapter')),
     CONSTRAINT unique_strategy_name UNIQUE (name)
 );
 
@@ -36,6 +37,7 @@ CREATE TABLE chunks (
     num_page INT,
     position_in_page INT,
     token_count INT,
+    character_count INT,
     metadata JSONB,
     created_at TIMESTAMP DEFAULT NOW(),
     FOREIGN KEY (document_id) REFERENCES documents(document_id),

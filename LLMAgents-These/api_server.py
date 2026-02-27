@@ -1,12 +1,16 @@
 import asyncio
 import copy
 import csv
+import json
+import logging
 import os
 import time
 import uuid
 from typing import Optional, List, Dict, Tuple
 from datetime import datetime
 from contextlib import asynccontextmanager
+from unittest import case
+
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
@@ -20,11 +24,26 @@ from dotenv import load_dotenv
 from starlette.responses import JSONResponse
 
 from rag_pipeline import RAGPipeline, RetrievalResult, RAGSource
-from question_session import SessionManager, SessionResponse, EvaluateRequest, UserResponse
-from helper import calculate_cosine_similarity
+from question_session import (PREMADE_QUESTIONS_BY_DOCUMENT_ID,
+                              SessionManager,
+                              EvaluateRequest,
+                              UserResponse,
+                              SessionStatus,
+                              EvaluationResult,
+                              from_AgentEvaluationResult_to_EvaluationResult, session_status_to_dict)
+
 from agents.qa_agent import get_qa_agent
-from agents.answer_evaluator_agent import get_evaluator_agent
-from database.database import get_db_connection, get_all_documents
+from agents.answer_evaluator_agent import get_evaluator_agent, EvaluateRequestInput, get_final_evaluator_agent, \
+    ListAgentEvaluationResult
+from agents.message_evaluator_agent import get_message_type_agent, MessageTypeRequestInput
+from database.database import (get_db_connection,
+                               get_all_documents,
+                               get_question_by_id,
+                               get_questions_by_ids,
+                               get_chunks_by_question_id,
+                               get_chunks_by_question_ids)
+
+from agents.token_monitor import *
 
 import asyncio
 if hasattr(asyncio, 'WindowsSelectorEventLoopPolicy'):
@@ -95,6 +114,36 @@ class DocumentsListResponse(BaseModel):
     timestamp: str = Field(..., description="Horodatage de la réponse")
 
 
+class RAGParameters(BaseModel):
+    nb_sources: int
+    reranking: bool
+
+class LLMCallData(BaseModel):
+    model: str
+    framework: Optional[str] = Field(None, description="Framework utilisé pour l'appel.")
+    input_tokens: Optional[int] = Field(None, description="Nombre de tokens d'entrée.")
+    output_tokens: Optional[int] = Field(None, description="Nombre de tokens de sortie.")
+    rag_parameters: Optional[RAGParameters]
+    consumed_energy_Wh: Optional[float] = Field(None, description="Consommation estimée pour des modèles en local.")
+    total_time: Optional[float]
+
+class SessionMessage(BaseModel):
+    session_id: str
+    user_message: str
+
+class SessionResponse(BaseModel):
+    session_status: SessionStatus
+    computed_message_type: str
+    # TODO: utiliser une structure pour indiquer les données de consommation
+    #       en tokens. Prévoir également un type générique.
+    metadata: dict
+    total_time: float
+    message: str
+
+    # pour faciliter le traitement côté client
+    new_question: bool
+    is_finished: bool
+
 class HealthResponse(BaseModel):
     """Modèle de réponse pour le health check"""
     status: str = Field(..., description="État du serveur")
@@ -103,9 +152,17 @@ class HealthResponse(BaseModel):
     version: str = Field(..., description="Version de l'API")
 
 qa_agent = get_qa_agent()
-evaluation_agent = get_evaluator_agent()
+evaluation_agent = get_evaluator_agent("mistral-small")
+final_evaluator = get_final_evaluator_agent("mistral-small")
+message_ev_agent = get_message_type_agent()
 session_manager = SessionManager()
+models_evaluator = ["ministral-3b-latest",
+                    "ministral-8b-latest",
+                    "mistral-small-latest"]
 
+# Contient les instances d'agent effectuant les évaluations pour chaque modèle
+# dans models_evaluator
+evaluators = []
 # === GESTION DU CYCLE DE VIE ===
 
 @asynccontextmanager
@@ -113,8 +170,20 @@ async def lifespan(app: FastAPI):
     """Gestion du cycle de vie de l'application"""
     # Startup
     initialize_rag()
+    initialize_evaluators()
     yield
     # Shutdown (si nécessaire)
+    print("Arrêt du serveur : sauvegarde des sessions...")
+    for session_id in session_manager.sessions:
+        status = session_manager.get_session_status(session_id)
+        session_dict = session_status_to_dict(status)
+        session_dict["metadata"] = {
+            "llm_used": "mistral-7b",
+            "number_of_agents": 3,
+            "server_shutdown_at": datetime.now().isoformat(),
+        }
+        append_session_to_json(session_dict)
+    print("Sauvegarde terminée.")
     pass
 
 # === APPLICATION FASTAPI ===
@@ -166,7 +235,7 @@ def initialize_rag():
 
     try:
         # Initialiser le pipeline RAG v3
-        rag_pipeline = RAGPipeline()
+        rag_pipeline = RAGPipeline(load_local=False)
         print("\n" + "=" * 60)
         print("Système RAG simple initialisé")
         print("=" * 60 + "\n")
@@ -177,6 +246,8 @@ def initialize_rag():
         print(f"\nERREUR lors de l'initialisation du RAG: {e}\n")
         raise
 
+def initialize_evaluators():
+    evaluators.extend([get_evaluator_agent(model) for model in models_evaluator])
 
 # === ENDPOINTS ===
 
@@ -247,6 +318,13 @@ async def health_check():
           response_model=QueryResponse,
           tags=["Query"])
 async def query_simple(request: QueryRequest):
+
+    if not request.models:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Aucun modèle sélectionné. Veuillez spécifier au moins un modèle."
+        )
+
     try:
         print(f"\n[{datetime.now().isoformat()}] Nouvelle requête: {request.question}\n Modèle: {request.models[0]}")
 
@@ -362,94 +440,207 @@ async def query_compare(request: QueryRequest):
         metadata={}
     )
 
-@app.post("/api/sessions/init/{document_id}")
-async def init_session(document_id: str):
+@app.post("/api/sessions/init/{document_id}",
+          response_model=SessionStatus)
+async def init_session(document_id: str,
+                       premade_session: bool = True):
     """
     Initialise une nouvelle session pour un document donné.
     Retourne l'ID de la session et les questions générées.
     """
-    # Générer les questions/réponses pour le document
-    response = qa_agent.run({"message": "Génère 3 questions.", "document": document_id})
 
-    # Créer une nouvelle session
-    session_id = str(uuid.uuid4())
-    session_manager.create_session(session_id, document_id)
-    session_manager.add_questions(session_id, response.questions_answers)
+    session_id = session_manager.create_session(document_id, premade_session)
+    if not premade_session:
+        # TODO: pour plus tard, en récupérant l'historique de l'utilisateur
+        #       et éventuellement ses préférences. Suite de questions recommandées
+        #       par LLM, IA plus classique, ou bien créée et corrigée par des utilisateurs
+        #       experts ou vérifiés.
+        raise NotImplementedError
 
-    return {
-        "session_id": session_id,
-        "document_id": document_id,
-        "questions": response.questions_answers,
-    }
+    questions_ids = PREMADE_QUESTIONS_BY_DOCUMENT_ID[document_id]
+    conn = await get_db_connection()
+    questions_tasks = [get_question_by_id(conn, question_id, include_answers=False) for question_id in questions_ids]
+    questions = await asyncio.gather(*questions_tasks)
 
-@app.post("/api/sessions/{session_id}/answer")
-async def submit_answer(
-    session_id: str,
-    question_index: int,
-    user_answer: str,
-):
+    # note: une liste par question, car une question peut avoir plusieurs chunks
+    # TODO: il faudra ajouter avec le document la méthode de chunking utilisée,
+    #       car pour le même document, il peut être découpé de plusieurs manières, donc avoir
+    #       plusieurs chunks pour la même question.
+    questions_chunks_tasks = [get_chunks_by_question_id(question_id, conn) for question_id in questions_ids]
+    questions_chunks = await asyncio.gather(*questions_chunks_tasks)
+    questions_texts = [question["content"] for question in questions]
+    question_pages = [chunk[0]["num_page"] for chunk in questions_chunks]
+
+    print(questions_texts)
+    print(question_pages)
+    session_manager.add_questions(session_id, questions_ids, questions_texts, question_pages)
+
+    return session_manager.get_session_status(session_id)
+
+
+@app.post("/api/sessions/message",
+          response_model=SessionResponse)
+async def submit_message(request: SessionMessage):
     """
-    Soumet une réponse utilisateur pour une question donnée.
-    Retourne l'évaluation de la réponse.
+    Ajoute un message à la conversation d'une session. L'agent analyse la réponse pour vérifier
+    si c'est la réponse à la question en cours, ou une demande de contexte supplémentaire.
     """
-    # Récupérer la session
+    start_time = time.time()
+    total_input_tokens = 0
+    total_output_tokens = 0
+
+    session_id = request.session_id
+    user_message = request.user_message
+
     session = session_manager.get_session(session_id)
     if not session:
         raise HTTPException(status_code=404, detail="Session non trouvée")
 
-    # Récupérer la question correspondante
-    if question_index >= len(session["questions"]):
-        raise HTTPException(status_code=400, detail="Index de question invalide")
+    if not evaluators:
+        logging.error("Evaluateurs non initialisés")
+        raise HTTPException(status_code=500, detail="Evaluateurs non initialisés")
 
-    question = session["questions"][question_index]
-    expected_answer = question.answer_text
+    current_question_id = session_manager.get_current_question_id(session_id)
+    if not current_question_id:
+        raise HTTPException(status_code=500, detail="Erreur détectée lors du traitement de la session")
 
-    # Évaluer la réponse
-    evaluation_input = EvaluateRequest(
-        question=question.question_text,
-        expected_answer=expected_answer,
-        user_answer=user_answer,
+    # récupérer la question et ses réponses
+    question = await get_question_by_id(await get_db_connection(),
+                                        current_question_id,
+                                        include_answers=True)
+
+    # vérification du type de message
+    # -> Tuple[OutputSchema, TokenCountResult, int]
+    result, token_count_result, output_tokens = monitor_agent_call(message_ev_agent,
+                                                                   user_input=MessageTypeRequestInput(
+                                                                              current_question=question["content"],
+                                                                              user_message=user_message
+                                                                   ),
+                                                                   method = "run")
+    message_type = result.message_type
+    total_input_tokens += token_count_result.total
+    total_output_tokens += output_tokens
+
+    logging.info("Message type determined : {message_type}".format(message_type=message_type),)
+    new_question = False
+    is_finished = False
+    message = ""
+    match message_type:
+        case "réponse":
+            if not question["answers"]:
+                raise HTTPException(status_code=500, detail="Pas de réponse prévue pour cette question...")
+            # il peut y avoir plusieurs réponses, on ne garde que la
+            # 1ère
+            expected_answer = question["answers"][0]["content"]
+            evaluation_input = EvaluateRequestInput(
+                question=question['content'],
+                expected_answer=expected_answer,
+                user_answer=user_message
+            )
+
+            # note: les evaluators sont initialisés avec des clients async.
+            # pour pouvoir effectuer ces appels en parallèle.
+            evaluations = []
+            """
+            for evaluator in evaluators:
+                evaluation, token_count_result, output_tokens = await monitor_agent_call_async(evaluator,
+                                                                                         evaluation_input,
+                                                                                         "run_async")
+                total_input_tokens += token_count_result.total
+                total_output_tokens += output_tokens
+                evaluations.append(evaluation)
+            print(evaluations)
+            """
+            coroutines = [
+                monitor_agent_call_async(evaluator, evaluation_input, "run_async")
+                for evaluator in evaluators
+            ]
+
+            eval_results = await asyncio.gather(*coroutines)
+            for result in eval_results:
+                evaluation, token_count_result, output_tokens = result
+                evaluations.append(evaluation)
+                total_input_tokens += token_count_result.total
+                total_output_tokens += output_tokens
+
+            if len(evaluations) > 1:
+                # /!\ contient un AgentEvaluationResult de answer_evaluation_agent.py.
+                # UserResponse attend pour l'attribut evaluation un EvaluationResult de
+                # question_session.py
+
+                # Provoque souvent cette erreur, pk ?
+                # Instructor does not support multiple tool calls, use List[Model] instead
+                final_evaluation, token_count_result, output_tokens = monitor_agent_call(final_evaluator,
+                                                            ListAgentEvaluationResult(
+                                                                evaluations=evaluations),
+                                                            "run")
+                total_input_tokens += token_count_result.total
+                total_output_tokens += output_tokens
+            else:
+                final_evaluation = evaluations[0]
+
+            evaluation_result = from_AgentEvaluationResult_to_EvaluationResult(final_evaluation)
+            user_response = UserResponse(
+                question_id=current_question_id,
+                question_text=question['content'],
+                user_answer=user_message,
+                date_sent=datetime.now(),
+                evaluation=evaluation_result
+            )
+
+            #mettre à jour la session
+            session_manager.add_response(session_id, user_response)
+
+            if evaluation_result.score >= 7:
+                # Si le score est suffisant, passer à la question suivante
+                # peut également marquer la fin de la session si c'était la dernière qst
+                session_manager.increment_current_index(session_id)
+                is_finished = session_manager.is_finished(session_id)
+
+                if not is_finished:
+                    new_question = True
+
+            # le client pourra détécter les changements par rapport à l'ancienne version de
+            # sessionStatus : chgt de question, question à refaire, ou fin de session
+            message = evaluation_result.feedback
+        case "demande_renseignement":
+
+            # faire appel à un LLM pour répondre à la question
+
+            message = "Message de demande de renseignement détecté (pas implémenté pour l'instant)"
+            pass
+        case "hors_sujet":
+            message = "Message hors-sujet détecté (pas implémenté pour l'instant)"
+            pass
+        case "autre":
+            message = "Message classé hors-catégorie..."
+            pass
+
+    total_time = time.time() - start_time
+    session_response = SessionResponse(
+        session_status=session_manager.get_session_status(session_id),
+        computed_message_type=message_type,
+        message=message,
+        new_question=new_question,
+        is_finished=is_finished,
+        total_time=total_time,
+        # note: le format de token_usage se calque sur celui de LangChain
+        #       le JS fonctionne sur ce format (pour l'instant)
+        # TODO: il sera à modifier plus tard.
+        metadata={"token_usage":{
+                "input_tokens": total_input_tokens,
+                "output_tokens": total_output_tokens,}}
     )
-    evaluation = evaluation_agent.run(evaluation_input)
-
-    # Calculer la similarité cosinus
-    cosine_sim = calculate_cosine_similarity(question.question_text, user_answer)
-
-    # Stocker la réponse
-    user_response = UserResponse(
-        question=question.question_text,
-        expected_answer=expected_answer,
-        user_answer=user_answer,
-        score=evaluation.score_cossim,
-        feedback=evaluation.feedback,
-        cosine_similarity=cosine_sim,
-        timestamp=datetime.now().isoformat(),
-    )
-    session_manager.add_response(session_id, user_response)
-
-    return {
-        "score": evaluation.score_cossim,
-        "feedback": evaluation.feedback,
-        "cosine_similarity": cosine_sim,
-    }
+    return session_response
 
 @app.get("/api/sessions/{session_id}")
-async def get_session(session_id: str):
+async def get_session(session_id: str) -> SessionStatus:
     """
     Récupère l'état actuel d'une session.
     """
-    session = session_manager.get_session(session_id)
-    if not session:
-        raise HTTPException(status_code=404, detail="Session non trouvée")
+    return
 
-    return SessionResponse(
-        session_id=session_id,
-        document_id=session["document_id"],
-        responses=session["responses"],
-        completed=session["completed"],
-    )
-
-@app.get("/api/sessions/{session_id}/export")
+@app.get("/api/sessions/export/{session_id}")
 async def export_session(session_id: str):
     """
     Exporte les réponses d'une session au format CSV.
@@ -489,8 +680,10 @@ async def export_session(session_id: str):
     )
 
 @app.get("/get_pdf")
-async def get_pdf(source_file: str):
-    file_path = f"C:/Users/xenyi/Documents/Ressources-Pro/Thèse/M3C-documents/{source_file}"
+async def get_pdf(document_id: str):
+
+    # note: pour l'instant, l'id du document est également son nom dans le dossier
+    file_path = f"C:/Users/xenyi/Documents/Ressources-Pro/Thèse/M3C-documents/{document_id}.pdf"
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="Fichier non trouvé")
 
@@ -612,6 +805,32 @@ def _build_query_rag_response(request: QueryRequest,
 
     return response
 
+import json
+from datetime import datetime
+from pathlib import Path
+
+def append_session_to_json(session_dict: Dict[str, Any], file_path: str = "sessions_backup.json"):
+    """
+    Ajoute une session à un fichier JSON existant.
+    Crée le fichier s'il n'existe pas.
+    """
+    file = Path(file_path)
+    sessions_data = []
+
+    # Lire le contenu existant si le fichier existe
+    if file.exists():
+        with open(file, "r", encoding="utf-8") as f:
+            try:
+                sessions_data = json.load(f)
+            except json.JSONDecodeError:
+                sessions_data = []
+
+    # Ajouter la nouvelle session
+    sessions_data.append(session_dict)
+
+    # Réécrire le fichier
+    with open(file, "w", encoding="utf-8") as f:
+        json.dump(sessions_data, f, indent=2, ensure_ascii=False)
 
 if __name__ == "__main__":
     # Configuration du serveur

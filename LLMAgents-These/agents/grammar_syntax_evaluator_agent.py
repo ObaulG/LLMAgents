@@ -1,6 +1,6 @@
 from atomic_agents.context import SystemPromptGenerator
 
-from answer_evaluator_agent import EvaluateRequestInput, EvaluationResult
+from answer_evaluator_agent import EvaluateRequestInput, AgentEvaluationResult
 
 evaluation_system_prompt_generator = SystemPromptGenerator(
     background=[
