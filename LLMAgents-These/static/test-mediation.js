@@ -289,6 +289,48 @@ async function sendMessage() {
 }
 
 
+// Fonction pour exporter les questions et réponses en CSV
+function exportToCSV() {
+    // Récupérer les données depuis localStorage
+    const questionsText = JSON.parse(localStorage.getItem('questionsText') || '[]');
+    const userMessages = []; // Nous allons collecter les messages de l'utilisateur
+    
+    // Récupérer tous les messages du chat pour extraire les réponses utilisateur
+    const chatMessages = document.querySelectorAll('.message.user');
+    chatMessages.forEach(msg => {
+        userMessages.push(msg.textContent.trim());
+    });
+    
+    // Créer le contenu CSV
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "Question,Réponse\n"; // En-tête
+    
+    // Ajouter chaque question et sa réponse correspondante
+    for (let i = 0; i < questionsText.length && i < userMessages.length; i++) {
+        const question = questionsText[i];
+        const answer = userMessages[i];
+        
+        // Échapper les guillemets et les retours à la ligne pour le CSV
+        const escapedQuestion = question ? `"${question.replace(/"/g, '""')}"` : '';
+        const escapedAnswer = answer ? `"${answer.replace(/"/g, '""')}"` : '';
+        
+        csvContent += `${escapedQuestion},${escapedAnswer}\n`;
+    }
+    
+    // Créer un lien pour télécharger le fichier
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', 'questions_reponses.csv');
+    document.body.appendChild(link);
+    
+    // Déclencher le téléchargement
+    link.click();
+    
+    // Supprimer le lien
+    document.body.removeChild(link);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     chatContainer = document.getElementById('chatMessages');
     questionInput = document.getElementById('questionInput');
@@ -309,4 +351,16 @@ document.addEventListener('DOMContentLoaded', () => {
     questionInput.focus();
 
     pdfViewer.style.display = 'none';
+    
+    // Ajouter un bouton d'export CSV dans l'interface
+    const exportButton = document.createElement('button');
+    exportButton.id = 'exportButton';
+    exportButton.textContent = 'Exporter en CSV';
+    exportButton.style.margin = '10px';
+    exportButton.style.padding = '8px 16px';
+    exportButton.addEventListener('click', exportToCSV);
+    
+    // Ajouter le bouton à côté du bouton d'envoi
+    const sendButtonContainer = sendButton.parentNode;
+    sendButtonContainer.appendChild(exportButton);
 });

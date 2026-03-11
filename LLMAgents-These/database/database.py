@@ -204,16 +204,45 @@ async def get_questions_by_ids(question_ids: list[str], conn) -> list[dict]:
         for row in rows
     ]
 
-async def get_chunks_for_document(document_id: str, conn):
-    """Récupère tous les chunks d'un document depuis la base de données."""
+async def get_chunk_by_id(chunk_id: int, conn) -> dict:
+    """
+    Récupère le chunk correspondant à l'id donné.
+    """
     async with conn.cursor() as cur:
         await cur.execute("""
-            SELECT chunk_id, content
-            FROM chunks
-            WHERE document_id = %s
-        """, (document_id,))
+                          SELECT c.chunk_id, c.content, c.num_page, c.position_in_page, c.metadata
+                          FROM chunks c
+                          WHERE c.chunk_id = %s""", (chunk_id,))
+        row = await cur.fetchone()
+        return {"chunk_id": row[0],
+                 "content": row[1],
+                 "num_page": row[2],
+                 "position_in_page": row[3],
+                 "metadata": row[4]}
 
+async def get_chunks_for_document(
+    document_id: str,
+    conn,
+    chunking_strategy_id: int = 7
+):
+    """Récupère tous les chunks d'un document depuis la base de données.
+    Filtre par chunking_strategy_id si fourni.
+    """
+    query = """
+        SELECT chunk_id, content
+        FROM chunks
+        WHERE document_id = %s
+    """
+    params = [document_id]
+
+    if chunking_strategy_id is not None:
+        query += " AND strategy_id = %s"
+        params.append(chunking_strategy_id)
+
+    async with conn.cursor() as cur:
+        await cur.execute(query, params)
         return await cur.fetchall()
+
 
 async def get_chunks_by_question_id(question_id: int, conn):
     """

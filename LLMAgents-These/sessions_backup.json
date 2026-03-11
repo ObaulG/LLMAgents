@@ -402,5 +402,315 @@
       "number_of_agents": 3,
       "server_shutdown_at": "2026-02-27T09:03:14.588695"
     }
+  },
+  {
+    "session_id": "cf4eaa04-4a61-45df-9489-d1174c4950af",
+    "document_id": "dbd5f14a9e6545880b0cd505583ea7d1fe1e8b3d",
+    "current_index": 0,
+    "completed": false,
+    "created_at": "2026-03-01T20:17:50.252325",
+    "time_elapsed_secs": 938,
+    "responses": [],
+    "questions_ids": [
+      249,
+      370,
+      737,
+      786,
+      115
+    ],
+    "questions_text": [
+      "Pourquoi le col de Teghime est-il considéré comme un lieu symbolique pour les Bastiais ?",
+      "Comment le mouvement de revitalisation culturelle corse, appelé 'Riacquistu', s'est-il manifesté dans les années 1970, notamment à travers la musique ?",
+      "En quoi le collège Simon-Jean Vinciguerra est-il considéré comme un 'monument vivant' selon le texte ?",
+      "Pourquoi la ville de Bastia a-t-elle pu ressentir un sentiment d'injustice envers Ajaccio en 1811 ?",
+      "Pourquoi peut-on dire que Sermanu est un symbole de résistance dans le contexte du chant corse ?"
+    ],
+    "pages": [
+      16,
+      31,
+      76,
+      82,
+      32
+    ],
+    "metadata": {
+      "llm_used": "mistral-7b",
+      "number_of_agents": 3,
+      "server_shutdown_at": "2026-03-01T20:33:29.245682"
+    }
+  },
+  {
+    "session_id": "8d516292-ac1d-4963-960c-61e0802b8530",
+    "document_id": "dbd5f14a9e6545880b0cd505583ea7d1fe1e8b3d",
+    "current_index": 2,
+    "completed": false,
+    "created_at": "2026-03-01T20:34:26.911383",
+    "time_elapsed_secs": 11725,
+    "responses": [
+      {
+        "question_id": 249,
+        "question_text": "Pourquoi le col de Teghime est-il considéré comme un lieu symbolique pour les Bastiais ?",
+        "user_answer": "parce que c'est la que le soleil se leve",
+        "date_sent": "2026-03-01T20:34:57.564730",
+        "evaluation": {
+          "score": 2,
+          "feedback": "Votre réponse ne correspond pas à la question posée. Le col de Teghime est un lieu symbolique pour les Bastiais en raison de sa position géographique et des vues qu'il offre, notamment la vision des « deux mers ». Il aurait été préférable de mentionner l'importance historique, culturelle ou géographique de ce lieu pour les Bastiais. N'hésitez pas à explorer des aspects comme la vue panoramique, la connexion géographique ou historique avec les deux régions (Est et Ouest) ou encore des références culturelles locales. N'oubliez pas de mentionner les deux mers.",
+          "cosine_similarity": 0.09,
+          "model": null
+        }
+      },
+      {
+        "question_id": 249,
+        "question_text": "Pourquoi le col de Teghime est-il considéré comme un lieu symbolique pour les Bastiais ?",
+        "user_answer": "Le col de Teghime est un lieu symbolique pour les Bastiais en raison de sa position géographique et des vues qu'il offre, notamment la vision des « deux mers ». Il aurait été préférable de mentionner l'importance historique, culturelle ou géographique de ce lieu pour les Bastiais. N'hésitez pas à explorer des aspects comme la vue panoramique, la connexion géographique ou historique avec les deux régions (Est et Ouest) ou encore des références culturelles locales. N'oubliez pas de mentionner les deux mers.",
+        "date_sent": "2026-03-01T20:35:48.241086",
+        "evaluation": {
+          "score": 8,
+          "feedback": "Votre réponse est globalement correcte et inclut des informations pertinentes sur la position géographique et les vues offertes par le col de Teghime. Vous avez bien mentionné l'idée des « deux mers » et la position géographique, ce qui est un bon point de départ. Cependant, pour enrichir votre réponse, il serait bénéfique d'inclure des détails sur la connexion géographique ou historique avec les deux régions (Est et Ouest) ou des références culturelles locales. N'oubliez pas de mentionner la division imaginaire de la Méditerranée en deux parties, dont la Tyrrhénienne. Cela renforcerait la symbolique culturelle ou historique spécifique aux Bastiais.",
+          "cosine_similarity": 0.82,
+          "model": null
+        }
+      },
+      {
+        "question_id": 370,
+        "question_text": "Comment le mouvement de revitalisation culturelle corse, appelé 'Riacquistu', s'est-il manifesté dans les années 1970, notamment à travers la musique ?",
+        "user_answer": "U riacquistu avia per uggettivu di riacquista a lingua. S'hè manifestatu incu parechji attori culturali chì anu tandu scrittu libri è soprattuttu à l'epica canzone",
+        "date_sent": "2026-03-01T20:42:42.702210",
+        "evaluation": {
+          "score": 7,
+          "feedback": "Votre réponse capture bien l'essence du mouvement 'Riacquistu' en évoquant la réappropriation de la langue et de la culture corse. Vous avez mentionné des éléments significatifs comme l'écriture de livres et l'émergence de l'épicane chanson, ce qui est un bon point de départ. Cependant, pour une réponse plus complète, il serait utile d'ajouter des détails sur le rôle de la musique polyphonique et du groupe 'Canta u populu corsu', ainsi que des événements culturels spécifiques comme la fête de Sant'Alesiu à Sermanu. N'oubliez pas de mentionner l'engagement de la jeunesse et le rejet de la négation de l'identité corse.",
+          "cosine_similarity": 0.69,
+          "model": null
+        }
+      },
+      {
+        "question_id": 737,
+        "question_text": "En quoi le collège Simon-Jean Vinciguerra est-il considéré comme un 'monument vivant' selon le texte ?",
+        "user_answer": "il est considere comme un monument vivant car c'est un personnage majeurs de la seconde guerre mondial (peut tu me repondre en corse",
+        "date_sent": "2026-03-01T20:44:57.857630",
+        "evaluation": {
+          "score": 2,
+          "feedback": "Votre réponse ne correspond pas à la question posée. Le collège Simon-Jean Vinciguerra n'a aucun lien avec la Seconde Guerre mondiale. Il est important de se concentrer sur les éléments historiques et culturels, comme son héritage lié au baroque et à l'histoire de l'éducation en Corse. Une réponse pertinente devrait s'appuyer sur les informations historiques et éducatives liées à son origine jésuite et son importance dans le paysage culturel local. N'oubliez pas de mentionner son origine jésuite et son importance dans le paysage culturel local.",
+          "cosine_similarity": 0.05,
+          "model": null
+        }
+      }
+    ],
+    "questions_ids": [
+      249,
+      370,
+      737,
+      786,
+      115
+    ],
+    "questions_text": [
+      "Pourquoi le col de Teghime est-il considéré comme un lieu symbolique pour les Bastiais ?",
+      "Comment le mouvement de revitalisation culturelle corse, appelé 'Riacquistu', s'est-il manifesté dans les années 1970, notamment à travers la musique ?",
+      "En quoi le collège Simon-Jean Vinciguerra est-il considéré comme un 'monument vivant' selon le texte ?",
+      "Pourquoi la ville de Bastia a-t-elle pu ressentir un sentiment d'injustice envers Ajaccio en 1811 ?",
+      "Pourquoi peut-on dire que Sermanu est un symbole de résistance dans le contexte du chant corse ?"
+    ],
+    "pages": [
+      16,
+      31,
+      76,
+      82,
+      32
+    ],
+    "metadata": {
+      "llm_used": "mistral-7b",
+      "number_of_agents": 3,
+      "server_shutdown_at": "2026-03-01T23:49:52.262046"
+    }
+  },
+  {
+    "session_id": "af8aa011-f1bb-4f7d-a19a-20993d63af01",
+    "document_id": "dbd5f14a9e6545880b0cd505583ea7d1fe1e8b3d",
+    "current_index": 1,
+    "completed": false,
+    "created_at": "2026-03-02T10:26:22.920075",
+    "time_elapsed_secs": 757,
+    "responses": [
+      {
+        "question_id": 249,
+        "question_text": "Pourquoi le col de Teghime est-il considéré comme un lieu symbolique pour les Bastiais ?",
+        "user_answer": "car le col divise en deux symboliquement la mer méditerranée",
+        "date_sent": "2026-03-02T10:29:43.967219",
+        "evaluation": {
+          "score": 7,
+          "feedback": "Votre réponse mentionne correctement que le col de Teghime joue un rôle symbolique dans la division de la Méditerranée, ce qui est une partie pertinente de la réponse attendue. Cependant, elle manque de détails sur le contexte local et le lien spécifique avec les Bastiais, ainsi que sur la notion des « deux mers » et du rôle du col comme passage est-ouest. Pour une réponse plus complète, il serait bon de préciser que ce col est aussi un passage stratégique et une référence visuelle pour les Bastiais, renforçant ainsi leur identité géographique et culturelle.",
+          "cosine_similarity": 0.7,
+          "model": null
+        }
+      },
+      {
+        "question_id": 370,
+        "question_text": "Comment le mouvement de revitalisation culturelle corse, appelé 'Riacquistu', s'est-il manifesté dans les années 1970, notamment à travers la musique ?",
+        "user_answer": "grâce au chant polyphonique et nottament a travers le groupe \"Sermanu\"",
+        "date_sent": "2026-03-02T10:32:23.080106",
+        "evaluation": {
+          "score": 6,
+          "feedback": "Votre réponse souligne avec pertinence l'importance du chant polyphonique et mentionne un aspect clé du mouvement 'Riacquistu' à travers la musique. Cependant, votre réponse manque de précision sur certains éléments essentiels de l'attente, comme le rejet de l'identité corse par une jeunesse engagée et l'exemple spécifique du groupe 'Canta u populu corsu'. Ces détails enrichissent la compréhension du contexte historique et culturel. Pour une réponse plus complète, il aurait été utile d'évoquer ces éléments pour montrer toute la dimension du mouvement dans les années 1970.",
+          "cosine_similarity": 0.6,
+          "model": null
+        }
+      }
+    ],
+    "questions_ids": [
+      249,
+      370,
+      737,
+      786,
+      115
+    ],
+    "questions_text": [
+      "Pourquoi le col de Teghime est-il considéré comme un lieu symbolique pour les Bastiais ?",
+      "Comment le mouvement de revitalisation culturelle corse, appelé 'Riacquistu', s'est-il manifesté dans les années 1970, notamment à travers la musique ?",
+      "En quoi le collège Simon-Jean Vinciguerra est-il considéré comme un 'monument vivant' selon le texte ?",
+      "Pourquoi la ville de Bastia a-t-elle pu ressentir un sentiment d'injustice envers Ajaccio en 1811 ?",
+      "Pourquoi peut-on dire que Sermanu est un symbole de résistance dans le contexte du chant corse ?"
+    ],
+    "pages": [
+      16,
+      31,
+      76,
+      82,
+      32
+    ],
+    "metadata": {
+      "llm_used": "mistral-7b",
+      "number_of_agents": 3,
+      "server_shutdown_at": "2026-03-02T10:39:00.063001"
+    }
+  },
+  {
+    "session_id": "c999b9ca-2c8f-4dc3-a808-550f34809a80",
+    "document_id": "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56",
+    "current_index": 0,
+    "completed": false,
+    "created_at": "2026-03-02T10:54:36.870539",
+    "time_elapsed_secs": 274,
+    "responses": [
+      {
+        "question_id": 2780,
+        "question_text": "Quel aspect de la culture coloniale est utilisé comme critère d'appréciation selon Nicolas Giudici ?",
+        "user_answer": "c'est l'expérience outre mer qui a pétrifié la culture coloniale",
+        "date_sent": "2026-03-02T10:56:34.926438",
+        "evaluation": {
+          "score": 6,
+          "feedback": "La réponse de l'utilisateur aborde un élément pertinent, à savoir l'expérience outre-mer, qui peut effectivement être liée à la culture coloniale. Cependant, elle ne correspond pas exactement à ce qui est attendu dans la question, qui semble demander une analyse ou une référence plus précise à un critère spécifique selon Nicolas Giudici. La réponse est partielle et manque de précision sur le critère d'appréciation exact mentionné par l'auteur. Il serait utile de fournir une référence plus claire ou une citation pour renforcer la pertinence.",
+          "cosine_similarity": 0.45,
+          "model": null
+        }
+      }
+    ],
+    "questions_ids": [
+      2780,
+      1224,
+      1506,
+      1525,
+      1757
+    ],
+    "questions_text": [
+      "Quel aspect de la culture coloniale est utilisé comme critère d'appréciation selon Nicolas Giudici ?",
+      "Quels sont les deux éléments naturels qui interagissent réciproquement selon le texte pour donner à la Corse une physionomie unique ?",
+      "Pourquoi la Corse est-elle considérée comme une \"île continentale\" selon le texte ?",
+      "Quelle est la caractéristique principale du pin laricio en Corse ?",
+      "Pourquoi la littoralisation peut-elle être considérée comme un phénomène aggravant les déséquilibres territoriaux en Corse ?"
+    ],
+    "pages": [
+      23,
+      6,
+      7,
+      7,
+      10
+    ],
+    "metadata": {
+      "llm_used": "mistral-7b",
+      "number_of_agents": 3,
+      "server_shutdown_at": "2026-03-02T10:59:11.193930"
+    }
+  },
+  {
+    "session_id": "68e66f25-9db7-47cd-af69-84db54d35698",
+    "document_id": "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56",
+    "current_index": 1,
+    "completed": false,
+    "created_at": "2026-03-02T11:01:49.864267",
+    "time_elapsed_secs": 2270,
+    "responses": [
+      {
+        "question_id": 2021,
+        "question_text": "Quels éléments du texte montrent que la Corse est envisagée comme une destination touristique et résidentielle ?",
+        "user_answer": "le projet ajaccien initié par Napoléon, ainsi que le développement héliotropique d'une corse touristique",
+        "date_sent": "2026-03-02T11:04:11.780111",
+        "evaluation": {
+          "score": 9,
+          "feedback": "La réponse de l'utilisateur est globalement correcte et couvre les éléments principaux mentionnés dans la réponse attendue. Elle mentionne bien le projet ajaccien et le développement héliotropique, qui sont effectivement des indices montrant que la Corse est perçue comme une destination touristique et résidentielle. Cependant, la réponse attendue précise explicitement que ces éléments sont liés à une Corse touristique et résidentielle, ce qui n'est pas formulé de manière aussi claire dans la réponse de l'utilisateur, bien que cela soit sous-entendu. Cela explique pourquoi la note est légèrement inférieure à 10.",
+          "cosine_similarity": 0.88,
+          "model": null
+        }
+      }
+    ],
+    "questions_ids": [
+      2021,
+      1224,
+      1506,
+      1525,
+      1757
+    ],
+    "questions_text": [
+      "Quels éléments du texte montrent que la Corse est envisagée comme une destination touristique et résidentielle ?",
+      "Quels sont les deux éléments naturels qui interagissent réciproquement selon le texte pour donner à la Corse une physionomie unique ?",
+      "Pourquoi la Corse est-elle considérée comme une \"île continentale\" selon le texte ?",
+      "Quelle est la caractéristique principale du pin laricio en Corse ?",
+      "Pourquoi la littoralisation peut-elle être considérée comme un phénomène aggravant les déséquilibres territoriaux en Corse ?"
+    ],
+    "pages": [
+      14,
+      6,
+      7,
+      7,
+      10
+    ],
+    "metadata": {
+      "llm_used": "mistral-7b",
+      "number_of_agents": 3,
+      "server_shutdown_at": "2026-03-02T11:39:39.900095"
+    }
+  },
+  {
+    "session_id": "10502051-e152-4b41-9bc8-01cec731ea97",
+    "document_id": "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56",
+    "current_index": 0,
+    "completed": false,
+    "created_at": "2026-03-03T14:30:30.199397",
+    "time_elapsed_secs": 5322,
+    "responses": [],
+    "questions_ids": [
+      2021,
+      1224,
+      1506,
+      1525,
+      1757
+    ],
+    "questions_text": [
+      "Quels éléments du texte montrent que la Corse est envisagée comme une destination touristique et résidentielle ?",
+      "Quels sont les deux éléments naturels qui interagissent réciproquement selon le texte pour donner à la Corse une physionomie unique ?",
+      "Pourquoi la Corse est-elle considérée comme une \"île continentale\" selon le texte ?",
+      "Quelle est la caractéristique principale du pin laricio en Corse ?",
+      "Pourquoi la littoralisation peut-elle être considérée comme un phénomène aggravant les déséquilibres territoriaux en Corse ?"
+    ],
+    "pages": [
+      14,
+      6,
+      7,
+      7,
+      10
+    ],
+    "metadata": {
+      "llm_used": "mistral-7b",
+      "number_of_agents": 3,
+      "server_shutdown_at": "2026-03-03T15:59:12.637690"
+    }
   }
 ]

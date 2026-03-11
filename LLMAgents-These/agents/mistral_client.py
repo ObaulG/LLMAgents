@@ -299,7 +299,6 @@ def get_mistral_client(async_mode: bool = False) -> mistralai.Mistral:
     
     return client
 
-
 def get_api_monitor() -> MistralAPIMonitor:
     """
     Retourne l'instance globale du moniteur API.

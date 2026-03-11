@@ -1,8 +1,12 @@
+import json
+import re
 from typing import Optional, List
 
 from atomic_agents import BaseIOSchema, AtomicAgent, AgentConfig
 from atomic_agents.context import SystemPromptGenerator, ChatHistory
-from .mistral_client import get_mistral_client
+from instructor import Mode
+
+from .instructor_factory import create_client
 
 class EvaluateRequestInput(BaseIOSchema):
     """
@@ -15,11 +19,10 @@ class EvaluateRequestInput(BaseIOSchema):
 
 class AgentEvaluationResult(BaseIOSchema):
     """
-    Contains the evaluation given by a LM to the answer. Also, with cos sim.
+    Contains the evaluation given by a LM to the answer.
     """
     score: int  # Note de 1 à 10
     feedback: str  # Commentaire sur la réponse
-    cosine_similarity: Optional[float]  # Similarité cosinus entre la question et la réponse
 
 class ListAgentEvaluationResult(BaseIOSchema):
     """
@@ -30,24 +33,53 @@ class ListAgentEvaluationResult(BaseIOSchema):
 
 evaluation_system_prompt_generator = SystemPromptGenerator(
     background=[
-        "Cet agent est spécialisé dans l'évaluation des réponses des utilisateurs à des questions de compréhension.",
-        "Il vérifie si la réponse de l'utilisateur correspond à la réponse attendue",
-
+        "Tu es un agent d’évaluation spécialisé dans l’analyse de réponses à des questions de compréhension.",
+        "Tu compares la réponse de l’utilisateur avec la réponse attendue."
     ],
     steps=[
-        "Analyser la question et la réponse attendue.",
-        "Comparer la réponse de l'utilisateur avec la réponse attendue.",
-        "Évaluer la pertinence de la réponse.",
-        "Attribuer une note de 1 à 10 (1 = complètement incorrect, 10 = complet).",
-        "Répondre à l'utilisateur de manière naturelle"
+        "Analyser précisément la question.",
+        "Identifier les éléments essentiels dans la réponse attendue.",
+        "Comparer avec la réponse de l’utilisateur.",
+        "Évaluer la pertinence et l’exactitude.",
+        "Déterminer une note entière entre 1 et 10."
     ],
     output_instructions=[
-        "La note doit être un entier entre 1 et 10.",
-        "Le commentaire doit être clair, constructif et en français.",
-        "L'évaluation doit être légère. Ne pas pénaliser si l'utilisateur donne une réponse cohérente."
-        "Ne pas pénaliser si l'utilisateur rajoute du contexte si cela est pertinent.",
-        "La réponse doit être rédigée. Pas de réponse en mots-clefs."
-        "Ne pas mentionner la note dans la réponse rédigée."
+        "Tu dois répondre UNIQUEMENT avec un objet JSON valide.",
+        "Ne produis aucun texte avant ou après le JSON.",
+        "Le JSON doit avoir EXACTEMENT cette structure :",
+        '{ "score": <entier entre 1 et 10>, "feedback": "<texte en français>" }',
+        "Le champ score doit être un entier compris entre 1 et 10.",
+        "Le champ feedback doit être un texte rédigé, clair, constructif et en français.",
+        "Ne jamais mentionner le mot 'score' ou la note chiffrée dans le feedback.",
+        "Ne pas ajouter d’autres champs.",
+        "Ne pas reformuler la question.",
+        "Ne pas expliquer ton raisonnement."
+    ],
+)
+
+evaluation_system_prompt_generator_bis = SystemPromptGenerator(
+    background=[
+        "Tu es un agent d’évaluation spécialisé dans l’analyse de réponses à des questions de compréhension.",
+        "Tu compares la réponse de l’utilisateur avec la réponse attendue."
+    ],
+    steps=[
+        "Analyser précisément la question.",
+        "Identifier les éléments essentiels dans la réponse attendue.",
+        "Comparer avec la réponse de l’utilisateur.",
+        "Évaluer la pertinence et l’exactitude.",
+        "Déterminer une note entière entre 1 et 10."
+    ],
+    output_instructions=[
+        "Tu dois répondre UNIQUEMENT avec un objet JSON valide dans un bloc ```json.",
+        "Ne produis aucun texte avant ou après le JSON.",
+        "Le JSON doit avoir EXACTEMENT cette structure :",
+        '{ "score": <entier entre 1 et 10>, "feedback": "<texte en français>" }',
+        "Le champ score doit être un entier compris entre 1 et 10.",
+        "Le champ feedback doit être un texte rédigé, clair, constructif et en français.",
+        "Ne jamais mentionner le mot 'score' ou la note chiffrée dans le feedback.",
+        "Ne pas ajouter d’autres champs.",
+        "Ne pas reformuler la question.",
+        "Ne pas expliquer ton raisonnement."
     ],
 )
 
@@ -74,8 +106,10 @@ final_evaluation_system_prompt_generator = SystemPromptGenerator(
     ],
 )
 
-def get_final_evaluator_agent(model: str = "mistral-medium"):
-    client = get_mistral_client()
+def get_final_evaluator_agent(model: str = "mistral-medium",
+                              provider: str = "mistral",
+                              async_mode: bool = False):
+    client = create_client(provider, async_mode)
     final_evaluation_agent = AtomicAgent[ListAgentEvaluationResult, AgentEvaluationResult](
         config=AgentConfig(
             client=client,
@@ -86,14 +120,61 @@ def get_final_evaluator_agent(model: str = "mistral-medium"):
     )
     return final_evaluation_agent
 
-def get_evaluator_agent(model: str = "mistral-medium"):
-    client = get_mistral_client(async_mode=True)
+def get_evaluator_agent(model: str = "mistral-medium",
+                              provider: str = "mistral",
+                              async_mode: bool = False,
+                              custom_system_prompt_generator=None):
+    system_prompt_generator = custom_system_prompt_generator if custom_system_prompt_generator else evaluation_system_prompt_generator
+    client = create_client(provider, model=None, async_mode=async_mode)
+    # Supprimer format json en cas d'erreur
     evaluation_agent = AtomicAgent[EvaluateRequestInput, AgentEvaluationResult](
         config=AgentConfig(
             client=client,
             model=model,
+            mode=Mode.JSON,
             history=ChatHistory(),
-            system_prompt_generator=evaluation_system_prompt_generator,
+            tools=[],
+            system_prompt_generator=system_prompt_generator,
+            model_api_parameters={"temperature": 0.05,},
         )
     )
     return evaluation_agent
+
+def get_evaluator_agent_local(model: str = "ministral-3:3b",
+                              provider: str = "ollama",
+                              async_mode: bool = False):
+    client = create_client(provider, async_mode)
+    evaluation_agent = AtomicAgent[EvaluateRequestInput, str](
+        config=AgentConfig(
+            client=client,
+            model=model,
+            mode=Mode.MD_JSON,
+            history=ChatHistory(),
+            tools=None,
+            system_prompt_generator=evaluation_system_prompt_generator_bis,
+            model_api_parameters={"temperature": 0.05},
+        )
+    )
+    return evaluation_agent
+
+async def run_raw(agent, input_data: EvaluateRequestInput) -> AgentEvaluationResult:
+    """
+    Effectué
+    """
+    raw_output = await agent.run_async(input_data)
+
+    # 1️⃣ Extraire bloc JSON si présent
+    match = re.search(r"```json\s*(.*?)\s*```", raw_output, re.DOTALL)
+    if match:
+        json_str = match.group(1)
+    else:
+        json_str = raw_output.strip()
+
+    # 2️⃣ Charger JSON
+    try:
+        data = json.loads(json_str)
+    except json.JSONDecodeError as e:
+        raise ValueError(f"Invalid JSON returned by model:\n{raw_output}") from e
+
+    # 3️⃣ Validation Pydantic
+    return AgentEvaluationResult.model_validate(data)

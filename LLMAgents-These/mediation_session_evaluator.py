@@ -81,11 +81,13 @@ class SessionEvaluationResult:
                  config: SessionEvaluationConfig,
                  session_status: SessionStatus,
                  total_evaluation_time: float,
-                 token_usage: Dict[str, int]):
+                 token_usage: Dict[str, int],
+                 model_execution_times: Dict[str, float]):
         self.config = config
         self.session_status = session_status
         self.total_evaluation_time = total_evaluation_time
         self.token_usage = token_usage
+        self.model_execution_times = model_execution_times
         self.timestamp = datetime.now().isoformat()
         
     def to_dict(self) -> Dict:
@@ -102,6 +104,7 @@ class SessionEvaluationResult:
             "document_id": self.session_status.document_id,
             "total_evaluation_time_seconds": self.total_evaluation_time,
             "token_usage": self.token_usage,
+            "model_execution_times": self.model_execution_times,
             "responses": [self._serialize_response(r) for r in self.session_status.responses],
             "timestamp": self.timestamp
         }
@@ -113,7 +116,7 @@ class SessionEvaluationResult:
             eval_data = {
                 "score": response.evaluation.score,
                 "feedback": response.evaluation.feedback,
-                "cosine_similarity": response.evaluation.cosine_similarity,
+                "cosine_similarity": 0,
                 "model": response.evaluation.model
             }
         
@@ -145,7 +148,7 @@ class MediationSessionEvaluator:
         
         # Liste des modèles disponibles
         self.available_models = {
-            "mistral": ["mistral-small-latest", "mistral-medium-latest", "mistral-large-latest"],
+            "mistral": ["mistral-small-latest", "mistral-medium", "mistral-large-2411"],
             "ministral": ["ministral-3b-latest", "ministral-8b-latest"]
         }
         
@@ -183,15 +186,18 @@ class MediationSessionEvaluator:
         
         return session_id
         
-    async def evaluate_session(self, session_id: str, config: SessionEvaluationConfig) -> SessionEvaluationResult:
+    async def evaluate_session(self, session_id: str, config: SessionEvaluationConfig, is_local: bool = True) -> SessionEvaluationResult:
         """Évalue une session complète avec la configuration donnée."""
         start_time = time.time()
         total_input_tokens = 0
         total_output_tokens = 0
+        model_execution_times = {}  # Track individual model execution times
         
         # Initialiser les évaluateurs pour cette configuration
-        evaluators = [get_evaluator_agent(model) for model in config.evaluator_models]
-        final_evaluator = get_final_evaluator_agent(config.final_evaluator_model) if config.with_final_evaluator else None
+        # TODO: bricolage avec is_local à corriger plus tard
+        provider = "ollama" if is_local else "mistral"
+        evaluators = [get_evaluator_agent(model, provider, async_mode=True) for model in config.evaluator_models]
+        final_evaluator = get_final_evaluator_agent(config.final_evaluator_model, provider, async_mode=True) if config.with_final_evaluator else None
         
         # Initialiser la liste des réponses
         responses = []
@@ -224,15 +230,29 @@ class MediationSessionEvaluator:
             # Évaluer avec tous les évaluateurs
             evaluations = []
             eval_start_time = time.time()
-            
-            # Appels asynchrones aux évaluateurs
-            coroutines = [
-                monitor_agent_call_async(evaluator, evaluation_input, "run_async")
-                for evaluator in evaluators
-            ]
-            
+
+            # Appels asynchrones aux évaluateurs avec timing individuel
+            coroutines = []
+            for i, evaluator in enumerate(evaluators):
+                model_name = config.evaluator_models[i]
+                start_model_time = time.time()
+
+                async def _evaluate_with_timing(evaluator, model_name, start_time, evaluation_input):
+                    logger.info(f"Modèle {model_name}...")
+                    result = await monitor_agent_call_async(evaluator, evaluation_input, "run_async")
+
+                    model_time = time.time() - start_time
+                    # Store the timing
+                    if model_name not in model_execution_times:
+                        model_execution_times[model_name] = 0.0
+                    model_execution_times[model_name] += model_time
+                    return result
+
+                coroutines.append(_evaluate_with_timing(evaluator, model_name, start_model_time, evaluation_input))
+
+            logger.info("Début de l'évaluation")
             eval_results = await asyncio.gather(*coroutines)
-            
+            logger.info("Evaluation terminée. Début du traitement des résultats")
             # Traiter les résultats
             for result in eval_results:
                 evaluation, token_count_result, output_tokens = result
@@ -254,11 +274,18 @@ class MediationSessionEvaluator:
                 total_input_tokens += token_count_result.total
                 total_output_tokens += output_tokens
                 
+                # Track final evaluator time
+                final_model_name = f"final_{config.final_evaluator_model}"
+                if final_model_name not in model_execution_times:
+                    model_execution_times[final_model_name] = 0.0
+                model_execution_times[final_model_name] += final_eval_time
+                
                 # Créer l'évaluation finale
                 evaluation_result = from_AgentEvaluationResult_to_EvaluationResult(final_evaluation)
                 evaluation_result.model = f"final_{config.final_evaluator_model}"
                 
             elif len(evaluations) == 1:
+                logger.info("Un seul évaluateur")
                 # Un seul évaluateur
                 evaluation_result = from_AgentEvaluationResult_to_EvaluationResult(evaluations[0])
                 evaluation_result.model = config.evaluator_models[0]
@@ -271,7 +298,6 @@ class MediationSessionEvaluator:
                 evaluation_result = EvaluationResult(
                     score=avg_score,
                     feedback=f"Moyenne de {len(evaluations)} évaluateurs: {feedbacks}",
-                    cosine_similarity=float(avg_cosine),
                     model="consolidated"
                 )
             
@@ -311,59 +337,73 @@ class MediationSessionEvaluator:
                 "total_input_tokens": total_input_tokens,
                 "total_output_tokens": total_output_tokens,
                 "total_tokens": total_input_tokens + total_output_tokens
-            }
+            },
+            model_execution_times=model_execution_times
         )
         
     async def run_comprehensive_evaluation(self) -> List[SessionEvaluationResult]:
         """Exécute une évaluation complète avec différentes configurations."""
-        
+
+        """
+                    SessionEvaluationConfig(
+                        evaluator_models=["ministral-3b-latest"],
+                        nb_evaluators=1,
+                        with_final_evaluator=False,
+                        final_evaluator_model="ministral-3b-latest"
+                    ),
+                    SessionEvaluationConfig(
+                        evaluator_models=["ministral-8b-latest"],
+                        nb_evaluators=1,
+                        with_final_evaluator=False,
+                        final_evaluator_model="ministral-3b-latest"
+                    ),
+                    SessionEvaluationConfig(
+                        evaluator_models=["mistral-small"],
+                        nb_evaluators=1,
+                        with_final_evaluator=False,
+                        final_evaluator_model="ministral-3b-latest"
+                    ),
+                    SessionEvaluationConfig(
+                        evaluator_models=["mistral-medium"],
+                        nb_evaluators=1,
+                        with_final_evaluator=False,
+                        final_evaluator_model="ministral-3b-latest"
+                    ),
+                    SessionEvaluationConfig(
+                        evaluator_models=["mistral-large-latest"],
+                        nb_evaluators=1,
+                        with_final_evaluator=False,
+                        final_evaluator_model="ministral-3b-latest"
+                    ),"""
         # Définir les configurations à tester
         configurations = [
-            # Configurations Mistral
+
             SessionEvaluationConfig(
-                evaluator_models=["mistral-small"], 
-                nb_evaluators=1,
-                with_final_evaluator=False
+                evaluator_models=["ministral-3b-latest" for _ in range(3)],
+                nb_evaluators=3,
+                with_final_evaluator=True,
+                final_evaluator_model="ministral-3b-latest"
             ),
             SessionEvaluationConfig(
-                evaluator_models=["mistral-medium", "mistral-medium", "mistral-medium"], 
+                evaluator_models=["ministral-3b-latest" for _ in range(3)],
                 nb_evaluators=3,
                 with_final_evaluator=True,
                 final_evaluator_model="mistral-large-latest"
             ),
             SessionEvaluationConfig(
-                evaluator_models=["mistral-large-latest" for _ in range(5)], 
-                nb_evaluators=5,
-                with_final_evaluator=True,
-                final_evaluator_model="mistral-large-latest"
-            ),
-            
-            # Configurations Ministral
-            SessionEvaluationConfig(
-                evaluator_models=["ministral-3b-latest"], 
-                nb_evaluators=1,
-                with_final_evaluator=False
-            ),
-            SessionEvaluationConfig(
-                evaluator_models=["ministral-3b-latest", "ministral-8b-latest", "ministral-3b-latest"], 
+                evaluator_models=["ministral-8b-latest" for _ in range(3)],
                 nb_evaluators=3,
                 with_final_evaluator=True,
-                final_evaluator_model="mistral-large-latest"
+                final_evaluator_model="ministral-8b-latest"
             ),
             SessionEvaluationConfig(
-                evaluator_models=["ministral-8b-latest" for _ in range(5)], 
-                nb_evaluators=5,
-                with_final_evaluator=True,
-                final_evaluator_model="mistral-large-latest"
-            ),
-            
-            # Configurations mixtes
-            SessionEvaluationConfig(
-                evaluator_models=["mistral-medium", "ministral-3b-latest", "mistral-small"], 
+                evaluator_models=["mistral-small", "mistral-small", "mistral-small"],
                 nb_evaluators=3,
                 with_final_evaluator=True,
-                final_evaluator_model="mistral-large-latest"
-            )
+                final_evaluator_model="mistral-small"
+            ),
+
+
         ]
         
         logger.info(f"Début de l'évaluation complète avec {len(configurations)} configurations...")
@@ -379,7 +419,7 @@ class MediationSessionEvaluator:
                 logger.info(f"Session créée: {session_id}")
                 
                 # Évaluer la session
-                result = await self.evaluate_session(session_id, config)
+                result = await self.evaluate_session(session_id, config, is_local=False)
                 results.append(result)
                 
                 logger.info(f"Évaluation terminée en {result.total_evaluation_time:.2f}s")
@@ -391,7 +431,58 @@ class MediationSessionEvaluator:
                 continue
         
         return results
-        
+
+    async def run_comprehensive_evaluation_local(self) -> List[SessionEvaluationResult]:
+        """Exécute une évaluation complète avec différentes configurations."""
+
+        # Définir les configurations à tester
+        configurations = [
+
+            SessionEvaluationConfig(
+                evaluator_models=["ministral-3:3b"],
+                nb_evaluators=1,
+                with_final_evaluator=False,
+                final_evaluator_model="ministral-3:3b"
+            ),
+            SessionEvaluationConfig(
+                evaluator_models=["cas/ministral-8b-instruct-2410_q4km"],
+                nb_evaluators=1,
+                with_final_evaluator=False,
+                final_evaluator_model="ministral-8b-latest"
+            ),
+            SessionEvaluationConfig(
+                evaluator_models=["llama3.1:8b"],
+                nb_evaluators=1,
+                with_final_evaluator=False,
+                final_evaluator_model="ministral-8b-latest"
+            ),
+        ]
+
+        logger.info(f"Début de l'évaluation complète avec {len(configurations)} configurations...")
+
+        results = []
+
+        for i, config in enumerate(configurations):
+            logger.info(f"\n=== Configuration {i + 1}/{len(configurations)}: {config.get_description()} ===")
+
+            try:
+                # Créer une nouvelle session pour cette configuration
+                session_id = await self.initialize_session()
+                logger.info(f"Session créée: {session_id}")
+
+                # Évaluer la session
+                result = await self.evaluate_session(session_id, config)
+                results.append(result)
+
+                logger.info(f"Évaluation terminée en {result.total_evaluation_time:.2f}s")
+                logger.info(f"Tokens utilisés: {result.token_usage['total_tokens']}")
+                logger.info(f"Score moyen: {self._calculate_average_score(result.session_status):.1f}")
+
+            except Exception as e:
+                logger.error(f"Erreur lors de l'évaluation avec {config.get_description()}: {str(e)}")
+                continue
+
+        return results
     def _calculate_average_score(self, session_status: SessionStatus) -> float:
         """Calcule le score moyen pour une session."""
         scores = []
@@ -408,6 +499,59 @@ class MediationSessionEvaluator:
             json.dump(results_dict, f, indent=2, ensure_ascii=False)
         
         logger.info(f"Résultats exportés dans {filename}")
+    
+    def export_results_to_csv(self, results: List[SessionEvaluationResult], filename: str = "mediation_session_results.csv") -> None:
+        """Exporte les résultats au format CSV avec questions et réponses de chaque modèle."""
+        import csv
+        
+        # Préparer les données pour le CSV
+        csv_data = []
+        
+        # Pour chaque configuration (modèle), ajouter les questions et réponses
+        for result in results:
+            config = result.config
+            session_status = result.session_status
+            
+            # Créer un nom de configuration lisible
+            config_name = config.get_description()
+            
+            # Pour chaque question/réponse dans la session
+            for i, response in enumerate(session_status.responses):
+                question_text = response.question_text
+                user_answer = response.user_answer
+                
+                # Ajouter une ligne avec la question et la réponse
+                csv_data.append({
+                    "Configuration": config_name,
+                    "Question": question_text,
+                    "Réponse": user_answer,
+                    "Score": response.evaluation.score if response.evaluation else "N/A",
+                    "Feedback": response.evaluation.feedback if response.evaluation else "N/A",
+                    "Modèle": response.evaluation.model if response.evaluation else "N/A"
+                })
+            
+            # Ajouter les temps d'exécution par modèle
+            for model_name, exec_time in result.model_execution_times.items():
+                csv_data.append({
+                    "Configuration": config_name,
+                    "Model": model_name,
+                    "Execution Time (s)": f"{exec_time:.3f}",
+                    "Type": "Model Timing"
+                })
+        
+        # Écrire dans le fichier CSV
+        with open(filename, "w", encoding="utf-8", newline='') as f:
+            if csv_data:
+                # Get all possible fieldnames from the data
+                all_fieldnames = set()
+                for row in csv_data:
+                    all_fieldnames.update(row.keys())
+                fieldnames = list(all_fieldnames)
+                writer = csv.DictWriter(f, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(csv_data)
+        
+        logger.info(f"Résultats exportés en CSV dans {filename}")
         
     def generate_comparison_report(self, results: List[SessionEvaluationResult]) -> str:
         """Génère un rapport comparatif des résultats."""
@@ -457,22 +601,51 @@ class MediationSessionEvaluator:
             
             report += "\n"
         
+        # Analyse des temps d'exécution par modèle
+        report += "## Analyse des temps d'exécution par modèle\n\n"
+
+        # Group by model and calculate statistics
+        model_timing_stats = {}
+        for result in results:
+            for model_name, exec_time in result.model_execution_times.items():
+                if model_name not in model_timing_stats:
+                    model_timing_stats[model_name] = []
+                model_timing_stats[model_name].append(exec_time)
+
+        # Generate timing table
+        report += "| Modèle | Temps moyen (s) | Temps min (s) | Temps max (s) | Écart-type |\n"
+        report += "|--------|-----------------|---------------|---------------|------------|\n"
+
+        for model_name in sorted(model_timing_stats.keys()):
+            times = model_timing_stats[model_name]
+            avg_time = sum(times) / len(times)
+            min_time = min(times)
+            max_time = max(times)
+            std_dev = (sum((t - avg_time) ** 2 for t in times) / len(times)) ** 0.5 if len(times) > 1 else 0
+
+            report += f"| {model_name} | {avg_time:.3f} | {min_time:.3f} | {max_time:.3f} | {std_dev:.3f} |\n"
+
+        report += "\n"
+
         # Analyse globale
         all_scores = [self._calculate_average_score(r.session_status) for r in results]
         all_times = [r.total_evaluation_time for r in results]
         all_tokens = [r.token_usage['total_tokens'] for r in results]
         
         report += "## Analyse globale\n"
-        report += f"- Score moyen global: {sum(all_scores) / len(all_scores):.1f}\n"
-        report += f"- Temps moyen: {sum(all_times) / len(all_times):.2f}s\n"
-        report += f"- Tokens moyens: {sum(all_tokens) / len(all_tokens):.0f}\n"
-        
+        report += f"- Score moyen global: {((sum(all_scores) / len(all_scores)) if all_scores else 0):.1f}\n"
+        report += f"- Temps moyen: {((sum(all_times) / len(all_times)) if all_times else 0):.2f}s\n"
+        report += f"- Tokens moyens: {(sum(all_tokens) / len(all_tokens) if all_tokens else 0):.0f}\n"
+
+        if results:
         # Meilleure configuration globale (meilleur compromis score/temps)
-        best_global = max(results, key=lambda x: self._calculate_average_score(x.session_status) / x.total_evaluation_time)
-        report += f"- Meilleure configuration globale: {best_global.config.get_description()}\n"
-        report += f"  - Score: {self._calculate_average_score(best_global.session_status):.1f}\n"
-        report += f"  - Temps: {best_global.total_evaluation_time:.2f}s\n"
-        report += f"  - Efficacité: {self._calculate_average_score(best_global.session_status) / best_global.total_evaluation_time:.3f} score/s\n"
+            best_global = max(results,
+                              key=lambda x: self._calculate_average_score(x.session_status) / x.total_evaluation_time,
+                              default=0)
+            report += f"- Meilleure configuration globale: {best_global.config.get_description()}\n"
+            report += f"  - Score: {self._calculate_average_score(best_global.session_status):.1f}\n"
+            report += f"  - Temps: {best_global.total_evaluation_time:.2f}s\n"
+            report += f"  - Efficacité: {self._calculate_average_score(best_global.session_status) / best_global.total_evaluation_time:.3f} score/s\n"
         
         return report
 
@@ -490,6 +663,7 @@ async def main():
         
         # Exporter les résultats
         evaluator.export_results_to_json(results)
+        evaluator.export_results_to_csv(results)  # Export CSV ajouté
         
         # Générer et afficher le rapport
         report = evaluator.generate_comparison_report(results)

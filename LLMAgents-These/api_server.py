@@ -156,9 +156,7 @@ evaluation_agent = get_evaluator_agent("mistral-small")
 final_evaluator = get_final_evaluator_agent("mistral-small")
 message_ev_agent = get_message_type_agent()
 session_manager = SessionManager()
-models_evaluator = ["ministral-3b-latest",
-                    "ministral-8b-latest",
-                    "mistral-small-latest"]
+models_evaluator = ["ministral-8b-latest"]
 
 # Contient les instances d'agent effectuant les évaluations pour chaque modèle
 # dans models_evaluator
@@ -246,8 +244,10 @@ def initialize_rag():
         print(f"\nERREUR lors de l'initialisation du RAG: {e}\n")
         raise
 
-def initialize_evaluators():
-    evaluators.extend([get_evaluator_agent(model) for model in models_evaluator])
+def initialize_evaluators(async_mode: bool = True):
+    evaluators.extend([get_evaluator_agent(model,
+                                           provider="mistral",
+                                           async_mode=async_mode) for model in models_evaluator])
 
 # === ENDPOINTS ===
 

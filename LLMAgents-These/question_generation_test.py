@@ -3,13 +3,15 @@ import asyncio
 import logging
 from typing import List, Dict, Optional
 
+import pandas as pd
+
 # Configuration du logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Import des fonctions existantes (à adapter selon ton projet)
-from agents.qa_agent import get_qa_agent, QuestionRequestInput, QuestionAnswerList
-from database import get_db_connection, save_question_to_db, get_questions_by_document_id, get_chunks_for_document
+from agents.qa_agent import get_qa_agent, QuestionRequestInput, QuestionAnswerList, QuestionAnswer
+from database import get_db_connection, save_question_to_db, get_chunk_by_id, get_questions_by_document_id, get_chunks_for_document
 
 # Constantes
 DOCUMENT_ID = "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56"
@@ -19,9 +21,27 @@ models_evaluator = ["ministral-3b-latest",
                     "ministral-8b-latest",
                     "mistral-small-latest",
                     "mistral-medium-latest",
-                    "mistral-large-2411",
-                    "mistral-large-latest"
-                    ]
+                    "mistral-large-latest"]
+
+async def generate_questions_on_chunk_multiple_models(
+    document_content: str,
+    num_questions: int = 3):
+
+    # 1. Initialiser l'agent de génération de questions
+    qa_agents = [get_qa_agent(model=model) for model in models_evaluator]
+
+    # 2. Générer les questions/réponses
+    input_schema = QuestionRequestInput(
+        message=f"Génère {num_questions} questions diversifiées sur le document.",
+        document=document_content
+    )
+    print("schema")
+    tasks = [asyncio.to_thread(agent.run, input_schema) for agent in qa_agents]
+    print("tasks")
+    responses = await asyncio.gather(*tasks, return_exceptions=True)
+    print("responses")
+
+    return responses
 
 async def generate_and_save_questions(
     document_content: str,
@@ -201,7 +221,48 @@ async def main():
     except Exception as e:
         logger.error(f"Erreur lors de l'exécution du script: {e}")
 
+async def test_no_save():
+    chunks = await get_chunks_for_document(document_id=DOCUMENT_ID,
+                                           conn=await get_db_connection(),
+                                           chunking_strategy_id=7)
+    chunk_id_test = "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-14"
+    document_id_test = "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56"
+
+    chunk = await get_chunk_by_id(chunk_id_test, await get_db_connection())
+
+    responses = await generate_questions_on_chunk_multiple_models(
+        document_content=chunk["content"],
+        num_questions=3)
+
+    print(responses)
+    data = []
+    for i, response in enumerate(responses):
+        # response est un QuestionAnswerList
+        print(type(response))
+        if not isinstance(response, QuestionAnswerList):
+            continue
+        print("adding new questions")
+        for qa in response.questions_answers:
+            if not isinstance(response, QuestionAnswer):
+                continue
+            # qa est un QuestionAnswer
+            data.append({
+                "model": models_evaluator[i],
+                "question": qa.question_text,
+                "answer": qa.answer_text,
+            })
+
+    data_for_pandas = {"model": [d["model"] for d in data],
+                       "question": [d["question"] for d in data],
+                       "answer": [d["answer"] for d in data]}
+    # 4. Créer un DataFrame et exporter en CSV
+    df = pd.DataFrame.from_dict(data, orient="index")
+    filename = f"questions_reponses_chunk_{chunk_id_test}.csv"
+    df.to_csv(filename, index=False, encoding="utf-8")
+
+    print(f"Export terminé : {filename}")
+
 
 if __name__ == "__main__":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    asyncio.run(main())
+    asyncio.run(test_no_save())
