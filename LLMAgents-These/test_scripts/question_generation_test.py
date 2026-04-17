@@ -5,17 +5,15 @@ from typing import List, Dict, Optional
 
 import pandas as pd
 
-# Configuration du logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Import des fonctions existantes (à adapter selon ton projet)
 from agents.qa_agent import get_qa_agent, QuestionRequestInput, QuestionAnswerList, QuestionAnswer
 from database import get_db_connection, save_question_to_db, get_chunk_by_id, get_questions_by_document_id, get_chunks_for_document
 
 # Constantes
 DOCUMENT_ID = "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56"
-DIFFICULTY_LEVEL = 3  # Niveau de difficulté par défaut
+DIFFICULTY_LEVEL = 3
 
 models_evaluator = ["ministral-3b-latest",
                     "ministral-8b-latest",
@@ -182,10 +180,13 @@ async def fetch_questions_from_document(
     logger.info(f"Nombre de questions récupérées: {len(questions)}")
     return questions
 
-async def main():
-
+async def generate_and_save_questions_entire_document(document_id=DOCUMENT_ID,
+                                                      nb_questions=3,
+                                                      chunking_strategy_id=7):
     try:
-        chunks = await get_chunks_for_document(document_id=DOCUMENT_ID, conn=await get_db_connection())
+        chunks = await get_chunks_for_document(document_id=DOCUMENT_ID,
+                                               conn=await get_db_connection(),
+                                               chunking_strategy_id=chunking_strategy_id)
         # [(chunkid, chunk_content),...]
         logger.info(f"{len(chunks)}Chunks reçus")
         logger.info("Génération des questions/réponses...")
@@ -193,16 +194,8 @@ async def main():
             saved_questions = await generate_and_save_questions_multiple_models(
                 document_content=chunk[1],
                 chunk_id=chunk[0],
-                num_questions=3)
+                num_questions=nb_questions)
         logger.info(f"Questions générées et sauvegardées: {len(saved_questions)}")
-
-        # 4. Récupérer les questions depuis la base de données
-        logger.info("Récupération des questions depuis la base de données...")
-        fetched_questions = await fetch_questions_from_document(
-            document_id=DOCUMENT_ID,
-            conn=await get_db_connection(),
-            status_filter="generated",
-        )
 
         # 5. Afficher les résultats
         logger.info("\n=== Questions générées et sauvegardées ===")
@@ -211,15 +204,18 @@ async def main():
             logger.info(f"Réponse: {q['answer']}")
             logger.info(f"Statut: {q['status']}\n")
 
-        logger.info("\n=== Questions récupérées depuis la base de données ===")
-        for q in fetched_questions:
-            logger.info(f"Question ID: {q['question_id']}")
-            logger.info(f"Question: {q['content']}")
-            logger.info(f"Statut: {q['status']}")
-            logger.info(f"Réponses: {[a['content'] for a in q['answers']]}\n")
-
     except Exception as e:
         logger.error(f"Erreur lors de l'exécution du script: {e}")
+
+async def main(document_ids: list[str],
+               nb_questions: int = 3,
+               chunking_strategy_id: int = 7,):
+
+    for doc_id in document_ids:
+        await generate_and_save_questions_entire_document(document_id=doc_id,
+                                                    nb_questions=nb_questions,
+                                                    chunking_strategy_id=chunking_strategy_id)
+
 
 async def test_no_save():
     chunks = await get_chunks_for_document(document_id=DOCUMENT_ID,
@@ -265,4 +261,9 @@ async def test_no_save():
 
 if __name__ == "__main__":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    asyncio.run(test_no_save())
+    document_ids = ["8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56",
+                    "dbd5f14a9e6545880b0cd505583ea7d1fe1e8b3d",
+                    "2f11a893316ef707028b1389f9dfbae717ea4f4e"]
+    asyncio.run(main(document_ids,
+                     nb_questions=3,
+                     chunking_strategy_id=7))

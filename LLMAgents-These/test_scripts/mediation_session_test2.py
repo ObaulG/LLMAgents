@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from database import (get_db_connection,
+from database.database import (get_db_connection,
                       get_questions_by_document_id,
                       get_question_by_id,
                       get_chunks_by_question_id,
@@ -45,6 +45,8 @@ async def simulate_cultural_mediation_session(
         #    include_answers=True,
         #    nb_limit=num_questions
         #)
+        # old values
+        #questions_ids = [370, 364, 519, 786, 115]
         questions_ids = [370, 364, 519, 786, 115]
         questions = [await get_question_by_id(conn, id) for id in questions_ids]
         if not questions:
@@ -79,7 +81,6 @@ async def simulate_cultural_mediation_session(
             user_answer = input("Votre réponse: ").strip()
 
             # Évaluer la réponse
-            # note: la réponse n'était même pas récupérée en fait...aya
             expected_answer = question['answers'][0]['content'] if question.get('answers') else "Réponse non disponible"
             evaluation_input = EvaluateRequestInput(
                 question=question['content'],
@@ -121,7 +122,6 @@ async def main():
     try:
         document_id = "dbd5f14a9e6545880b0cd505583ea7d1fe1e8b3d.pdf"
         conn = await get_db_connection()
-        await delete_questions_for_pages_1_to_12(conn, document_id)
         await conn.commit()
         await simulate_cultural_mediation_session(document_id, num_questions=5)
     except Exception as e:

@@ -46,7 +46,7 @@ class Summariser():
         chunk_summaries = []
 
         # retrieve the progress already done
-        output_file = "progress_summaries.json"
+        output_file = "../progress_summaries.json"
         if os.path.exists(output_file):
             with open(output_file, "r", encoding="utf-8") as f:
                 progress_data = json.load(f)

@@ -134,7 +134,7 @@ class MediationSessionEvaluator:
     
     def __init__(self):
         # Configuration du document à utiliser
-        self.document_id = "dbd5f14a9e6545880b0cd505583ea7d1fe1e8b3d"
+        self.document_id = "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56"
         self.question_ids = PREMADE_QUESTIONS_BY_DOCUMENT_ID[self.document_id]
         
         # Charger les réponses utilisateur
@@ -155,7 +155,7 @@ class MediationSessionEvaluator:
     def _load_user_answers(self) -> List[str]:
         """Charge les réponses utilisateur depuis le fichier."""
         try:
-            with open("reponses-test-lochi-mondu.txt", "r", encoding="utf-8") as f:
+            with open("../reponses-test-lochi-mondu.txt", "r", encoding="utf-8") as f:
                 answers = [line.strip() for line in f.readlines() if line.strip()]
             if len(answers) != len(self.question_ids):
                 logger.warning(f"Nombre de réponses ({len(answers)}) différent du nombre de questions ({len(self.question_ids)})")
@@ -343,40 +343,37 @@ class MediationSessionEvaluator:
         
     async def run_comprehensive_evaluation(self) -> List[SessionEvaluationResult]:
         """Exécute une évaluation complète avec différentes configurations."""
-
-        """
-                    SessionEvaluationConfig(
-                        evaluator_models=["ministral-3b-latest"],
-                        nb_evaluators=1,
-                        with_final_evaluator=False,
-                        final_evaluator_model="ministral-3b-latest"
-                    ),
-                    SessionEvaluationConfig(
-                        evaluator_models=["ministral-8b-latest"],
-                        nb_evaluators=1,
-                        with_final_evaluator=False,
-                        final_evaluator_model="ministral-3b-latest"
-                    ),
-                    SessionEvaluationConfig(
-                        evaluator_models=["mistral-small"],
-                        nb_evaluators=1,
-                        with_final_evaluator=False,
-                        final_evaluator_model="ministral-3b-latest"
-                    ),
-                    SessionEvaluationConfig(
-                        evaluator_models=["mistral-medium"],
-                        nb_evaluators=1,
-                        with_final_evaluator=False,
-                        final_evaluator_model="ministral-3b-latest"
-                    ),
-                    SessionEvaluationConfig(
-                        evaluator_models=["mistral-large-latest"],
-                        nb_evaluators=1,
-                        with_final_evaluator=False,
-                        final_evaluator_model="ministral-3b-latest"
-                    ),"""
-        # Définir les configurations à tester
         configurations = [
+            SessionEvaluationConfig(
+                evaluator_models=["ministral-3b-latest"],
+                nb_evaluators=1,
+                with_final_evaluator=False,
+                final_evaluator_model="ministral-3b-latest"
+            ),
+            SessionEvaluationConfig(
+                evaluator_models=["ministral-8b-latest"],
+                nb_evaluators=1,
+                with_final_evaluator=False,
+                final_evaluator_model="ministral-3b-latest"
+            ),
+            SessionEvaluationConfig(
+                evaluator_models=["mistral-small"],
+                nb_evaluators=1,
+                with_final_evaluator=False,
+                final_evaluator_model="ministral-3b-latest"
+            ),
+            SessionEvaluationConfig(
+                evaluator_models=["mistral-medium"],
+                nb_evaluators=1,
+                with_final_evaluator=False,
+                final_evaluator_model="ministral-3b-latest"
+            ),
+            SessionEvaluationConfig(
+                evaluator_models=["mistral-large-latest"],
+                nb_evaluators=1,
+                with_final_evaluator=False,
+                final_evaluator_model="ministral-3b-latest"
+            ),
 
             SessionEvaluationConfig(
                 evaluator_models=["ministral-3b-latest" for _ in range(3)],
@@ -384,24 +381,14 @@ class MediationSessionEvaluator:
                 with_final_evaluator=True,
                 final_evaluator_model="ministral-3b-latest"
             ),
-            SessionEvaluationConfig(
-                evaluator_models=["ministral-3b-latest" for _ in range(3)],
-                nb_evaluators=3,
-                with_final_evaluator=True,
-                final_evaluator_model="mistral-large-latest"
-            ),
+
             SessionEvaluationConfig(
                 evaluator_models=["ministral-8b-latest" for _ in range(3)],
                 nb_evaluators=3,
                 with_final_evaluator=True,
                 final_evaluator_model="ministral-8b-latest"
             ),
-            SessionEvaluationConfig(
-                evaluator_models=["mistral-small", "mistral-small", "mistral-small"],
-                nb_evaluators=3,
-                with_final_evaluator=True,
-                final_evaluator_model="mistral-small"
-            ),
+
 
 
         ]

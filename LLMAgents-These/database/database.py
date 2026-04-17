@@ -227,6 +227,9 @@ async def get_chunks_for_document(
 ):
     """Récupère tous les chunks d'un document depuis la base de données.
     Filtre par chunking_strategy_id si fourni.
+    Valeurs correspondantes de chunking_strategy_id :
+    1 - découpage initial en chunks de 800 tokens et overlap de 100 tokens
+    7 - découpage en chunks de 2700 caractères et overlap de 400 caractères
     """
     query = """
         SELECT chunk_id, content

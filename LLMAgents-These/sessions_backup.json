@@ -712,5 +712,37 @@
       "number_of_agents": 3,
       "server_shutdown_at": "2026-03-03T15:59:12.637690"
     }
+  },
+  {
+    "session_id": "85f7771b-e4d5-4b48-a6d0-557d74a219cb",
+    "document_id": "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56",
+    "current_index": 0,
+    "completed": false,
+    "created_at": "2026-04-15T11:28:41.752733",
+    "time_elapsed_secs": 14589,
+    "responses": [],
+    "questions_ids": [
+      9158,
+      9235,
+      9389,
+      10040
+    ],
+    "questions_text": [
+      "Pourquoi peut-on dire que le racisme évoqué dans le texte est à la fois normalisé et décomplexé en Corse ?",
+      "Pourquoi la lutte contre le système mafieux en Corse est-elle décrite comme plus difficile qu'en Sicile ? Expliquez en vous appuyant sur les différences structurelles entre les deux régions.",
+      "Pourquoi le football, malgré son histoire conflictuelle, reste-t-il un pilier identitaire pour les Corses selon le texte ? Citez deux éléments clés mentionnés dans le document qui illustrent cette affirmation.",
+      "Pourquoi la création du GR20 est-elle considérée comme emblématique dans la stratégie de diversification touristique de la Corse ?"
+    ],
+    "pages": [
+      43,
+      46,
+      53,
+      81
+    ],
+    "metadata": {
+      "llm_used": "mistral-7b",
+      "number_of_agents": 3,
+      "server_shutdown_at": "2026-04-15T15:31:51.667646"
+    }
   }
 ]

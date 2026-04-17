@@ -1,0 +1,731 @@
+8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56 7
+46/156
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-0 ---
+- Le paragraphe est illisible ou incompréhensible.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-1 ---
+- L'ouvrage a été achevé d'imprimer en août 2022.
+- L'impression a été réalisée par Printer Portuguesa.
+- L'ouvrage a été édité par les Éditions Actes Sud.
+- Le siège des Éditions Actes Sud se situe place Nina-Berberova, 13200, Arles.
+- L'ouvrage est copyrighté par Actes Sud en 2022.
+- Le site web des Éditions Actes Sud est www.actes-sud.fr.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-2 ---
+- L'ouvrage est dirigé par Didier Rey.
+- Les cartes sont réalisées par Alexandre Nicolas.
+- L'éditeur est Actes Sud.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-3 ---
+- Le paragraphe est illisible et ne contient aucune information exploitable.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-4 ---
+- Le chapitre 1 porte sur "Le Territoire" et est divisé en plusieurs sous-parties écrites par Joseph Martinetti.
+- La Corse est décrite comme une "île-montagne" en Méditerranée (p.10).
+- Les contraintes naturelles et historiques de la Corse sont analysées (p.12).
+- La maîtrise du territoire insulaire est abordée (p.14).
+- L'organisation spatiale de la Corse est questionnée (p.16).
+- La Corse est présentée comme une île à la fois menacée et protégée (p.18).
+- L'insularité de la Corse est analysée comme un atout ou un handicap (p.20).
+- Le chapitre 2 traite du "Poids de l'histoire" avec des contributions de Christophe Luzi, Sylvain Gregori et Caroline Parsi.
+- Le mythe paolien est comparé au mythe napoléonien (p.24).
+- Les liens entre la Corse et les colonies sont explorés (p.26).
+- Le banditisme en Corse est analysé (p.28).
+- L'évolution vers le gangstérisme est étudiée (p.30).
+- L'impact de la Première Guerre mondiale sur la Corse est détaillé (p.32).
+- L'impact de la Seconde Guerre mondiale sur la Corse est abordé (p.34).
+- Le chapitre 3, "Hommes et Société", est traité par Didier Rey, Ludovic Martel et Caroline Parsi.
+- La transition de la Corse d'une île d'émigrés à une île d'immigrés est analysée (p.38).
+- Les aléas démographiques de la Corse sont présentés (p.40).
+- Les enjeux du vieillissement en Corse sont discutés (p.42).
+- La société corse est décrite comme inégalitaire et paupérisée (p.44).
+- Les addictions et violences dans une société en crise sont abordées (p.46).
+- Les tendances mafieuses menaçant la société corse sont analysées (p.48).
+- Le chapitre 4, "La Culture", inclut des analyses d'Alain Di Meglio, Didier Rey, Ludovic Martel, Christophe Luzi et Lisa D’Orazio.
+- La langue corse et sa diversité géographique sont étudiées (p.52).
+- La tradition religieuse et l'immigration en Corse sont analysées (p.54).
+- Les passions sportives en Corse sont présentées (p.56).
+- L'évolution des passions sportives est détaillée (p.58).
+- La vitalité culturelle de la Corse est questionnée (p.60).
+- La Corse est décrite comme une île de médias (p.62).
+- Le chapitre 5, "La Politique", est traité par Didier Rey, Lorenzo Di Stefano et André Fazi.
+- Le système politique corse est décrit comme clanique et clientéliste (p.66).
+- La décomposition du système clanique et clientéliste est analysée (p.68).
+- La contestation du système par les communistes est abordée (p.70).
+- La contestation nationaliste en Corse est détaillée (p.72).
+- La recomposition du système politique corse est étudiée (p.74).
+- L'évolution institutionnelle de la Corse est présentée (p.76).
+- Le chapitre 6, "L'Économie", est traité par Christophe Storai et Ludovic Martel.
+- Le PAR (Plan d'Aménagement Rural) et ses inconséquences sont analysés (p.80).
+- L'omnipotence du tourisme en Corse est abordée (p.82).
+- Les "sports de nature" et leur équilibre entre attractivité et développement durable sont étudiés (p.84).
+- Les autres secteurs d'activité économique en Corse sont présentés (p.86).
+- Les enjeux économiques pour l'avenir de la Corse sont discutés (p.88).
+- Une bibliographie est incluse à partir de la page 90.
+- Les textes et la cartographie sont présentés à partir de la page 93.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-5 ---
+- La Corse est décrite comme un territoire où la montagne et la mer interagissent profondément.
+- Ces interactions entre montagne et mer influencent la nature et l'histoire de la Corse.
+- Ces caractéristiques donnent à la Corse une physionomie originale et grandiose.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-6 ---
+- La Corse est décrite comme une "île-montagne" en Méditerranée par Friedrich Ratzel en 1899.
+- Friedrich Ratzel a qualifié la Corse de "pays de montagnes dans la mer".
+- L'originalité de la Corse repose sur trois éléments : le fait montagneux, le fait insulaire et le fait méditerranéen.
+- La Corse est la plus accidentée des grandes îles de la Méditerranée.
+- Le Monte Cinto, point culminant de la Corse, atteint 2 706 mètres.
+- L'altitude moyenne de la Corse est de 568 mètres, contre 441 mètres pour la Sicile et 344 mètres pour la Sardaigne.
+- En Corse, la mer n'est jamais distante de plus de 40 kilomètres.
+- La montagne est omniprésente en Corse, limitant les espaces plans nécessaires aux grands aménagements.
+- L'agglomération ajaccienne, la plus peuplée, est installée sur les étroites plaines alluviales du Prunelli et de la Gravona.
+- La montagne corse est divisée en deux grands ensembles géologiques distincts.
+- Le cloisonnement de la montagne favorise l'existence de microrégions individualisées.
+- Les microrégions corses se construisent autour de vallées, comme la Cinarca ou le Niolo.
+- Ces microrégions jouent un rôle essentiel dans l'organisation des terroirs et la formation des identités locales.
+- Au Nord-Est, la Corse alpine (Cap Corse, Castagniccia) est constituée de schistes et de serpentines.
+- Le mont San Pedrone, dans la Corse alpine, culmine à 1 767 mètres.
+- Les massifs de la Corse alpine atteignent en moyenne entre 1 000 et 1 500 mètres d'altitude.
+- Les maisons traditionnelles de la Corse alpine ont des toits en *teghje* (lauze).
+- À l'ouest et au sud, la Corse cristalline domine avec une puissante arête faîtière.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-7 ---
+- Les maisons traditionnelles de la Corse cristalline sont en granite avec des toits en tuiles.
+- Paul Méjean a évoqué les habitations en granite dans ses notes sur la maison corse (1932).
+- La Corse est une île continentale proche de la terre ferme, contrairement aux îles océaniques.
+- La connectivité maritime en Méditerranée réduit l'isolement des îles comme la Corse.
+- Depuis la Corse, le continent et les îles de l'espace italique sont visibles.
+- La proximité géographique développe un sentiment de continuité insulaire et péninsulaire.
+- La Corse est méditerranéenne, mais son orographie et son insularité atténuent les contraintes climatiques.
+- La Corse est plus arrosée et possède de vastes espaces forestiers couvrant un quart de sa superficie.
+- Le pin laricio, présent entre 900 et 1 800 mètres d'altitude, est surnommé "le roi de la montagne corse".
+- Un maquis dense, composé de bruyère et de lentisque, caractérise la Corse et ses senteurs.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-8 ---
+- Le pin laricio, présent entre 900 et 1 800 mètres d'altitude, est surnommé "le roi de la montagne corse".
+- Un maquis dense, composé de bruyère et de lentisque, caractérise la Corse.
+- Julien Gracq décrit une "odeur puissante" typique de la Corse dans ses *Lettrines*.
+- Cette odeur, perçue près du port d'Ajaccio, est décrite comme "sèche, chaude et résineuse".
+- Cette odeur évoque des parfums rappelant l'Orient et "l'Arabie pétrée".
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-9 ---
+- La Corse est divisée en deux ensembles géologiques principaux : la Corse alpine et la Corse hercynienne.
+- La Corse alpine comprend des sédiments miocènes et éocènes, des nappes supérieures, des schistes lustrés, des formations ophiolitiques et des unités continentales.
+- La Corse hercynienne inclut des formations comme la dacite, la rhyolite, les andésites, les sédiments permo-carbonifères, ainsi que divers types de granite et de plutonisme.
+- Les falaises de Bonifacio sont un élément géologique notable de la Corse.
+- La carte géologique simplifiée de la Corse est basée sur les travaux de Pierre Simi (1992).
+- Alain Gauthier a publié *La Corse, deux montagnes dans la mer* en 1998.
+- Peregrine Horden et Nicholas Purcell ont étudié l'histoire méditerranéenne dans *The Corrupting Sea* (2000).
+- Joseph Martinetti a écrit sur le milieu naturel et l'économie de la Corse dans un ouvrage dirigé par Christine Bonneton (2006).
+- Pierre Simi a rédigé un *Précis de géographie physique, humaine, économique, régionale de la Corse* en 1981.
+- Les principales distances en Corse sont mesurées à partir du port de Bastia.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-10 ---
+- La Corse a une faible densité démographique avec seulement 39 habitants au kilomètre carré.
+- La densité démographique de la Corse est bien inférieure à celle de la région Provence-Alpes-Côte d'Azur (161 hab/km²), de la Catalogne (244 hab/km²) et de la Campanie en Italie (429 hab/km²).
+- La Corse reste l'une des régions les moins peuplées de Méditerranée malgré une croissance démographique récente due au solde migratoire.
+- La Corse possède de longs linéaires côtiers préservés de l'urbanisation (Sartenais, golfe de Porto, Filosorma).
+- Les espaces intérieurs de la Corse ont été largement désertifiés par un exode rural massif jusqu'aux années 2000.
+- La Corse est considérée comme un conservatoire d'une "méditerranéité originelle".
+- Raoul Blanchard décrivait les espaces littoraux de la Corse comme marqués par une impression d'abandon et de solitude.
+- La naturalité méditerranéenne de la Corse est aujourd'hui perçue comme un atout.
+- La Corse est devenue une destination touristique depuis la seconde moitié du XIXe siècle sous le concept d'« île de Beauté ".
+- La Corse est décrite comme un territoire méditerranéen authentique, riche en diversité de paysages.
+- Son patrimoine historique est moins riche que celui d'autres îles méditerranéennes comme la Sardaigne, selon Friedrich Ratzel.
+- La diversité paysagère de la Corse repose sur des étagements altitudinaux.
+- L'étage méditerranéen en Corse s'étend jusqu'à 400 mètres d'altitude.
+- On trouve en Corse des yeuseraies et des forêts de chênes verts, rares sur les rivages méditerranéens actuels.
+- La vallée du Fango, entre Porto et Calvi, abrite une forêt climacique méditerranéenne "inviolée".
+- Autour de Porto-Vecchio, les sols siliceux favorisent le développement de subéraies (chênes-lièges).
+- Le maquis, formation végétale emblématique de la Corse, associe arbres et arbustes comme les arbousiers et les bruyères arborescentes.
+- Les formes dégradées du maquis incluent la cistaie et les pelouses à asphodèles.
+- Ces territoires de basse altitude constituaient autrefois le domaine d'habitation et d'activités humaines.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-11 ---
+- Le maquis en Corse associe des arbres et arbustes comme les arbousiers (*albitru*) et les bruyères arborescentes (*a scopa*).
+- Les formes dégradées du maquis incluent la cistaie (*u mucchju*) et les pelouses à asphodèles (*u tarrabucciulu*).
+- Les territoires de basse altitude étaient autrefois utilisés pour l'hivernage des communautés agropastorales de l'intérieur.
+- La transhumance était particulièrement marquée dans les régions centrales de la montagne cristalline, comme le Niolo.
+- Raoul Blanchard a décrit la Corse comme "un pays neuf, un peu fruste, où l'action de la nature sur l'homme se fait énergiquement sentir" en 1915.
+- La densité démographique de la Corse est de 39 habitants/km².
+- La population de la Corse est passée de 275 000 en 2003 à 339 000 en 2020, soit une croissance de 23,3 %.
+- Malte a une densité démographique de 1 593 habitants/km² et une superficie de 315 km².
+- La population de Malte est passée de 400 000 à 502 000 entre 2003 et 2020, soit une croissance de 25,5 %.
+- La Crète a une densité de 85 habitants/km² et une superficie de 8 250 km².
+- La population de la Crète est passée de 598 000 à 634 000 entre 2003 et 2020, soit une croissance de 6,2 %.
+- Les Baléares ont une densité de 237 habitants/km² et une superficie de 5 014 km².
+- La population des Baléares est passée de 910 000 à 1 188 000 entre 2003 et 2020, soit une croissance de 30,4 %.
+- Chypre a une densité de 130 habitants/km² et une superficie de 9 251 km².
+- La population de Chypre est passée de 993 000 à 1 207 000 entre 2003 et 2020, soit une croissance de 21,5 %.
+- La Sardaigne a une densité de 67 habitants/km² et une superficie de 24 090 km².
+- La population de la Sardaigne est passée de 1 650 000 à 1 611 000 entre 2003 et 2020, soit une baisse de 2,4 %.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-12 ---
+- Les *Piaghji* sont des plaines littorales en Corse, souvent au cœur de conflits d'usage historiques.
+- L'étage méditerranéen et supraméditerranéen en Corse est marqué par des oliveraies jusqu'à 600 mètres, des châtaigneraies et des chênaies.
+- Les communautés rurales d'altitude moyenne se situent en Balagne ou dans la Rocca.
+- Les communautés rurales de plus haute altitude (entre 600 et 1 000 mètres) se trouvent dans l'Alta Rocca, le Venacais ou le Niolo.
+- Les espaces montagnards, subalpins et alpins sont utilisés comme estives.
+- Les forêts de pins laricio ou de hêtres laissent place, au-delà de 1 700 mètres, à une pelouse alpine composée de pozzines ou d'aulnes odorants.
+- Le plateau du Coscione est un exemple de zone alpine avec des buissons d'aulnes odorants.
+- L'étagement de la végétation en Corse est détaillé dans les travaux de Jacques Gamisans (2003).
+- Les cartes montrent l'évolution des densités démographiques en Corse en 1872, 1911 et 2017.
+- En 1872, les plus fortes concentrations démographiques se trouvaient dans les régions montagneuses comme la Castagniccia (100 habitants/km²).
+- Marcelle Conrad a écrit *Plantes et fleurs rencontrées. L'île pas à pas* (1993).
+- Jacques Gamisans est l'auteur de *La Végétation de la Corse* (2003).
+- Georges Ravis-Giordani a étudié les communautés villageoises du Niolo dans *Bergers corses* (2001).
+- Le déterminisme géographique en Corse est discuté en référence aux travaux de Lucien Febvre (*La Terre et l'Évolution humaine*, 1922).
+- Lucien Febvre remet en question l'influence fatale de la nature sur les sociétés humaines, s'opposant aux idées de Carl Ritter.
+- Le cadre naturel et la mise en valeur traditionnelle des terroirs sont des fondements de l'identité corse.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-13 ---
+- Lucien Febvre souligne le libre arbitre des sociétés humaines face aux lois naturelles, remettant en cause le déterminisme géographique de Carl Ritter.
+- En 1872, les plus fortes densités démographiques en Corse se situaient dans des régions montagneuses comme la Castagniccia (100 habitants/km²) ou le Haut-Taravo.
+- Une opposition s'est développée entre une zone littorale densément peuplée et un intérieur désertifié.
+- Un processus de littoralisation des hommes et des activités a marqué la Corse.
+- Les changements dans la répartition de la population montrent que la nature et le relief ne sont pas les seuls facteurs expliquant le sous-peuplement corse.
+- Les densités démographiques en Corse sont classées en trois catégories : 0-20 hab/km², 20-100 hab/km² et plus de 100 hab/km² (source : Insee, 2019).
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-14 ---
+- Le relief montagneux de la Corse constitue un obstacle majeur aux voies de communication.
+- La dorsale granitique de la Corse, orientée du nord-ouest vers le sud-est, compte plus de cent sommets dépassant 2 000 mètres d'altitude.
+- Les cols enneigés de la dorsale restent difficiles à franchir.
+- La Corse a une configuration archipélagique, formée "d'îles dans l'île".
+- Ces "îles dans l'île" correspondent aux *pieve* ecclésiastiques historiques.
+- Les *pieve* constituent l'unité de base du territoire corse.
+- La Corse présente deux grands types de paysages montagneux : la Corse granitique à l'ouest et au sud, et la Corse schisteuse au nord-est.
+- La Corse granitique offre des paysages alpins, tandis que la Corse schisteuse propose des paysages plus doux avec des sommets arrondis comme le massif du San Pedrone.
+- La ligne de crêtes de la Corse granitique structure la géographie insulaire.
+- Cette ligne oppose une "Corse de l'au-delà des monts" (Di qua da li monti ou Pumonti) à l'ouest à une "Corse de l'en deçà des monts" (Di là da li monti ou Cismonte) à l'est.
+- Les termes *Banda di Dentro* et *Banda di Fuori* reflètent une représentation italocentrée ancienne de la Corse.
+- La Corse orientale était considérée comme une partie du monde italien depuis l'Italie continentale.
+- La première carte manuscrite de la Corse par Cristoforo Buondelmonte détaille surtout les lieux de peuplement de la Corse orientale, laissant l'Ouest comme une *terra incognita*.
+- Au XIXe siècle, l'ingénieur Jean Reynaud opposait les "montagnes escarpées et sauvages de l'Ouest" à la "partie nord-orientale plus féconde et plus peuplée".
+- L'État a tenté de répondre aux défis du relief en mettant en place un réseau de routes carrossables au XIXe siècle.
+- Ce réseau comprenait des routes nationales (RN), des routes forestières, des routes départementales et des routes vicinales.
+- Un projet ferroviaire corso-sarde, imaginé par Antonio Conti sous le Second Empire, visait à relier l'Europe et l'Afrique.
+- Le premier réseau ferré corse, appelé *trinichellu*, a relié Bastia, Ajaccio, la Balagne et la Plaine orientale à la fin du XIXe siècle.
+- Le déclin de l'économie corse au début du XXe siècle a affecté le développement des infrastructures.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-15 ---
+- Le projet ferroviaire corso-sarde d'Antonio Conti, imaginé sous le Second Empire, visait à relier l'Europe et l'Afrique.
+- Le premier réseau ferré corse, appelé *trinichellu*, a été mis en place à la fin du XIXe siècle.
+- Le *trinichellu* reliait Bastia, Ajaccio, la Balagne et la Plaine orientale.
+- Le déclin économique de la Corse au début du XXe siècle et l'arrivée des véhicules individuels ont limité le développement du rail.
+- Le rail en Corse est aujourd'hui principalement utilisé pour des activités touristiques.
+- La question des déplacements intérieurs s'est intensifiée dans les années 1980 avec la création d'institutions et d'administrations régionales.
+- En 1993, la collectivité territoriale de Corse s'est substituée à l'État pour la gestion des transports.
+- En 2014, les routes nationales (RN) sont devenues des routes territoriales (RT) avec un nouveau logo.
+- L'extension urbaine de Bastia, Ajaccio et Calvi-Île-Rousse, ainsi que l'implantation de l'université à Corte, ont relancé l'intérêt pour les chemins de fer corses (CFC).
+- Dans les années 2000, le réseau ferroviaire de 232 kilomètres a bénéficié d'une modernisation notable.
+- Les temps de déplacement en train restent longs, ce qui ne remet pas en cause la domination des transports routiers en Corse.
+- La voiture reste le moyen de transport dominant en Corse.
+- Les temps de déplacement routiers en Corse sont plus longs que sur le continent ou en Sardaigne.
+- Parcourir 100 kilomètres en Corse peut prendre jusqu'à deux heures.
+- Cette lenteur s'explique par des facteurs naturels, culturels et politiques.
+- La gestion localiste des micro-territoires est ancrée dans les imaginaires collectifs corses.
+- Les intérêts locaux priment souvent sur l'intérêt général, paralysant les grands projets d'infrastructures régionales.
+- Des progrès ont été réalisés, comme la construction de vingt routes territoriales entre Ajaccio et Bastia, incluant les tunnels de San Quilico et de Bocognano.
+- Une portion autoroutière a été mise en service au sud de Bastia.
+- Volney a décrit la Corse comme "un entassement de rochers" avec des chaînes de montagnes dominant l'le du midi au nord (1820).
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-16 ---
+- Le volontarisme politique pour développer des infrastructures régionales en Corse est souvent bloqué par la priorité donnée aux intérêts locaux plutôt qu'à l'intérêt général.
+- Des progrès ont été réalisés, comme la construction de vingt routes territoriales entre Ajaccio et Bastia.
+- Les tunnels de San Quilico et de Bocognano font partie des améliorations routières en Corse.
+- Une courte portion autoroutière a été mise en service au sud de Bastia.
+- Les infrastructures routières en Corse restent bien moins développées que celles qui traversent les Alpes ou l'Apennin en Italie et en France.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-17 ---
+- Les cartes présentent les temps de trajet moyens en voiture particulière à partir de plusieurs communes de Corse.
+- Les comptages routiers en Corse sont représentés selon les données de l'Observatoire régional des transports (2014).
+- Le trafic moyen journalier annuel en Corse est mesuré en milliers de véhicules par jour.
+- Félix Ciccolini a étudié la mise en place du réseau routier corse au XIXe siècle et sa transformation au XXe siècle dans l'*Atlas ethno-historique de la Corse* (2004).
+- Arnaud Huyssen et Rémi Malleville ont analysé les trajets courts pour se rendre au travail en Corse, soulignant la domination de la voiture (Insee Flash Corse 58, 2021).
+- Pierre Simi a écrit *L'Adaptation humaine dans la dépression centrale de la Corse* (1966).
+- Les temps de trajet en voiture en Corse varient de moins d'une heure à plus de quatre heures selon les communes.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-18 ---
+- L'organisation spatiale de la Corse est influencée par un relief cloisonné et des temps de déplacement longs.
+- Les résidents corses ont souvent recours aux services des métropoles continentales méditerranéennes et de Paris.
+- L'histoire géopolitique de la Corse a rendu difficile la constitution d'un réseau de villes cohérent.
+- Yeramiehl Kolodny (1962) a analysé les stratégies des présides génois pour affirmer leur prééminence en Corse.
+- La Corse est divisée en quatre ensembles majeurs autonomes : Grand Ajaccio, Grand Bastia, bipôle balanin (Calvi et L’Île-Rousse), et pôle Sud-Est (Porto-Vecchio).
+- Ces quatre ensembles représentent 78 % de la population de l'île.
+- Le Grand Ajaccio compte 113 612 habitants (Insee, 2017).
+- Le Grand Bastia compte 108 967 habitants (Insee, 2017).
+- Le bipôle balanin (Calvi et L’Île-Rousse) compte 20 760 habitants.
+- Le pôle Sud-Est (Porto-Vecchio) compte 23 069 habitants.
+- L'Insee définit les aires d'attraction urbaine comme un pôle urbain entouré de communes dont au moins 15 % des actifs travaillent dans la commune-pôle.
+- La carte des aires d'attraction urbaine minimise certaines réalités géographiques, comme la séparation de Bonifacio de l'aire porto-vecchiaise.
+- Sartène et Propriano sont séparées dans les statistiques, bien qu'elles forment un ensemble géographique cohérent.
+- L'ensemble Aléria-Ghisonaccia-Prunelli-di-Fiumorbo, bien qu'ignoré par les statistiques, forme une réelle aire urbaine.
+- Corte et Propriano sont également des aires urbaines significatives.
+- Les quatre aires de chalandise en Corse correspondent aux zones desservies par les quatre aéroports de l'île.
+- Une logique centrifuge caractérise l'espace insulaire, basée sur la rivalité entre les quatre pôles principaux (Ajaccio, Bastia, Calvi-L’Île-Rousse, Porto-Vecchio).
+- Trois autres ensembles moins autonomes existent : Corte, Sartène-Propriano et le centre de la Plaine orientale (Ghisonaccia).
+- Une logique centripète se cristallise autour de l'axe intérieur reliant Ajaccio, Corte et Bastia.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-19 ---
+- Une logique centripète en Corse se concentre sur l'axe intérieur reliant Ajaccio, Corte et Bastia.
+- Ajaccio, Corte et Bastia partagent les fonctions décisionnelles et sont desservies par la route territoriale RT20.
+- L'axe tripolitain (Ajaccio-Corte-Bastia) repose sur une volonté politique régionale visant à y concentrer les fonctions publiques supérieures (universités, administrations régionales, services hospitaliers).
+- La Corse est divisée entre l'Au-délà-des-Monts (aire ajaccienne) et l'En-deçà-des-Monts (aire bastiaise).
+- Les quatre ensembles majeurs de l'archipel corse sont représentés : pôles urbains régionaux, autres pôles urbains, zones de forte périurbanisation et aires d'attraction des pôles mineurs.
+- Les espaces plans (moins de 200 mètres d'altitude) sont appelés "plages de l'intérieur" et incluent le système Golo-Tavignano.
+- Les axes majeurs des dynamiques insulaires incluent des routes européennes et internes.
+- Les points de passage obligés vers les "continents" (France continentale, Italie, Toscane, Sardaigne) sont indiqués sur la carte.
+- La source de la carte est issue des travaux d'A. Laclau et J. Martinetti dans l'*Atlas ethnohistorique* (CTHS, 2004).
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-20 ---
+- L'organisation spatiale de la Corse évite de départager Ajaccio, Bastia et Corte, chacune revendiquant le titre de "capitale de la Corse".
+- La Corse n'a jamais réussi à imposer une centralité métropolitaine claire.
+- Trois projets géohistoriques inaboutis expliquent cette situation : le projet bastiais (prééminence économique et culturelle vers l'Italie), le projet cortenais (symbolique de l'indépendance paolienne) et le projet ajaccien (associé à Napoléon et au développement touristique).
+- Le projet bastiais met en avant une ville ouverte sur le monde italien.
+- Le projet cortenais symbolise une indépendance liée à Pascal Paoli et a été réactivé par l'idéologie nationaliste depuis les années 1960.
+- Le projet ajaccien est associé à Napoléon Bonaparte et au développement touristique et résidentiel de la Corse.
+- Un axe interne et tripolitain (Ajaccio-Corte-Bastia) structure la géographie de la Corse.
+- Cet axe est concurrencé par un axe européen privilégié par les institutions européennes dans les années 1980, visant à renforcer les relations entre la Toscane, la Corse et la Sardaigne.
+- Les dynamiques démographiques en Corse sont vigoureuses, notamment avec l'émergence de nouveaux pôles productifs comme Borgo ou Moriani en Plaine orientale.
+- Les autorités régionales craignent une externalisation trop forte de la Corse face à des territoires italiens économiquement plus puissants et diversifiés.
+- La Corse est décrite comme une "île-ville" selon l'expression de Benoît Bunnik (2014).
+- Les données démographiques de 2007 et 2017 montrent une croissance variable selon les pôles urbains.
+- L'aire de Bastia compte 108 967 habitants en 2017, avec une densité de 1 082 habitants/km².
+- L'aire d'Ajaccio compte 70 659 habitants dans le pôle urbain et 95 042 avec sa couronne en 2017.
+- L'aire de Porto-Vecchio compte 23 069 habitants en 2017.
+- L'aire de Calvi-L’Île-Rousse compte 11 972 habitants dans le pôle urbain et 15 643 avec sa couronne en 2017.
+- L'aire de Propriano compte 7 224 habitants dans le pôle urbain et 11 293 avec sa couronne en 2017.
+- Les espaces hors des villes en Corse comptent 104 483 habitants en 2017.
+- La Corse totale compte 334 938 habitants en 2017, avec une densité de 38 habitants/km².
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-21 ---
+- La Corse est décrite comme une "île-ville", selon l'expression de Benoît Bunnik (2014).
+- L'axe européen Bastia-Bonifacio vise à renforcer les relations tyrrhéniennes mais suscite une grande prudence chez les autorités corses.
+- Les autorités corses craignent une externalisation trop forte face à des territoires italiens économiquement plus puissants et diversifiés.
+- La Corse est divisée en sept aires d'attraction des villes.
+- Les aires d'attraction sont classées en trois catégories : plus de 50 000 habitants, moins de 50 000 habitants, et couronnes périurbaines.
+- La question de la capitale de la Corse reste débattue : Bastia est considérée comme la capitale en deçà des monts, tandis qu'Ajaccio l'est au-delà des monts.
+- Le baron de Beaumont a décrit en 1822 le partage des honneurs de suzeraineté entre Bastia et Ajaccio.
+- Les données sur les passagers aériens montrent l'importance des aéroports de Poretta et Figari.
+- Benoît Bunnik a analysé les territoires ruraux de marge en Corse dans *La France des marges* (2017).
+- Yeramiehl Kolodny a étudié la géographie urbaine de la Corse dans un ouvrage publié en 1962.
+- Joseph Martinetti a proposé une lecture géopolitique des relations entre la Corse et la Toscane dans *Études corses* (2014).
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-22 ---
+- La Corse est surnommée "l'île de Beauté" depuis la seconde moitié du XIXe siècle.
+- Francis Pomponi souligne que cette image s'est développée sous la IIIe République.
+- Les récits de voyage et impressions littéraires ont mis en valeur la nature violente et pittoresque de la Corse.
+- La Corse est perçue comme "le sanctuaire d'une Méditerranée originelle".
+- Cette représentation est devenue un "label identitaire et touristique".
+- À partir des années 1950, la Corse a dû concilier tourisme de masse et préservation des équilibres paysagers traditionnels.
+- La politique de protection environnementale n'a que partiellement résolu les tensions entre développement et préservation.
+- La rente foncière, surnommée "l'or bleu de la Corse", alimente les appétits spéculatifs.
+- En 1960, le projet Debré proposait la création d'un centre d'expérimentation atomique dans les anciennes mines de l'Argentella, entre Calvi et Galéria.
+- La contestation du projet Debré a été menée par des élus, des radicaux de gauche et des communistes.
+- La remise en cause du projet a pris une dimension identitaire et régionaliste.
+- Le plasticage des pylônes électriques de la ligne carbo-sarde en 1963 a marqué le début de l'usage de la violence pour des motifs environnementaux.
+- En 1973, l'Action régionaliste corse (ARC), dirigée par les frères Simeoni, a mené la contestation contre le déversement des boues rouges par la société italienne Montedison au large du cap Corse.
+- Le nationalisme et l'écologie en Corse dénoncent une "main basse" sur l'île et s'opposent à la bétonisation et à la baléarisation du littoral.
+- La violence a favorisé le développement d'une "économie prédatrice" basée sur le partage du linéaire côtier entre bandes armées rivales.
+- Hélène Constanty évoque une "razzia sur la Corse" pour décrire la mainmise des intérêts politiques et mafieux sur le secteur résidentiel et touristique.
+- Les 1 000 kilomètres de côtes corses sont victimes d'un mitage coûteux et inesthétique des espaces naturels.
+- Hélène Constanty pose la question : "Combien de temps encore l'île de Beauté résistera-t-elle à la spéculation immobilière ?" dans *Razzia sur la Corse* (2012).
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-23 ---
+- Une habitation sur trois en Corse est une résidence secondaire.
+- La croissance démographique et l'afflux estival de touristes amplifient les nuisances liées à l'hyperconsommation.
+- Une "Corse moche" s'est développée en périphérie des centres urbains et le long des axes routiers.
+- La reconquête des "espaces en friche" représente un défi pour les collectivités locales.
+- Le statut décentralisé de la collectivité de Corse n'a pas permis de mettre en place une politique efficace de traitement des déchets.
+- Le rejet d'un incinérateur régional dans les années 2010 illustre les difficultés des élus locaux à établir une politique durable de gestion des déchets.
+- Dès les années 1960, une politique de protection de la nature a été mise en place en Corse.
+- François Giacobbi, président du conseil général, a facilité la création du Parc naturel régional de la Corse (PNRC) en 1972.
+- Des scientifiques de renom ont participé à l'inventaire du patrimoine naturel de la Corse.
+- Nicolas Alfonsi, député et maire de Piana, a présidé en 1976 le conseil des rivages de la Corse.
+- Le Conservatoire du littoral a acquis 20 % du linéaire littoral corse grâce à l'action de Nicolas Alfonsi.
+- Des zones de protection ont été établies, comme le parc naturel marin du Cap Corse et de l'Agriate.
+- Le Conservatoire du littoral possède des terrains protégés en Corse.
+- Des réserves naturelles et des sites classés au titre de la directive Habitats existent en Corse.
+- Des aires spécialement protégées d'importance méditerranéenne sont présentes en Corse.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-24 ---
+- Les villes principales de Corse sont marquées sur les cartes touristiques.
+- Les régions de forte pression touristique sont identifiées en Corse.
+- Les infrastructures touristiques les plus médiatisées sont indiquées.
+- Les fortes concentrations d'attentats depuis 1970 sont signalées sur la carte.
+- Le Parc naturel régional de Corse est représenté.
+- Les réserves naturelles de Corse sont localisées.
+- Les principaux sites du Conservatoire du littoral sont indiqués.
+- Les sites remarquables de Corse sont mis en avant.
+- La mise en tourisme de la Corse inclut des sites comme Finocchiarola, Fango, Scandola, Girolata, Rosso, Spelunca, les Sanguinaires, Capo di Muro, Campomoro, Palombaggia, Rondinara, Roccapina, Ventilegne, le domaine de Sperone, Bonifacio, les îles Lavezzi et Cavallo.
+- La réserve naturelle des Bouches de Bonifacio, avec 80 000 hectares, est la plus vaste de France métropolitaine.
+- En 2020, le site de Scandola, classé au patrimoine mondial de l'humanité par l'UNESCO en 1983, a été déclassé par le Conseil de l'Europe.
+- Ce déclassement révèle une application laxiste des règles de fréquentation du site, nuisible aux espèces protégées.
+- Les autorités locales ont du mal à résister aux pressions spéculatives.
+- La population de balbuzards pêcheurs, un rapace protégé et menacé en Méditerranée, a chuté dans la réserve naturelle de Scandola.
+- En 1974, il y avait deux couples de balbuzards en Corse, passant à huit dans les années 1990, avant de décliner.
+- Une étude franco-italienne, impliquant des chercheurs du CNRS et de l'université de Montpellier, montre que les activités touristiques perturbent les balbuzards en période de reproduction.
+- Le trafic des bateaux est trois fois plus important dans la réserve de Scandola que hors de celle-ci, avec plus de 400 bateaux par jour sous les nids en période estivale.
+- Les mâles balbuzards apportent moins de proies à la nichée en raison des perturbations.
+- Les femelles restent plus longtemps en alerte loin du nid, ce qui stresse les poussins.
+- Le nombre de poussins à l'envol a chuté depuis 2010 en raison du stress causé par les perturbations.
+- Une étude publiée le 17 décembre 2018 dans *Animal Conservation* souligne la nécessité de modifier la gestion du tourisme dans la réserve marine de Scandola.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-25 ---
+- Une étude publiée le 17 décembre 2018 par P. Dacher, O. Durez et D. Grémillet (CNRS, Montpellier) montre l'impact du tourisme sur les balbuzards pêcheurs en Corse.
+- L'étude a été publiée dans la revue *Animal Conservation* et a fait sa couverture.
+- Elle met en évidence la nécessité de modifier la gestion du tourisme dans la réserve marine protégée de Scandola.
+- La protection naturelle de la Corse est menacée par la surfréquentation touristique.
+- L'exemple de la réserve de Scandola illustre comment le passage trop fréquent des visiteurs menace la reproduction du balbuzard pécheur.
+- Hélène Constanty a analysé les enjeux de la spéculation en Corse dans *Razzia sur la Corse. Des plasticages à la folie spéculative* (2012).
+- Marie-Anne Lefèvre a étudié les liens entre écologie et géopolitique en Corse dans *Hérodote* (2001).
+- Francis Pomponi a exploré l'image de la Corse et des Corses sous la IIIe République dans *Études corses* (1997).
+- Paul Silvani a enquêté sur "l'or bleu de la Corse" dans un ouvrage publié en 1998.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-26 ---
+- La Corse est géographiquement plus proche des côtes toscanes et de la Sardaigne que des côtes méditerranéennes françaises.
+- Cette situation explique une relative surinsularisation de la Corse due à son appartenance à la France.
+- Au XIXe siècle, les insulaires corses devaient doubler leur temps de navigation pour rejoindre le continent français.
+- Le principe d'un traitement national égalitaire des territoires a permis une reconnaissance précoce du handicap d'insularité.
+- Le concept de service public pour faciliter la desserte maritime de la Corse s'est affirmé sous la monarchie de Juillet.
+- Emmanuel Arène, député républicain de la Corse (1856-1908), a rappelé à l'État français ses obligations pour atténuer les contraintes de l'insularité.
+- Après la Seconde Guerre mondiale, la nécessité d'ancrer la Corse au territoire national est devenue plus pressante.
+- Eugène Mannoni a publié un article intitulé "La Corse, un département à la mer" dans *Le Monde* les 4 et 5 janvier 1960.
+- En réponse aux événements d'Aléria en 1975, l'État a défini le principe de continuité territoriale.
+- La Compagnie générale transmediterranéenne a été nationalisée en 1976 et est devenue la Société nationale Corse-Méditerranée (SNCM).
+- La mission de la SNCM était d'aligner le coût du transport maritime sur celui du rail pratiqué par la SNCF.
+- La SNCM a bénéficié d'aides publiques selon l'esprit du "service public à la française".
+- Avec l'affirmation du discours régionaliste, le concept de handicap insulaire s'est associé à une demande d'autonomie et de gestion locale des transports.
+- La décentralisation et le statut particulier de la Corse en 1981 ont conduit à la création de l'Office des transports en 1982.
+- L'Office des transports est un établissement public régional qui fixe les modalités de la desserte aérienne et maritime entre la Corse et le continent français.
+- L'Office des transports établit les obligations et délégations de service public.
+- La desserte des transports s'est améliorée, mais à un coût élevé.
+- La dotation de continuité territoriale représente 56 % de la valeur totale des dotations de l'État à la Collectivité territoriale de Corse (CTC).
+- En 2018, cette dotation s'élevait à 187 millions d'euros.
+- L'approche phénoménologique de l'insularité a fourni, dès les années 1980, les fondements conceptuels d'une spécificité des îles.
+- Cette approche a encouragé les îles à s'organiser au sein des institutions européennes comme un lobby territorial.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-27 ---
+- La dotation de continuité territoriale représente 56 % des dotations de l'État à la Collectivité territoriale de Corse (CTC).
+- En 2018, cette dotation s'élevait à 187 millions d'euros.
+- Dès les années 1980, l'approche phénoménologique de l'insularité a encouragé les îles à s'organiser au sein des institutions européennes.
+- Une commission des îles a été créée en 1980, où les élus corses ont joué un rôle important.
+- Friedrich Ratzel a souligné que la Corse, en Méditerranée et proche d'autres terres, n'est pas une île au même degré qu'une île isolée dans l'océan (1899).
+- La synergie limitée entre les îles et leur marginalisation croissante dans une Europe continentalisée réduisent leurs actions de coopération interrégionale.
+- L'intégration européenne a eu des effets paradoxaux sur l'insularité, notamment avec l'adoption du principe d'ouverture à la concurrence.
+- Les nouvelles règles européennes ont particulièrement affecté la desserte maritime de la Corse.
+- Dans les années 1980, un basculement maritime vers l'est a été observé, favorisant les ports italiens et Bastia.
+- Ce basculement a été perçu comme une réinsertion de la Corse dans un ensemble tyrrhénien, mais il s'est ralenti ou inversé.
+- En 2011, la répartition des passagers par type de transport en Corse était de 49 % pour le maritime et 51 % pour l'aérien.
+- Le rapport passagers-population en Corse était de 128 % en 2011.
+- En Crète, ce rapport était de 157 %, et dans les Baléares, il atteignait 367 %.
+- En Sardaigne, le rapport passagers-population était de 54 %, et en Sicile, de 39 %.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-28 ---
+- Un rééquilibrage du trafic maritime corse s'est opéré en faveur de la France continentale, ouvert à la concurrence.
+- Le port de Toulon est le principal bénéficiaire de cette recomposition du trafic maritime corse.
+- La réussite du port de Toulon est associée au dynamisme de la compagnie privée Corsica Ferries.
+- Corsica Ferries réaffirme la primauté des relations entre la Corse et le continent français.
+- En 1989, une compagnie régionale de transport aérien, CCM (devenue ensuite Air Corsica), a été créée.
+- Air Corsica est dirigée par un directoire d'élus territoriaux.
+- Air Corsica est une société anonyme d'économie mixte.
+- La collectivité de Corse est l'actionnaire majoritaire d'Air Corsica avec 66 % des parts.
+- Air France détient 12 % des parts d'Air Corsica.
+- Le Crédit agricole détient 5,94 % des parts d'Air Corsica.
+- Air Corsica propose des tarifs spécifiques pour les résidents corses vers Paris, Marseille et Nice.
+- Les tarifs élevés d'Air Corsica peuvent limiter l'accueil touristique en Corse.
+- En 2018, le trafic de passagers des ports maritimes des îles de Méditerranée occidentale a été cartographié.
+- Le trafic aérien de passagers des îles de Méditerranée occidentale a également été analysé en 2018.
+- Les ports corses ont vu leur trafic de passagers évoluer depuis 2000, avec une distinction entre ports principaux et secondaires.
+- Le transport aérien en Corse est moins important que dans d'autres îles européennes comme les Baléares ou les Canaries.
+- Les îles espagnoles, comme les Baléares et les Canaries, reposent sur un tourisme fortement externalisé et ouvert aux compagnies privées.
+- Les données sur le trafic de passagers des ports corses proviennent de l'Observatoire régional des transports de la Corse.
+- En 2018, les Baléares ont enregistré un trafic de 27,64 millions de passagers.
+- Formentera a enregistré un trafic maritime notable en Méditerranée en 2018.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-29 ---
+- Simone Weil a décrit la Corse comme un exemple des dangers du déracinement dans *L'Enracinement* (1949).
+- Elle évoque la conquête, la colonisation et la corruption des habitants de la Corse par les Français.
+- Elle souligne que les Corses, une fois intégrés dans l'administration française, ont traité les Français comme une population conquise.
+- Les Corses ont occupé des postes tels que préfets de police, policiers, adjudants et autres fonctions similaires.
+- Ce texte est tiré de l'ouvrage *L'Enracinement. Prélude d’une déclaration des devoirs envers l'être humain* (1949).
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-30 ---
+- Pasquale Paoli (1725-1807) est un symbole de l'indépendance de la Corse, surnommé "Babbu di a Patria" (Père de la Patrie).
+- Pasquale Paoli a inspiré la Constitution de 1755.
+- Il est le fondateur de l'université de Corte en 1764.
+- Paoli est une figure majeure de l’Illuminismo européen.
+- En juin 1769, Paoli est vaincu par les armées françaises et trouve refuge à Londres.
+- Depuis Londres, il anime la résistance en lien avec son frère Clemente, exilé en Toscane avec des centaines de *fuorusciti* (exilés).
+- Paoli revient en Corse en juillet 1790 après un passage par Paris.
+- À Paris, il reçoit l'hommage du nouveau pouvoir révolutionnaire.
+- Élu président du conseil général et commandant de la Garde nationale, il espère établir un gouvernement autonome pour la Corse.
+- La radicalisation de la Révolution française et la formation de la première coalition entraînent une rupture avec la France en 1793.
+- Paoli accepte les propositions britanniques, menant à la formation du royaume anglo-corse (1794-1796).
+- Napoléon Bonaparte écrit à Paoli en 1789 : "Général. Je naquis quand la patrie périssait."
+- Dans sa lettre, Bonaparte évoque l'invasion française de la Corse en 1769.
+- La mémoire de Paoli est célébrée à travers l'île, souvent par des monuments et des odonymes récents.
+- Une course pédestre, *A Paolina*, commémore son héritage.
+- Les événements historiques liés à Paoli incluent la défaite contre les Français en mai 1769 à Ponte Novu et la victoire contre les Génois en octobre 1768.
+- Paoli est né à Morosaglia et a passé son enfance entre cette ville et le couvent de Sant'Antò di a Casabianca.
+- Il quitte la Corse avec son père en 1739.
+- Le siège du gouvernement national se tient à Corte entre 1755 et 1769.
+- La ville de L'Île-Rousse a été fondée sous son impulsion.
+- La mémoire paolienne est marquée par des monuments et des noms de rues dans plusieurs villes corses, dont Bastia, Propriano, Sartène et Porto-Vecchio.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-31 ---
+- Napoléon Bonaparte écrit à Pasquale Paoli en 1789 pour évoquer la conquête française de la Corse et son impact sur sa naissance.
+- Napoléon déclare : "Général. Je naquis quand la patrie périssait."
+- Il décrit l'invasion française avec 30 000 soldats "vomis sur nos côtes, noyant le trône de la liberté dans des flots de sang."
+- Paoli, en désaccord avec les Britanniques, quitte la Corse et meurt en exil à Londres en 1807.
+- La figure de Paoli est récupérée par le pouvoir central dès le Second Empire.
+- La IIIe République instrumentalise l'image de Paoli pour neutraliser son potentiel contestataire.
+- Dans l'idéologie républicaine de la "petite patrie", l'expérience paoline est présentée comme une préfiguration de la Révolution française.
+- Cette interprétation donne un caractère inéluctable au rattachement de la Corse à la France.
+- Napoléon Bonaparte est né en 1769 et mort en 1821.
+- La mémoire napoléonienne est principalement concentrée à Ajaccio.
+- Une statue de Napoléon se trouve au Casone depuis 1938.
+- Les régates impériales et le Trail Napoléon sont des événements commémoratifs liés à Napoléon.
+- Napoléon embarque pour Autun en 1778.
+- La maison Bonaparte à Ajaccio a été construite à son initiative.
+- Napoléon a étudié à l'école militaire de Brienne et à l'École militaire de Paris.
+- Des associations commémorent les régiments et danses impériales liées à Napoléon.
+- Des monuments et odonymes honorent Napoléon à Ajaccio, Propriano, Sartène, Porto-Vecchio et Bonifacio.
+- L'aéroport de Figari est nommé Napoléon-Bonaparte.
+- Napoléon a participé à l'expédition de Sardaigne en 1793.
+- Le Second régiment des chasseurs à pied de la Garde est associé à la mémoire napoléonienne.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-32 ---
+- Napoléon Bonaparte (1769-1821) a initialement été un partisan farouche de l'indépendance de la Corse.
+- Napoléon a rêvé de jouer un rôle important dans l'histoire de la Corse.
+- Il s'est éloigné de Pasquale Paoli et a adhéré aux idéaux révolutionnaires français.
+- Napoléon a dû fuir la Corse en 1793 pour embrasser sa carrière militaire et politique.
+- Napoléon est devenu la figure tutélaire de la Corse française avant même le règne de Napoléon III.
+- Son parcours et celui de ses généraux d'origine corse ont contribué à la francisation de l'île.
+- Jusqu'en 1889, Napoléon était encore associé à Paoli, notamment lors des commémorations du centenaire de la Révolution française.
+- À partir de l'entre-deux-guerres et surtout après 1945, Napoléon a progressivement éclipsé Paoli dans l'histoire républicaine de la Corse.
+- Paoli a été relégué aux marges de l'histoire officielle, en partie à cause de la récupération de son image par la propagande irrédentiste fasciste.
+- La Corse est devenue principalement associée à Napoléon, notamment à travers des produits touristiques et des navires portant son nom.
+- L'instrumentalisation de Napoléon a culminé en 1969 lors des festivités du bicentenaire de sa naissance.
+- Le mouvement de redécouverte culturelle (*Riacquistu*) a conduit à une réévaluation de l'histoire de la Corse.
+- Cette réévaluation a permis de replacer Paoli au centre de l'histoire insulaire, au détriment de Napoléon.
+- Les régionalistes, autonomistes et indépendantistes ont construit un contre-discours historique centré sur Paoli.
+- Ce contre-discours s'est traduit par la publication d'ouvrages et la commémoration des combats de 1768 et 1769 contre les Français.
+- De nombreux bustes de Paoli ont été érigés à travers l'île.
+- Une guérilla idéologique et culturelle oppose les partisans de la Corse française et de Napoléon aux nationalistes groupés autour de Paoli.
+- Des produits comme les bières *A Paolina* et *Napo* illustrent cette opposition symbolique entre les deux figures historiques.
+- Le musée Paoli de Morosaglia est un exemple de la réhabilitation de la mémoire de Paoli.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-33 ---
+- Le musée Paoli de Morosaglia, propriété du conseil général de la Haute-Corse, est resté fermé pendant une longue période, officiellement en raison de travaux.
+- Dans les années 2000, les querelles idéologiques entre partisans de Napoléon et de Paoli se sont apaisées.
+- La collectivité de Corse a lancé le projet *Paoli-Napoléon* pour réconcilier les mythes des deux figures historiques.
+- Ce projet vise à promouvoir l'île en tirant parti des deux héros, devenus des produits marketing.
+- Pierre Bertoncini a écrit *Le Spectre de la mémoire de Pascal Paoli. Territoire, patrimoine et culture en Corse* (2011).
+- Jean Tulard est l'auteur de *Napoléon*, édition du bicentenaire (2021).
+- Michel Vergé-Franceschi a publié *Paoli. Un Corse des Lumières* (2005).
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-34 ---
+- L'émigration des Corses vers l'empire colonial français s'inscrit dans une tradition migratoire plus ancienne, principalement dirigée vers l'ensemble italien à l'époque moderne.
+- Cette émigration a une dimension anthropologique intense sur le plan affectif, bien qu'elle tende à s'estomper auprès des générations actuelles.
+- Ce phénomène a touché toutes les familles corses, en faisant une histoire collectivement intime.
+- Jusqu'aux années 2000, l'historiographie insulaire a peu abordé l'histoire de l'émigration des Corses dans les colonies.
+- L'émigration vers les colonies a joué un rôle fondamental dans la construction de l'identité insulaire contemporaine, notamment par la confrontation à l'altérité.
+- Marien Martini a publié *Les Corses dans l'expansion française* dans les années 1950, issu de conférences données lors de la Quinzaine impériale de Vichy en 1942.
+- Ce livre avait une dimension idéologique visant à démontrer que l'émigration aurait marqué les Corses du sceau de la "francité".
+- Cette émigration a également contribué à l'émergence d'une "corsité", qui s'est transformée en "corsitude" avec la décolonisation.
+- Le contexte de cette migration est marqué par une crise économique structurelle et conjoncturelle en Corse à partir des années 1880.
+- L'empire colonial français, "dévoreur d'hommes", a servi d'appel migratoire pour les Corses.
+- Des dizaines de milliers de Corses, souvent militaires ou fonctionnaires, se sont installés en Afrique ou en Asie.
+- Les Corses émigrés formaient des groupes solidaires grâce à l'amicalisme.
+- Ces réseaux ont permis aux Corses d'avoir une influence électorale et politique, tant dans les débats concernant la Corse que dans la vie politique des colonies.
+- Les émigrés corses restaient très attachés à leur île d'origine.
+- Presque tous revenaient au moins une fois par an dans leur collectivité d'origine.
+- Beaucoup se réinstallaient en Corse à l'âge de la retraite.
+- Grâce à des salaires plus élevés que ceux qu'ils auraient eus en travaillant "au village", ils soutenaient financièrement leur famille.
+- Ils affichaient souvent un train de vie ostentatoire pour démontrer leur réussite.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-35 ---
+- Les émigrés corses revenaient régulièrement dans leur collectivité d'origine et s'y réinstallaient souvent à la retraite.
+- Grâce à des salaires plus élevés que ceux qu'ils auraient eus en Corse, ils soutenaient financièrement leur famille.
+- Ils affichaient souvent un train de vie ostentatoire pour montrer leur "réussite sociale" liée à l'exil.
+- Ce phénomène a alimenté un marasme socioéconomique endémique et le déclin de la société agropastorale traditionnelle.
+- Anne Meistersheim décrit l'évocation des ancêtres corses ayant vécu dans les colonies comme un mélange de nostalgie ironique et de mauvaise conscience.
+- Le sujet de la colonisation et du rôle des Corses dans les colonies reste tabou et est décrit comme "présent-absent masqué".
+- Antoine Albitreccia a résumé en 1939 que la Corse a fourni des hommes à la France pour administrer son empire colonial.
+- Ces hommes, au contact du monde extérieur, ont adopté un mode de vie plus moderne et ont influencé ceux restés en Corse.
+- Ce changement a créé un train de vie modernisé, difficile à maintenir sans ressources extérieures.
+- Depuis un siècle, les jeunes Corses ont été attirés par les carrières militaires, coloniales et administratives.
+- À leur retour, avec une pension ou une retraite, ils avaient souvent perdu le goût du travail de la terre et s'intéressaient peu à l'entretien des propriétés familiales.
+- La décolonisation a été vécue comme une rupture en Corse.
+- La Corse a été le seul département à soutenir les putschistes d'Alger en mai 1958.
+- Lors du référendum sur les accords d'Évian en 1962, le "oui" a obtenu 69 301 voix (88 %), mais avec 83 195 abstentions, marquant un attachement au monde colonial disparu.
+- Après 1962, le programme de "mise en valeur" de la Corse s'est accéléré.
+- Les modalités de ce programme ont donné aux Corses le sentiment d'être à leur tour "colonisés".
+- Cette situation a poussé certains Corses vers des chemins de révolte, en raison de leur expérience outre-mer.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-36 ---
+- Le référendum sur les accords d'Évian en 1962 a enregistré 83 195 abstentions en Corse, marquant un attachement au monde colonial disparu.
+- Après 1962, le programme de "mise en valeur" de la Corse s'est accéléré.
+- Les modalités de ce programme ont donné aux Corses le sentiment d'être à leur tour "colonisés".
+- Ce sentiment a poussé certains Corses vers des chemins de révolte.
+- Nicolas Giudici souligne que l'expérience outre-mer a profondément nourri l'intelligentsia corse.
+- Cette expérience a pétrifié la culture coloniale en critère d'appréciation pour les Corses.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-37 ---
+- Une carte montre l'émigration corse entre 1830 et 1962 vers divers pays et territoires, notamment l'Empire colonial français, les États-Unis, Puerto Rico, l'Espagne, et la France.
+- Entre 1900 et 1950, environ 1 800 Corses ont émigré aux États-Unis.
+- Entre 1900 et 1950, environ 7 000 Corses ont émigré en Espagne.
+- Entre 1840 et 1910, environ 5 250 Corses ont émigré à Puerto Rico.
+- Entre 1928 et 1954, entre 900 et 1 000 Corses ont émigré en France.
+- Les résultats du référendum du 8 janvier 1961 sur l'autodétermination de l'Algérie montrent les votes des communes corses.
+- À Ajaccio, 9 818 inscrits, 9 749 votants, 6 065 "oui" et 2 784 "non".
+- À Bastelica, 2 340 inscrits, 1 348 votants, 1 101 "oui" et 242 "non".
+- À Bastia, 16 039 inscrits, 8 841 votants, 6 726 "oui" et 1 982 "non".
+- À Bocognano, 2 479 inscrits, 1 226 votants, 986 "oui" et 232 "non".
+- À Bonifacio, 1 875 inscrits, 1 016 votants, 400 "oui" et 607 "non".
+- À Calacuccia, 3 337 inscrits, 902 votants, 624 "oui" et 270 "non".
+- À Calenzana, 3 050 inscrits, 1 434 votants, 1 392 "oui" et 38 "non".
+- À Calvi, 1 846 inscrits, 1 376 votants, 890 "oui" et 273 "non".
+- À Corte, 3 721 inscrits, 1 801 votants, 1 335 "oui" et 420 "non".
+- À La Porta, 1 361 inscrits, 685 votants, 595 "oui" et 86 "non".
+- À L'Isula/L'Île-Rousse, 2 841 inscrits, 1 500 votants, 1 188 "oui" et 300 "non".
+- À Morosaglia, 2 419 inscrits, 1 109 votants, 967 "oui" et 135 "non".
+- Francis Arzalier a écrit *Les Corses et la Question coloniale* (2009).
+- Charlie Galibert a publié *La Corse, une île et le monde* (2004).
+- Vanina Profizi a analysé *La légende coloniale des Corses* dans *Nouvelle histoire des colonisations européennes* (2013).
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-38 ---
+- Le banditisme corse s'inscrit dans un contexte de violence interpersonnelle persistante sur l'île. 
+- À la fin du XIXe siècle, les homicides en Corse étaient souvent liés à la défense de la réputation et du clan. 
+- La fuite des criminels pour échapper à la justice et aux représailles des familles des victimes était fréquente, même pendant la IIIe République. 
+- En 1890, la Corse occupait les premiers rangs de la statistique criminelle en France. 
+- Le nombre d'homicides en Corse était cinq fois supérieur à celui du département de la Seine et quinze fois supérieur à la moyenne française. 
+- Georges Clemenceau a proposé en 1871 de céder la Corse à l'Italie en raison de son problème de banditisme. 
+- En 1908, Clemenceau a décrit la Corse comme un département "réfractaire à toute assimilation" et "ne pouvant être comparé à aucun autre". 
+- L'arrondissement d'Ajaccio était le plus meurtrier, abritant des bandits célèbres comme les frères Bellacoscia de Bocognano dans les années 1890 et André Spada dans la Cinarca pendant l'entre-deux-guerres. 
+- L'arrondissement de Corte comptait également de nombreuses victimes, notamment en raison du poids du Fiumorbo dans le taux d'homicides. 
+- L'arrondissement de Sartène était également concerné par le banditisme. 
+- Les régions de Calvi et de Bastia étaient moins touchées par le banditisme, bien que Bastia soit marquée par de nombreuses vendettas. 
+- Le banditisme n'était pas spécifique à la Corse et concernait d'autres régions méditerranéennes montagneuses ou isolées. 
+- En Espagne, la Sierra Morena et la Serrania de Ronda étaient des hauts lieux du banditisme andalou. 
+- Alexandre Dumas a écrit que "l'Italie méridionale produit naturellement du blé dans ses plaines, de l'huile dans ses vallées, des brigands dans ses montagnes". 
+- La Sardaigne et la Sicile, comme la Corse, présentaient des taux d'homicides très élevés. 
+- Salvatore Giuliano, un bandit sicilien célèbre, est mort en 1950. 
+- Le Basilicate subissait les exactions des bandes de Crocco et de Francolino, tandis que la Calabre était touchée par les agissements du brigand Musolino. 
+- Au début du XXe siècle, les photographies de bandits corses, comme les frères Bellacoscia de Bocognano, étaient largement diffusées. 
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-39 ---
+- Les frères Bellacoscia de Bocognano étaient des bandits corses célèbres dont les photographies étaient placées à côté de celles d'autres bandits méditerranéens dans des "bestiaires" des hors-la-loi.
+- Un ouvrage intitulé *Banditi, briganti brigantesse nell' 800* a été publié en 1931 et présentait ces figures de bandits.
+- Paul Bourde a écrit en 1887 : "Retenez-les bien, ces chiffres officiels ; sans cette précaution, vous ne croiriez pas que les histoires que j'ai à vous raconter se passent dans un département français."
+- Ce texte est tiré de l'ouvrage *En Corse : l'esprit de clan, les mœurs politiques, les vendettas, le banditisme* (réédité en 1983).
+- Le *Supplément illustré Le Petit Journal* du 16 juillet 1892 présentait en une une illustration du bandit corse Bellacoscia se rendant aux gendarmes.
+- Cette illustration montre l'importance médiatique du banditisme corse à l'époque.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-40 ---
+- Une carte montre les territoires des bandits corses célèbres à la fin du XIXe et au début du XXe siècle. 
+- Les bandits méditerranéens étaient souvent des individus désœuvrés et pauvres. 
+- En Italie, deux tiers des bandits étaient ouvriers agricoles, les autres étant paysans, fermiers ou artisans. 
+- Carmine Donatelli Crocco, un bandit italien célèbre, était journalier et garçon vacher. 
+- En Andalousie, la misère poussait souvent les journaliers agricoles à devenir hors-la-loi. 
+- Les hors-la-loi étaient généralement jeunes, célibataires et sans enfants, évitant ainsi les responsabilités familiales. 
+- En Corse, le banditisme était souvent motivé par la nécessité de venger un déshonneur, indépendamment de l'âge ou de la condition sociale. 
+- Certains bandits corses étaient des hommes âgés, comme Antoine Bonelli (Bellacoscia), qui était sexagénaire dans les années 1880. 
+- Antoine Bonelli, avec sa longue barbe blanche, est devenu une figure sympathique aux yeux des écrivains corses et des touristes. 
+- Les guides Joanne et Baedeker conseillaient aux touristes de visiter Antoine Bonelli à Bocognano. 
+- Paul Joanne décrivait Bonelli comme "fort aimable pour les touristes" et rassurait les voyageurs sur leur sécurité. 
+- Paul Bourde a consacré un chapitre aux Bellacoscia dans son étude sur la Corse, les qualifiant de "Rois de la montagne corse". 
+- Émile Bergerat a écrit une "note ethnographique" sur les deux hors-la-loi de la Pentica. 
+- Les bandits corses étaient perçus comme les "bons sauvages" de la France. 
+- Les contemporains parlaient d'une "exhibition des bandits", comparable à celle des indigènes ramenés des colonies. 
+- Les archives départementales de Haute-Corse montrent l'origine géographique des homicides et tentatives jugés en Corse. 
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-41 ---
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-42 ---
+- Les contemporains (autorités, journalistes, villageois) affirment que le banditisme en Corse évolue vers le gangstérisme au début du XXe siècle.
+- Le bandit d'honneur devient une figure légendaire après les années 1930.
+- Les pratiques des bandits corses se normalisent, passant du pillage à des activités de perception (parcitori).
+- André Spada, Joseph Bartoli et Nonce Romanetti sont des exemples de bandits devenus percepteurs.
+- Ces bandits s'éloignent de l'image du bandit d'honneur ou protecteur des populations et des clans.
+- Dans l'entre-deux-guerres, André Spada utilise l'intimidation pour obtenir des terres et protéger son refuge à la Punta (Cinarca).
+- Les bandits de cette époque se font payer des tributs par des notables ou des agents publics en échange de protection et de tranquillité.
+- André Spada a vécu principalement de l'argent versé par les responsables des services postaux entre Ajaccio et Lopigna de 1926 à 1933.
+- L'administration locale protégeait souvent les bandits en leur délivrant des concessions ou des contrats.
+- En novembre 1931, une vaste opération de contre-banditisme est menée en Corse sous la direction du lieutenant-colonel Delavallade.
+- L'effectif de la compagnie de gendarmerie double avec le recrutement de 600 gardes républicains mobiles supplémentaires.
+- En Corse, le rapport était d'un gendarme pour 267 habitants, contre un pour 1 860 dans les autres départements français au début du XXe siècle.
+- La Corse bénéficiait d'un traitement d'exception, comparable à celui des colonies ou des champs de bataille.
+- Le "milieu" corse s'organise désormais principalement à Marseille.
+- Les bandits sont contraints d'émigrer en raison des mutations et des bouleversements affectant la société corse.
+- La société corse rejette de plus en plus la violence et aspire à une normalisation des pratiques.
+- Les bandits quittent l'île pour fuir vers le continent, perdant le soutien des populations locales.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-43 ---
+- Les bandits corses, rejetés par la société corse, quittent l'île pour s'installer sur le continent français.
+- Ils perdent progressivement le soutien des populations locales.
+- Des communautés corses se constituent à Paris et à Marseille.
+- Ces communautés donnent naissance à des gangs organisés.
+- Le lieutenant-colonel Delavallade a décrit, en 1930, l'attitude méfiante des Corses envers les gendarmes venus du continent.
+- Les gendarmes souffraient d'une forme de quarantaine perpétuelle et d'une hostilité latente.
+- Les villageois corses craignaient de se compromettre en parlant aux gendarmes.
+- La couverture du magazine *Détective* du 16 août 1954 illustre l'intérêt médiatique pour le banditisme et le gangstérisme.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-44 ---
+- Dominique Leca, un Corse fils de gendarme, a fait partie des "Apaches", une bande de voyous parisiens au début du XXe siècle.
+- Dominique Leca a commis de nombreux crimes et a terminé au bagne de Cayenne.
+- La pègre marseillaise a été marquée par des Corses célèbres comme Spirito, Carbone, Barthélemy et Antoine Guerrini.
+- Les frères Guerrini se présentaient comme les héritiers d'une tradition de vengeance et de vendetta.
+- Les frères Guerrini se sont engagés aux côtés de la Résistance pendant la Seconde Guerre mondiale.
+- Le terme "gangstérisme" est jugé imparfait pour décrire le banditisme corse au XXe siècle.
+- Les meurtriers corses, même émigrés, se considéraient comme les héritiers des bandits d'honneur du XIXe siècle.
+- Ils se présentaient comme vengeurs d'offenses et redresseurs de torts.
+- André Spada avait pour devise : "plutôt cent mille fois la mort qu'une seule fois le déshonneur".
+- Des truands corses comme "Pierrot le Corse" ont fait la une des journaux, comme *Détective* le 4 juillet 1949.
+- Pierre Cucari, un autre truand corse, a été exécuté par un gang adverse à Paris, et son enterrement a fait la une le 16 août 1954.
+- Une expédition policière de grande envergure a été menée en Corse pour traquer les bandits dans le maquis.
+- Six cents gardes mobiles ont été déployés pour cette opération.
+- Des avisos patrouillaient le long des côtes pour arrêter les fuyards.
+- Les ministères de l'Intérieur, de la Guerre et de la Marine ont préparé ensemble cette expédition.
+- Les bandits corses étaient perçus à tort comme des gentilshommes par les touristes et la littérature.
+- Les récits romantisaient leurs qualités, leur adresse, leur chevalerie et leur mépris du danger.
+- Les bandits corses étaient comparés aux "maures pirates barbaresques" dans les représentations artistiques.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-45 ---
+- Les bandits corses étaient perçus à tort comme des gentilshommes romantiques.
+- La littérature a romantisé les bandits corses, chantant leurs qualités, leur adresse, leur chevalerie et leur mépris du danger.
+- Les bandits étaient comparés aux "maures pirates barbaresques" dans les gravures de Callot.
+- Les bandits corses étaient drapés dans leur *pelone* comme dans une pourpre de légende.
+- Ils étaient considérés comme les derniers chevaliers romantiques d'un monde moderne.
+- Maupassant a chanté le bandit Santa Luccia, qui s'est évadé du bagne pour venger un faux témoin.
+- Mérimée a immortalisé Colomba d'Istria, une héroïne native d'Olmeto, et Matteo Falcone, qui a tué son propre fils pour punir sa trahison.
+- Vers 1860, Antoine et Jacques Bonelli, les célèbres frères Bellacoscia, ont tenu le maquis, tué leurs ennemis et sont morts dans leur lit.
+- Les Bellacoscia recevaient des personnalités comme la princesse de Saxe-Weimar, le baron Haussmann et Edmond About.
+- Les bandits corses se faisaient élire comme représentants politiques.
+- La vendetta régnait en Corse, où un chien tué pouvait provoquer des cascades de meurtres et l'extinction de familles entières.
+- Les assassins prenaient le maquis et narguaient les gendarmes, parfois en signant des traités de paix avec eux.
+- Être bandit corse offrait certains avantages : une vie paresseuse, des filles faciles, des ripailles fréquentes et des profits certains.
+- En 1902, Jean-Camille Nicolai, apprenant que son père avait été tué par le bandit Lanfranchi, a quitté son collège, poursuivi l'assassin et l'a abattu huit jours plus tard.
+- Jean-Camille Nicolai est devenu bandit à son tour, a pris le maquis et a tué un gendarme trop curieux.
+- Il a été abattu près d'une maison de Lattesta.
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-46 ---
+
+--- Chunk 8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56-7-47 ---
+- La Corse, bien que géographiquement éloignée des fronts, a été fortement impactée par la Première Guerre mondiale.
+- Chaque village corse possède un monument aux morts témoignant de l'impact de la Grande Guerre.
+- La mémoire de la Première Guerre mondiale a longtemps dominé l'historiographie corse.
+- Deux courants historiographiques antagonistes existent : l'un exagérant, l'autre minimisant le nombre de soldats corses tombés au champ d'honneur.
+- La Corse a payé un lourd tribut avec 12 000 morts sur les 40 000 mobilisés, soit un poilu corse sur quatre tué.
+- Les Corses ne sont pas partis en guerre avec enthousiasme, comme le reste des Français.
+- Résignation, fatalisme et contrainte ont conduit les hommes corses à répondre à l'appel de la patrie.
+- Les Corses n'ont pas été considérés comme de la "chair à canon", contrairement aux accusations du mouvement autonomiste des années 1920 et du *Riacquistu*.
+- La participation massive des Corses aux hostilités prouve une forme d'intégration à la nation française.
+- Le faible taux de désertion parmi les soldats corses illustre cette intégration.
+- Contrairement à ce qui a longtemps été écrit, l'identité culturelle insulaire n'a jamais été brisée par l'armée, l'État en guerre, l'union sacrée politique, le "bourrage de crâne" ou le brassage des combattants.
+- L'identité corse a plutôt été renforcée par la guerre.
+- Un article de *La Jeune Corse* du 18 novembre 1915 souligne la bravoure des soldats corses et leur forte présence dans les régiments.
+- Les régiments avec un pourcentage élevé de soldats corses se sont particulièrement distingués.
+- Le monument aux morts de Tallone est un exemple des mémoriaux dédiés aux soldats corses tombés pendant la guerre.

@@ -47,7 +47,7 @@ class TokenMonitoringSummariser(Summariser):
         chunk_summaries = []
         
         # Récupérer la progression déjà effectuée
-        output_file = "progress_summaries.json"
+        output_file = "../progress_summaries.json"
         if os.path.exists(output_file):
             with open(output_file, "r", encoding="utf-8") as f:
                 progress_data = json.load(f)

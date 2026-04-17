@@ -30,7 +30,7 @@ from database.database import get_db_connection, get_questions_by_ids, get_quest
 # Document ID et IDs des questions spécifiques
 document_id = "dbd5f14a9e6545880b0cd505583ea7d1fe1e8b3d"
 question_ids = [249, 370, 737, 786, 115]  # IDs spécifiques depuis question_session.py
-responses_file = "reponses-test-lochi-mondu.txt"  # Fichier contenant les réponses utilisateur
+responses_file = "../reponses-test-lochi-mondu.txt"  # Fichier contenant les réponses utilisateur
 session_id = "test"
 
 

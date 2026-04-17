@@ -1,0 +1,370 @@
+[
+  {
+    "config": {
+      "evaluator_models": [
+        "ministral-3b-latest"
+      ],
+      "nb_evaluators": 1,
+      "with_final_evaluator": false,
+      "final_evaluator_model": "ministral-3b-latest",
+      "description": "1 eval(ministral-3b-latest)"
+    },
+    "session_id": "72d3e62a-1ab6-437b-9b1b-e63b55dd0e58",
+    "document_id": "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56",
+    "total_evaluation_time_seconds": 9.854477167129517,
+    "token_usage": {
+      "total_input_tokens": 3876,
+      "total_output_tokens": 596,
+      "total_tokens": 4472
+    },
+    "model_execution_times": {
+      "ministral-3b-latest": 8.246003866195679
+    },
+    "responses": [
+      {
+        "question_id": 9158,
+        "question_text": "Pourquoi peut-on dire que le racisme évoqué dans le texte est à la fois normalisé et décomplexé en Corse ?",
+        "user_answer": "car il sépare les deux mers, la méditérranée et tyrrhénienne, relie plusieurs communes et porte un lourd souvenir du passé de la 2nde gm",
+        "date_sent": "2026-04-07T16:44:49.056989",
+        "evaluation": {
+          "score": 1,
+          "feedback": "La réponse de l'utilisateur ne répond pas du tout à la question posée. Elle mentionne des éléments géographiques et historiques liés à la Corse, mais aucun lien avec le racisme, sa normalisation ou sa décomplexation. Il est essentiel de se concentrer sur les aspects décrits dans l'attendu, notamment les violences symboliques et l'absence de réprobation forte dans les pratiques sociales. Une réponse pertinente devrait analyser les mécanismes de normalisation du racisme dans ce contexte.",
+          "cosine_similarity": 0,
+          "model": "ministral-3b-latest"
+        }
+      },
+      {
+        "question_id": 9235,
+        "question_text": "Pourquoi la lutte contre le système mafieux en Corse est-elle décrite comme plus difficile qu'en Sicile ? Expliquez en vous appuyant sur les différences structurelles entre les deux régions.",
+        "user_answer": "Il s'est manifesté par la paghjella, revitalisée en 1955 par jacques luciani et l'abbé Filippi, puis par le Riacquistu, avec des groupes comme canta u populu corsu, à partir des années 70",
+        "date_sent": "2026-04-07T16:44:49.756540",
+        "evaluation": {
+          "score": 2,
+          "feedback": "La réponse de l'utilisateur ne traite pas directement des différences structurelles entre la Corse et la Sicile en matière de lutte contre les systèmes mafieux. Elle se concentre sur des événements culturels ou politiques spécifiques (comme la paghjella et le Riacquistu), sans lien avec les mécanismes organisationnels ou les particularités géographiques et sociales évoqués dans l'attendu. Pour répondre correctement, il faudrait analyser comment ces dynamiques culturelles ou historiques illustrent ou influencent la complexité de la lutte contre la mafia, mais ce n'est pas le cas ici.",
+          "cosine_similarity": 0,
+          "model": "ministral-3b-latest"
+        }
+      },
+      {
+        "question_id": 9389,
+        "question_text": "Pourquoi le football, malgré son histoire conflictuelle, reste-t-il un pilier identitaire pour les Corses selon le texte ? Citez deux éléments clés mentionnés dans le document qui illustrent cette affirmation.",
+        "user_answer": "il est créé suite à la mission du père Landini en 1552 consistant à limiter les dérives du clergé corse. Les premiers cours y ont eu lieu en 1601 et son oratoire est exemplaire de l'art baroque",
+        "date_sent": "2026-04-07T16:44:50.453493",
+        "evaluation": {
+          "score": 1,
+          "feedback": "La réponse de l'utilisateur ne répond pas à la question posée et ne cite aucun élément lié à l'importance identitaire du football en Corse. Elle mentionne des événements historiques et architecturaux liés à l'éducation religieuse et à l'art baroque, totalement déconnectés du contexte sportif et identitaire évoqué dans l'attendu. Pour justifier la pertinence du football comme pilier identitaire, il aurait fallu identifier des éléments comme la mobilisation sociale ou l'affection exceptionnelle pour le sport, comme dans l'attendu.",
+          "cosine_similarity": 0,
+          "model": "ministral-3b-latest"
+        }
+      },
+      {
+        "question_id": 10040,
+        "question_text": "Pourquoi la création du GR20 est-elle considérée comme emblématique dans la stratégie de diversification touristique de la Corse ?",
+        "user_answer": "La raison vient des conséquences de la Révolution française, qui laissa Bastia comme chef-lieu du département. Le département est ensuite coupé en deux, puis réunifié par Napoléon en 1811, qui déclare Ajaccio comme chef lieu et non Bastia",
+        "date_sent": "2026-04-07T16:44:51.100638",
+        "evaluation": {
+          "score": 1,
+          "feedback": "La réponse de l'utilisateur ignore totalement la question sur le GR20 et son rôle dans la diversification touristique de la Corse. Elle traite des événements historiques liés à la géopolitique corse (Révolution française, unification du département), sans lien avec les enjeux touristiques ou stratégiques mentionnés dans l'attendu. Une réponse pertinente aurait dû expliquer comment le GR20 a contribué à valoriser l’image de la Corse comme destination d’aventure et à renforcer son attractivité économique.",
+          "cosine_similarity": 0,
+          "model": "ministral-3b-latest"
+        }
+      }
+    ],
+    "timestamp": "2026-04-07T16:44:51.100638"
+  },
+  {
+    "config": {
+      "evaluator_models": [
+        "ministral-8b-latest"
+      ],
+      "nb_evaluators": 1,
+      "with_final_evaluator": false,
+      "final_evaluator_model": "ministral-3b-latest",
+      "description": "1 eval(ministral-8b-latest)"
+    },
+    "session_id": "33aaebb4-d1f5-42cf-9cc4-b29a865a6303",
+    "document_id": "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56",
+    "total_evaluation_time_seconds": 3.728105306625366,
+    "token_usage": {
+      "total_input_tokens": 3551,
+      "total_output_tokens": 362,
+      "total_tokens": 3913
+    },
+    "model_execution_times": {
+      "ministral-8b-latest": 2.35937237739563
+    },
+    "responses": [
+      {
+        "question_id": 9158,
+        "question_text": "Pourquoi peut-on dire que le racisme évoqué dans le texte est à la fois normalisé et décomplexé en Corse ?",
+        "user_answer": "car il sépare les deux mers, la méditérranée et tyrrhénienne, relie plusieurs communes et porte un lourd souvenir du passé de la 2nde gm",
+        "date_sent": "2026-04-07T16:44:52.928881",
+        "evaluation": {
+          "score": 2,
+          "feedback": "La réponse apportée ne traite absolument pas du sujet demandé, à savoir l'analyse du racisme en tant que phénomène normalisé et décomplexé en Corse. Elle évoque des éléments géographiques et historiques sans lien avec la question posée, ce qui rend la réponse totalement hors contexte et inappropriée.",
+          "cosine_similarity": 0,
+          "model": "ministral-8b-latest"
+        }
+      },
+      {
+        "question_id": 9235,
+        "question_text": "Pourquoi la lutte contre le système mafieux en Corse est-elle décrite comme plus difficile qu'en Sicile ? Expliquez en vous appuyant sur les différences structurelles entre les deux régions.",
+        "user_answer": "Il s'est manifesté par la paghjella, revitalisée en 1955 par jacques luciani et l'abbé Filippi, puis par le Riacquistu, avec des groupes comme canta u populu corsu, à partir des années 70",
+        "date_sent": "2026-04-07T16:44:53.617519",
+        "evaluation": {
+          "score": 1,
+          "feedback": "La réponse fournie ne répond en rien à la question posée sur les différences structurelles entre les systèmes mafieux en Corse et en Sicile. Elle aborde uniquement un aspect culturel et musical, sans aucun lien avec les enjeux organisationnels ou criminels évoqués dans la question. Cela montre une totale déconnexion avec le sujet demandé.",
+          "cosine_similarity": 0,
+          "model": "ministral-8b-latest"
+        }
+      },
+      {
+        "question_id": 9389,
+        "question_text": "Pourquoi le football, malgré son histoire conflictuelle, reste-t-il un pilier identitaire pour les Corses selon le texte ? Citez deux éléments clés mentionnés dans le document qui illustrent cette affirmation.",
+        "user_answer": "il est créé suite à la mission du père Landini en 1552 consistant à limiter les dérives du clergé corse. Les premiers cours y ont eu lieu en 1601 et son oratoire est exemplaire de l'art baroque",
+        "date_sent": "2026-04-07T16:44:54.239044",
+        "evaluation": {
+          "score": 1,
+          "feedback": "La réponse ne répond pas à la question posée sur le rôle identitaire du football en Corse. Elle évoque un sujet totalement différent, à savoir l'histoire de l'éducation ou du clergé en Corse, sans aucun lien avec le football ou son importance culturelle et identitaire.",
+          "cosine_similarity": 0,
+          "model": "ministral-8b-latest"
+        }
+      },
+      {
+        "question_id": 10040,
+        "question_text": "Pourquoi la création du GR20 est-elle considérée comme emblématique dans la stratégie de diversification touristique de la Corse ?",
+        "user_answer": "La raison vient des conséquences de la Révolution française, qui laissa Bastia comme chef-lieu du département. Le département est ensuite coupé en deux, puis réunifié par Napoléon en 1811, qui déclare Ajaccio comme chef lieu et non Bastia",
+        "date_sent": "2026-04-07T16:44:54.949070",
+        "evaluation": {
+          "score": 1,
+          "feedback": "La réponse apportée ne traite pas du sujet demandé concernant le GR20 ou la diversification touristique. Elle se concentre uniquement sur un événement historique lié à la Révolution française et à l'organisation administrative de la Corse, sans aucun rapport avec la question posée.",
+          "cosine_similarity": 0,
+          "model": "ministral-8b-latest"
+        }
+      }
+    ],
+    "timestamp": "2026-04-07T16:44:54.949070"
+  },
+  {
+    "config": {
+      "evaluator_models": [
+        "mistral-medium"
+      ],
+      "nb_evaluators": 1,
+      "with_final_evaluator": false,
+      "final_evaluator_model": "ministral-3b-latest",
+      "description": "1 eval(mistral-medium)"
+    },
+    "session_id": "fa281f16-4b56-4bfa-a149-22c451c6957e",
+    "document_id": "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56",
+    "total_evaluation_time_seconds": 7.773643732070923,
+    "token_usage": {
+      "total_input_tokens": 3665,
+      "total_output_tokens": 448,
+      "total_tokens": 4113
+    },
+    "model_execution_times": {
+      "mistral-medium": 6.551852464675903
+    },
+    "responses": [
+      {
+        "question_id": 9158,
+        "question_text": "Pourquoi peut-on dire que le racisme évoqué dans le texte est à la fois normalisé et décomplexé en Corse ?",
+        "user_answer": "car il sépare les deux mers, la méditérranée et tyrrhénienne, relie plusieurs communes et porte un lourd souvenir du passé de la 2nde gm",
+        "date_sent": "2026-04-07T16:44:59.308888",
+        "evaluation": {
+          "score": 1,
+          "feedback": "Ta réponse ne correspond absolument pas à la question posée. Tu as confondu le sujet avec des éléments géographiques et historiques sans lien avec le racisme évoqué dans le texte. Il est essentiel de te concentrer sur les idées principales du texte, notamment la normalisation et la banalisation du racisme à travers des violences symboliques et son ancrage dans les pratiques sociales.",
+          "cosine_similarity": 0,
+          "model": "mistral-medium"
+        }
+      },
+      {
+        "question_id": 9235,
+        "question_text": "Pourquoi la lutte contre le système mafieux en Corse est-elle décrite comme plus difficile qu'en Sicile ? Expliquez en vous appuyant sur les différences structurelles entre les deux régions.",
+        "user_answer": "Il s'est manifesté par la paghjella, revitalisée en 1955 par jacques luciani et l'abbé Filippi, puis par le Riacquistu, avec des groupes comme canta u populu corsu, à partir des années 70",
+        "date_sent": "2026-04-07T16:45:00.716239",
+        "evaluation": {
+          "score": 1,
+          "feedback": "Ta réponse est totalement hors sujet. La question porte sur les différences structurelles entre les systèmes mafieux en Corse et en Sicile, et non sur des expressions culturelles ou musicales. Il est important de te concentrer sur les éléments demandés, notamment la structure atomisée et désorganisée du système mafieux corse, par opposition à la hiérarchie sicilienne, pour expliquer la difficulté de la lutte.",
+          "cosine_similarity": 0,
+          "model": "mistral-medium"
+        }
+      },
+      {
+        "question_id": 9389,
+        "question_text": "Pourquoi le football, malgré son histoire conflictuelle, reste-t-il un pilier identitaire pour les Corses selon le texte ? Citez deux éléments clés mentionnés dans le document qui illustrent cette affirmation.",
+        "user_answer": "il est créé suite à la mission du père Landini en 1552 consistant à limiter les dérives du clergé corse. Les premiers cours y ont eu lieu en 1601 et son oratoire est exemplaire de l'art baroque",
+        "date_sent": "2026-04-07T16:45:03.286612",
+        "evaluation": {
+          "score": 1,
+          "feedback": "Ta réponse est complètement hors sujet et ne répond pas à la question posée. Le sujet abordé concerne le football comme pilier identitaire en Corse, et non l'histoire d'une institution religieuse ou éducative. Pour répondre correctement, il est nécessaire de se référer aux éléments clés du texte, tels que la mobilisation sociale autour du football et son importance culturelle, notamment à travers des exemples comme le Sporting Club de Bastia.",
+          "cosine_similarity": 0,
+          "model": "mistral-medium"
+        }
+      },
+      {
+        "question_id": 10040,
+        "question_text": "Pourquoi la création du GR20 est-elle considérée comme emblématique dans la stratégie de diversification touristique de la Corse ?",
+        "user_answer": "La raison vient des conséquences de la Révolution française, qui laissa Bastia comme chef-lieu du département. Le département est ensuite coupé en deux, puis réunifié par Napoléon en 1811, qui déclare Ajaccio comme chef lieu et non Bastia",
+        "date_sent": "2026-04-07T16:45:04.774436",
+        "evaluation": {
+          "score": 1,
+          "feedback": "Ta réponse est totalement hors sujet et ne traite en aucun cas de la création du GR20 ou de la stratégie touristique de la Corse. Il est essentiel de te concentrer sur les éléments demandés, notamment le rôle du GR20 dans la diversification touristique, son impact sur l’attractivité territoriale et la promotion des sports de nature.",
+          "cosine_similarity": 0,
+          "model": "mistral-medium"
+        }
+      }
+    ],
+    "timestamp": "2026-04-07T16:45:04.774436"
+  },
+  {
+    "config": {
+      "evaluator_models": [
+        "mistral-large-latest"
+      ],
+      "nb_evaluators": 1,
+      "with_final_evaluator": false,
+      "final_evaluator_model": "ministral-3b-latest",
+      "description": "1 eval(mistral-large-latest)"
+    },
+    "session_id": "a6cc8038-81ca-462e-af70-04f0955939d9",
+    "document_id": "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56",
+    "total_evaluation_time_seconds": 21.149853706359863,
+    "token_usage": {
+      "total_input_tokens": 3739,
+      "total_output_tokens": 520,
+      "total_tokens": 4259
+    },
+    "model_execution_times": {
+      "mistral-large-latest": 19.976544618606567
+    },
+    "responses": [
+      {
+        "question_id": 9158,
+        "question_text": "Pourquoi peut-on dire que le racisme évoqué dans le texte est à la fois normalisé et décomplexé en Corse ?",
+        "user_answer": "car il sépare les deux mers, la méditérranée et tyrrhénienne, relie plusieurs communes et porte un lourd souvenir du passé de la 2nde gm",
+        "date_sent": "2026-04-07T16:45:10.897316",
+        "evaluation": {
+          "score": 2,
+          "feedback": "Votre réponse ne correspond pas du tout à la question posée. Vous faites référence à des éléments géographiques et historiques sans lien avec le racisme évoqué dans le texte. Il est essentiel de se concentrer sur les manifestations du racisme décrites, notamment son caractère normalisé et décomplexé, ainsi que sur les exemples ou explications qui illustrent cette idée. Relisez attentivement le texte pour identifier ces éléments clés.",
+          "cosine_similarity": 0,
+          "model": "mistral-large-latest"
+        }
+      },
+      {
+        "question_id": 9235,
+        "question_text": "Pourquoi la lutte contre le système mafieux en Corse est-elle décrite comme plus difficile qu'en Sicile ? Expliquez en vous appuyant sur les différences structurelles entre les deux régions.",
+        "user_answer": "Il s'est manifesté par la paghjella, revitalisée en 1955 par jacques luciani et l'abbé Filippi, puis par le Riacquistu, avec des groupes comme canta u populu corsu, à partir des années 70",
+        "date_sent": "2026-04-07T16:45:16.554230",
+        "evaluation": {
+          "score": 1,
+          "feedback": "Votre réponse est complètement hors sujet. Vous évoquez des éléments culturels liés à la musique et à un mouvement de revitalisation identitaire, ce qui n’a aucun lien avec la question posée. Pour répondre correctement, il fallait analyser les différences structurelles entre les systèmes mafieux en Corse et en Sicile, en insistant sur l’organisation, la fragmentation et les spécificités géographiques et sociales de la Corse qui compliquent la lutte contre ce fléau.",
+          "cosine_similarity": 0,
+          "model": "mistral-large-latest"
+        }
+      },
+      {
+        "question_id": 9389,
+        "question_text": "Pourquoi le football, malgré son histoire conflictuelle, reste-t-il un pilier identitaire pour les Corses selon le texte ? Citez deux éléments clés mentionnés dans le document qui illustrent cette affirmation.",
+        "user_answer": "il est créé suite à la mission du père Landini en 1552 consistant à limiter les dérives du clergé corse. Les premiers cours y ont eu lieu en 1601 et son oratoire est exemplaire de l'art baroque",
+        "date_sent": "2026-04-07T16:45:21.131568",
+        "evaluation": {
+          "score": 1,
+          "feedback": "Votre réponse est totalement hors sujet. Vous mentionnez des éléments historiques liés à une institution religieuse et à l'art baroque, ce qui n'a aucun rapport avec la question posée sur le rôle du football dans l'identité corse. Pour répondre correctement, il fallait se concentrer sur les deux éléments clés soulignés dans le texte : la mobilisation identitaire autour du football et les exemples précis comme le Sporting Club de Bastia ou l'enthousiasme qu'il génère.",
+          "cosine_similarity": 0,
+          "model": "mistral-large-latest"
+        }
+      },
+      {
+        "question_id": 10040,
+        "question_text": "Pourquoi la création du GR20 est-elle considérée comme emblématique dans la stratégie de diversification touristique de la Corse ?",
+        "user_answer": "La raison vient des conséquences de la Révolution française, qui laissa Bastia comme chef-lieu du département. Le département est ensuite coupé en deux, puis réunifié par Napoléon en 1811, qui déclare Ajaccio comme chef lieu et non Bastia",
+        "date_sent": "2026-04-07T16:45:26.013636",
+        "evaluation": {
+          "score": 1,
+          "feedback": "Votre réponse est complètement éloignée de la question posée. Vous évoquez des éléments historiques liés à l'administration de la Corse et à la Révolution française, sans aucun lien avec la création du GR20 ou la stratégie de diversification touristique. Pour répondre correctement, il fallait se concentrer sur le rôle du GR20 dans le développement du tourisme en Corse, son impact sur l'image de l'île et son importance dans la structuration des activités de pleine nature.",
+          "cosine_similarity": 0,
+          "model": "mistral-large-latest"
+        }
+      }
+    ],
+    "timestamp": "2026-04-07T16:45:26.013636"
+  },
+  {
+    "config": {
+      "evaluator_models": [
+        "ministral-3b-latest",
+        "ministral-3b-latest",
+        "ministral-3b-latest"
+      ],
+      "nb_evaluators": 3,
+      "with_final_evaluator": true,
+      "final_evaluator_model": "ministral-3b-latest",
+      "description": "3 eval(ministral-3b-latest, ministral-3b-latest, ministral-3b-latest) + final(ministral-3b-latest)"
+    },
+    "session_id": "61962e85-50bd-4acf-ba61-783cae5263b2",
+    "document_id": "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56",
+    "total_evaluation_time_seconds": 9.282804250717163,
+    "token_usage": {
+      "total_input_tokens": 16401,
+      "total_output_tokens": 2444,
+      "total_tokens": 18845
+    },
+    "model_execution_times": {
+      "ministral-3b-latest": 6.669382810592651,
+      "final_ministral-3b-latest": 3.4858367443084717
+    },
+    "responses": [
+      {
+        "question_id": 9158,
+        "question_text": "Pourquoi peut-on dire que le racisme évoqué dans le texte est à la fois normalisé et décomplexé en Corse ?",
+        "user_answer": "car il sépare les deux mers, la méditérranée et tyrrhénienne, relie plusieurs communes et porte un lourd souvenir du passé de la 2nde gm",
+        "date_sent": "2026-04-07T16:45:30.958053",
+        "evaluation": {
+          "score": 1,
+          "feedback": "Les trois évaluateurs soulignent une réponse totalement déconnectée des attentes de la question. Aucune analyse pertinente du racisme intégré dans les structures sociales et culturelles de la Corse n'est apportée. Pour améliorer votre réponse, il serait crucial de : \n\n1. **Identifier explicitement** comment le racisme est intégré dans les dynamiques sociales et culturelles de la Corse, en lien avec les mécanismes de normalisation et de décomplexion mentionnés dans le contexte.\n\n2. **Citer des exemples concrets** ou des mécanismes symboliques (violences symboliques, absence de réprobation forte) pour illustrer ces liens.\n\n3. **Éviter les digressions** sur des éléments géographiques ou historiques qui ne répondent pas aux exigences de la question.\n\nCette synthèse montre que la réponse manque cruellement de profondeur et de pertinence par rapport aux attentes. Pensez à réorganiser vos idées pour répondre aux enjeux sociaux et culturels spécifiques à la question posée.",
+          "cosine_similarity": 0,
+          "model": "final_ministral-3b-latest"
+        }
+      },
+      {
+        "question_id": 9235,
+        "question_text": "Pourquoi la lutte contre le système mafieux en Corse est-elle décrite comme plus difficile qu'en Sicile ? Expliquez en vous appuyant sur les différences structurelles entre les deux régions.",
+        "user_answer": "Il s'est manifesté par la paghjella, revitalisée en 1955 par jacques luciani et l'abbé Filippi, puis par le Riacquistu, avec des groupes comme canta u populu corsu, à partir des années 70",
+        "date_sent": "2026-04-07T16:45:32.570276",
+        "evaluation": {
+          "score": 2,
+          "feedback": "Les évaluateurs ont relevé que votre réponse, bien que partiellement pertinente sur certains aspects culturels ou historiques de la Corse, ne répond pas aux exigences centrales de la question. Pour mieux répondre aux attentes, il faudrait approfondir l’analyse des **différences structurelles** entre la lutte contre les systèmes mafieux en Corse et en Sicile. Plus précisément, il faudrait explorer :\n\n- **La fragmentation sociale** et ses implications sur la cohésion régionale ou la résistance aux structures criminelles.\n- **L’absence ou la faiblesse d’une hiérarchie mafieuse unifiée** en Corse, et comment cela influence la gestion des affaires criminelles par les autorités.\n\nEn intégrant ces éléments, votre analyse pourrait mieux capturer les spécificités régionales demandées. Les événements culturels ou historiques, bien qu’intéressants, ne suffisent pas à eux seuls pour répondre à la question posée. Pensez à équilibrer votre réponse entre ces deux dimensions pour une évaluation plus complète.",
+          "cosine_similarity": 0,
+          "model": "final_ministral-3b-latest"
+        }
+      },
+      {
+        "question_id": 9389,
+        "question_text": "Pourquoi le football, malgré son histoire conflictuelle, reste-t-il un pilier identitaire pour les Corses selon le texte ? Citez deux éléments clés mentionnés dans le document qui illustrent cette affirmation.",
+        "user_answer": "il est créé suite à la mission du père Landini en 1552 consistant à limiter les dérives du clergé corse. Les premiers cours y ont eu lieu en 1601 et son oratoire est exemplaire de l'art baroque",
+        "date_sent": "2026-04-07T16:45:34.012120",
+        "evaluation": {
+          "score": 1,
+          "feedback": "Les trois évaluateurs soulignent que votre réponse ne couvre aucunement les aspects essentiels liés au football et à son rôle dans l’identité corses, comme demandé. Pour répondre correctement à la question, il serait indispensable d’aborder :\n\n- **La symbolique du football** comme vecteur d’unité et d’identité régionale.\n- **Son rôle dans la mobilisation sociale** et les dynamiques identitaires en Corse.\n\nEn intégrant ces éléments clés, votre analyse pourrait mieux refléter les attentes du texte. Les références historiques ou culturelles, bien que pertinentes en soi, ne suffisent pas à répondre à la question posée. Pensez à recentrer votre réflexion sur les aspects sportifs et identitaires demandés.",
+          "cosine_similarity": 0,
+          "model": "final_ministral-3b-latest"
+        }
+      },
+      {
+        "question_id": 10040,
+        "question_text": "Pourquoi la création du GR20 est-elle considérée comme emblématique dans la stratégie de diversification touristique de la Corse ?",
+        "user_answer": "La raison vient des conséquences de la Révolution française, qui laissa Bastia comme chef-lieu du département. Le département est ensuite coupé en deux, puis réunifié par Napoléon en 1811, qui déclare Ajaccio comme chef lieu et non Bastia",
+        "date_sent": "2026-04-07T16:45:35.456088",
+        "evaluation": {
+          "score": 1,
+          "feedback": "Votre réponse ne tient aucunement compte des éléments clés demandés concernant le GR20 et son impact sur la stratégie touristique de la Corse. Pour répondre correctement, il faudrait analyser comment ce sentier emblématique a contribué à :\n\n- **Valoriser l’image de la Corse comme destination d’aventure et d’exception**, en attirant des touristes recherchant des expériences uniques.\n- **Renforcer son attractivité touristique** en créant une identité régionale autour du sport, de la nature et des défis physiques.\n\nLes aspects historiques ou administratifs, bien que parfois pertinents, ne suffisent pas à répondre à la question posée. Pensez à recentrer votre analyse sur les dynamiques touristiques et fédératrices liées au GR20 pour une réponse plus complète et alignée avec les attentes.",
+          "cosine_similarity": 0,
+          "model": "final_ministral-3b-latest"
+        }
+      }
+    ],
+    "timestamp": "2026-04-07T16:45:35.456088"
+  }
+]

@@ -1,8 +1,4 @@
 # agents/qa_agent.py
-from typing import Optional
-
-import instructor
-import mistralai
 from atomic_agents import AtomicAgent, AgentConfig, BaseIOSchema
 from atomic_agents.context import SystemPromptGenerator, ChatHistory
 

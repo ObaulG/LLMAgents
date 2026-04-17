@@ -9,7 +9,8 @@ from agents.answer_evaluator_agent import AgentEvaluationResult
 # Suite de questions prédéfinies pour des fins de démonstration
 PREMADE_QUESTIONS_BY_DOCUMENT_ID = {
     "dbd5f14a9e6545880b0cd505583ea7d1fe1e8b3d" : [249, 370, 737, 786, 115],
-    "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56" : [2021, 1224, 1506, 1525, 1757]
+    #"8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56" : [2021, 1224, 1506, 1525, 1757]
+    "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56" : [9158, 9235, 9389, 10040, ]
 }
 
 class SessionMetadata(BaseModel):
