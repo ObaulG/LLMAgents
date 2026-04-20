@@ -1,9 +1,9 @@
 # 📄 LLMAgents - Système de Questions/Réponses sur Documents
 
-**Version** : 0.1.0  
-**Auteur** : Xenyi  
-**Date** : 2024-2025
+*Note: README généré par IA, en cours de validation...*
 
+**Version** : 0.1.0  
+**Auteur** : Obaul  
 ---
 
 ## 📋 Table des Matières
@@ -32,7 +32,7 @@
 Le système implique deux modes d'interaction principaux :
 
 - **🤖 ChatBot RAG** (`m3c-chatbot.html`) : Permet de poser des questions libres sur un corpus de documents avec récupération automatique des sources pertinentes (RAG - Retrieval Augmented Generation)
-- **📚 Chatbot Inversé M3C** (`pdf_chat_interface.html`) : Propose une session guidée avec des questions prédéfinies pour évaluer la compréhension d'un document spécifique
+- **📚 Chatbot Inversé M3C** (`pdf_chat_interface.html`) : Propose une session guidée avec des questions prédéfinies pour évaluer la compréhension d'un document spécifique.
 
 ---
 
@@ -148,7 +148,7 @@ graph TD
 
 ### Prérequis
 
-- **Python** : 3.10+
+- **Python** : 3.12
 - **PostgreSQL** : 15+ avec extension `pgvector`
 - **Node.js** : Optionnel (pour développement frontend)
 - **Ollama** : Optionnel (pour modèles locaux)
