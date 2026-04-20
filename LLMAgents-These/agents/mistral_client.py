@@ -1,7 +1,7 @@
 # dependencies.py
 import os
 import instructor
-import mistralai.client
+from mistralai.client import Mistral
 from fastapi import Depends, HTTPException
 from typing import Optional, Dict, Any
 from datetime import datetime, timedelta
@@ -276,7 +276,7 @@ class MistralAPIMonitor:
 _global_api_monitor = None
 
 
-def get_mistral_client(async_mode: bool = False) -> mistralai.Mistral:
+def get_mistral_client(async_mode: bool = False) -> Mistral:
     """
     Crée et retourne un client Mistral configuré avec Instructor.
     Lève une exception si la clé API n'est pas définie.
@@ -289,7 +289,7 @@ def get_mistral_client(async_mode: bool = False) -> mistralai.Mistral:
         )
 
     # Initialiser le client Mistral avec Instructor
-    client = instructor.from_mistral(mistralai.Mistral(api_key=MISTRAL_API_KEY),
+    client = instructor.from_mistral(Mistral(api_key=MISTRAL_API_KEY),
                                      use_async=async_mode)
     
     # Initialiser le moniteur global si ce n'est pas déjà fait

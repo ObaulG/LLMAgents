@@ -1,12 +1,10 @@
 import os
 from typing import Union, Literal, Optional
 import instructor
-from google.generativeai import GenerativeModel
 from instructor import Instructor, AsyncInstructor
-import mistralai
+from mistralai.client import Mistral
 from fastapi import HTTPException
 from openai import OpenAI, AsyncOpenAI
-import google.generativeai as genai
 
 
 GOOGLE_MODELS = ["gemma-3-4b-it", "gemma-3-12b-it", "gemma-3-27b-it"]
@@ -62,7 +60,7 @@ def _create_mistral_client(async_mode: bool) -> Union[Instructor, AsyncInstructo
         )
 
     client = instructor.from_mistral(
-        mistralai.Mistral(api_key=MISTRAL_API_KEY),
+        Mistral(api_key=MISTRAL_API_KEY),
         use_async=async_mode
     )
 
