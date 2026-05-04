@@ -16,7 +16,6 @@ DB_CONFIG= {
 }
 
 CHUNK_CHAR_SIZE = 2700
-DOCUMENTS_PATH = "C:\\Users\\xenyi\\Documents\\Ressources-Pro\\Thèse\\M3C-documents"
 
 # Initialisation des modèles
 llm = ChatMistralAI(

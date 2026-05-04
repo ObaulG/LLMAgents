@@ -45,6 +45,7 @@ from database.database import (get_db_connection,
 
 from agents.token_monitor import *
 
+from config import DOCUMENTS_PATH
 import asyncio
 if hasattr(asyncio, 'WindowsSelectorEventLoopPolicy'):
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -684,7 +685,7 @@ async def get_pdf(document_id: str):
 
     document_id = document_id.replace(".pdf", "")
     # note: pour l'instant, l'id du document est également son nom dans le dossier
-    file_path = f"C:/Users/xenyi/Documents/Ressources-Pro/Thèse/M3C-documents/{document_id}.pdf"
+    file_path = f"{DOCUMENTS_PATH}/{document_id}.pdf"
     if not os.path.exists(file_path):
         print("file not found...")
         raise HTTPException(status_code=404, detail="Fichier non trouvé")

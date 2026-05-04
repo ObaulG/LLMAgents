@@ -1,0 +1,1 @@
+from config import DOCUMENTS_PATH
