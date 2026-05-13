@@ -19,10 +19,11 @@
                 <h1>🤖 Chatbot RAG M3C</h1>
                 <p class="subtitle">Système de Questions/Réponses sur documents</p>
             </div>
-            <div class="header-nav">
-                <a href="m3c-chatbot.html" class="nav-link active">Interface Standard</a>
+             <div class="header-nav">
+                <a href="m3c-chatbot.html" class="nav-link">Interface Standard</a>
                 <span class="nav-separator">|</span>
                 <a href="question_session.html" class="nav-link">Interface PDF+Chat</a>
+                <span class="nav-separator">|</span>
             </div>
         </div>
 
@@ -40,12 +41,7 @@
                         <span class="setting-label">Reranking</span>
                     </label>
                 </div>
-                <div class="setting-item">
-                    <label class="setting-checkbox">
-                        <input type="checkbox" id="useOntology" checked>
-                        <span class="setting-label">Ontologie</span>
-                    </label>
-                </div>
+
                 <div class="setting-item">
                     <label class="setting-label">
                         Nb sources:
@@ -53,7 +49,20 @@
                     </label>
                 </div>
             </div>
-            
+
+            <!-- Sélecteur de document pour RAG -->
+            <div class="document-selector-container">
+                <label class="setting-label">
+                    <input type="checkbox" id="useSingleDocument" onchange="toggleDocumentSelector()">
+                    <span>RAG sur un document spécifique</span>
+                </label>
+                <div id="documentSelector" style="display: none; margin-top: 10px;">
+                    <select id="selectedDocumentRAG" class="document-select">
+                        <option value="">Chargement des documents...</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="model-selector">
                 <label for="model-select" class="model-selector-label">Modèle de langage</label>
                 <div class="model-select-container">

@@ -5,7 +5,8 @@ const API_URL_RAG = 'http://localhost:8000/api/query/rag';
 const API_URL_SIMPLE = 'http://localhost:8000/api/query/simple';
 const API_URL_COMPARE = 'http://localhost:8000/api/query/compare';
 
-let chatContainer, questionInput, sendButton, loading, modelSelect, selectedModelsDisplay;
+let chatContainer, questionInput, sendButton, loading, modelSelect, selectedModelsDisplay, selectedDocumentRAG;
+let documents = []; // holds the existing documents informations, filled in loadDocumentsId
 
 // Fonction pour mettre à jour l'affichage des modèles sélectionnés
 function updateSelectedModels() {
@@ -24,6 +25,50 @@ function updateSelectedModels() {
         badge.textContent = option.text;
         badgesContainer.appendChild(badge);
     });
+}
+
+// Fonction pour afficher/masquer le sélecteur
+function toggleDocumentSelector() {
+    const checkbox = document.getElementById("useSingleDocument");
+    const selectorDiv = document.getElementById("documentSelector");
+    selectorDiv.style.display = checkbox.checked ? "block" : "none";
+}
+
+// Fonction pour peupler le sélecteur
+function populateDocumentSelector() {
+    const selector = document.getElementById("selectedDocumentRAG");
+    selector.innerHTML = ""; // Vide le sélecteur
+
+    // Ajoute une option par défaut
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "Sélectionnez un document";
+    selector.appendChild(defaultOption);
+
+    // Ajoute les documents au sélecteur
+    documents.forEach(doc => {
+        const option = document.createElement("option");
+        option.value = doc.document_id;
+        option.textContent = doc.document_id;
+        selector.appendChild(option);
+    });
+
+    // Active le sélecteur
+    selector.disabled = false;
+}
+
+// Fonction pour charger les documents depuis l'API
+async function loadDocumentsId() {
+    try {
+        const response = await fetch("/api/documents");
+        if (!response.ok) throw new Error("Erreur lors du chargement des documents");
+        const data = await response.json();
+        documents = data.documents;
+        console.log(documents);
+        populateDocumentSelector();
+    } catch (error) {
+        console.error("Erreur:", error);
+    }
 }
 
 async function sendQuestion() {
@@ -51,7 +96,8 @@ async function sendQuestion() {
         k: parseInt(document.getElementById('numSources').value),
         use_rag: document.getElementById("useRAG").checked,
         use_reranking: document.getElementById('useReranking').checked,
-        use_ontology_enrichment: document.getElementById('useOntology').checked
+        use_ontology_enrichment: false,
+        rag_monodocument_id: selectedDocumentRAG.value,
     };
 
     if (params.models.length > 1) {
@@ -135,12 +181,16 @@ function showError(message) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    loadDocumentsId().catch(error => {
+        console.error("Erreur lors du chargement initial des documents:", error);
+    });
     chatContainer = document.getElementById('chatContainer');
     questionInput = document.getElementById('questionInput');
     sendButton = document.getElementById('sendButton');
     loading = document.getElementById('loading');
     modelSelect = document.getElementById('model-select');
     selectedModelsDisplay = document.getElementById('selectedModels');
+    selectedDocumentRAG = document.getElementById('selectedDocumentRAG');
 
     updateSelectedModels();
     modelSelect.addEventListener('change', updateSelectedModels);

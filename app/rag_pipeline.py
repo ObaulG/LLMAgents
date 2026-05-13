@@ -113,18 +113,22 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
                         final_prompt: Optional[str],
                         sources:Optional[List[RAGSource]],
                         k: int = 3,
+                        specified_document_id: Optional[str]=None,
                         **kwargs) -> tuple[BaseMessage, List[RAGSource], float]:
         """
         if preprocess_data does not contain the keys final_prompt and sources,
         then this function executes the preprocess.
         Then, it calls the LLM invocation method.
+        If specified_document_id exists, then the RAG will operate only on chunks from this
+        document.
         """
         if not (final_prompt or sources):
-            final_prompt, sources = await self.rag_preprocess(prompt, reranking, k)
+            final_prompt, sources = await self.rag_preprocess(prompt, reranking, k, specified_document_id)
             print("preprocess done")
         answer, total_time, consumed_energy_Wh = await self.query_simple(final_prompt, model, **kwargs)
 
         return answer, sources, total_time, consumed_energy_Wh
+
     def _init_llm_instances(self, load_local:bool = False):
         MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
         GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
@@ -185,7 +189,8 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
 
     async def _retrieve_top_k_chunks_from_db(self,
                                        prompt_embeddings: List[float],
-                                       k: int = 3) -> List[RAGSource]:
+                                       k: int = 3,
+                                       specified_document_id: Optional[str] = None) -> List[RAGSource]:
         """
         Recherche les k chunks les plus pertinents dans la base de données PostgreSQL,
         en utilisant la similarité cosinus entre les embeddings.
@@ -215,7 +220,8 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
             results = await database.get_top_k_similar_chunks_cossim(aconn,
                                                                      embedding=prompt_embeddings,
                                                                      model_name=self.embedder_name,
-                                                                     k=k)
+                                                                     k=k,
+                                                                     specified_document_id=specified_document_id)
 
             rag_sources = []
             for row in results:
@@ -307,9 +313,10 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
         return
 
     async def rag_preprocess(self,
-                       prompt: str,
-                       reranking: Optional[str],
-                       k: int = 3, ) -> tuple[str, List[RAGSource]]:
+                             prompt: str,
+                             reranking: Optional[str],
+                             k: int = 3,
+                             specified_document_id: Optional[str] = None) -> tuple[str, List[RAGSource]]:
         """
         Établit les étapes préliminaires du RAG :
         1. Transforme le prompt en embeddings.
@@ -319,6 +326,7 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
             prompt (str): Le texte du prompt.
             k (int): Nombre de chunks à retourner.
             reranking (str): optional operation to rerank the documents retrieved with another algorithm
+            specified_document_id (str): if specified, will compute only the given document
         Returns:
             list: Liste des k chunks les plus pertinents (avec leurs scores et métadonnées).
         """
@@ -329,7 +337,8 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
             prompt_embeddings = self._get_prompt_embeddings(prompt)
             # 2. Recherche les 3*k chunks les plus pertinents
             top_k_chunks = await self._retrieve_top_k_chunks_from_db(prompt_embeddings,
-                                                                     self.rag_rerank_ndocs_coeff*k)
+                                                                     self.rag_rerank_ndocs_coeff*k,
+                                                                     specified_document_id)
             # 3. Reranking pour garder k chunks
             print("reranking: {}".format(reranking))
             if reranking:

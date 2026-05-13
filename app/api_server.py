@@ -12,6 +12,7 @@ from contextlib import asynccontextmanager
 from unittest import case
 
 from fastapi import FastAPI, HTTPException, status
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from langchain_core.messages import BaseMessage
@@ -67,6 +68,7 @@ class QueryRequest(BaseModel):
     models: List[str] = Field(..., description="Modèles utilisés pour la génération")
     k: int = Field(3, description="Nombre de documents à récupérer", ge=1, le=20)
     use_rag: bool = Field(False, description="Utiliser le RAG pour s'appuyer sur des ressources existantes")
+    rag_monodocument_id: Optional[str]= Field(None, description="RAG sur un seul document dont on fournit l'identifiant")
     use_reranking: bool = Field(False, description="Utiliser le reranking pour améliorer les résultats")
     include_quantitative: bool = Field(True, description="Inclure les données quantitatives")
 
@@ -195,10 +197,11 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+app.mount("/static", StaticFiles(directory="app/static", html=True), name="static")
+
 # === CONFIGURATION CORS ===
 
-# Pour les tests en local, on autorise toutes les origines
-# En production, spécifier les domaines autorisés
+# TODO: spécifier les domaines autorisés
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # En production: ["http://localhost:3000", "https://votre-domaine.com"]
@@ -206,7 +209,6 @@ app.add_middleware(
     allow_methods=["*"],  # GET, POST, etc.
     allow_headers=["*"],  # Headers autorisés
 )
-
 # === INITIALISATION DU RAG ===
 def initialize_rag():
     """
@@ -379,7 +381,8 @@ async def query_rag(request: QueryRequest):
             k=request.k,
             reranking="bm25+" if request.use_reranking else None,
             final_prompt=None,
-            sources=None
+            sources=None,
+            specified_document_id=request.rag_monodocument_id,
         )
     except Exception as e:
         print(f"[{datetime.now().isoformat()}] ERREUR: {str(e)}")
@@ -406,7 +409,8 @@ async def query_compare(request: QueryRequest):
     if request.use_rag:
         final_prompt, best_documents = await rag_pipeline.rag_preprocess(prompt=request.question,
                                                                          reranking=reranking,
-                                                                         k=request.k)
+                                                                         k=request.k,
+                                                                         specified_document_id=request.rag_monodocument_id,)
         print(best_documents)
     # we keep the query_simple function to get the answer
     tasks = [
@@ -440,6 +444,59 @@ async def query_compare(request: QueryRequest):
         total_time=time.time() - time_start,
         metadata={}
     )
+
+
+@app.post("/api/query/single-doc-rag",
+          response_model=QueryResponse,
+          tags=["Query"])
+async def query_single_doc_rag(request: QueryRequest):
+    """
+    Pose une question au système en utilisant le RAG sur un seul document spécifique
+
+    Args:
+        request: QueryRequest contenant la question et les paramètres
+
+    Returns:
+        QueryResponse avec la réponse et les sources
+
+    Raises:
+        HTTPException 503: Si le système RAG n'est pas initialisé
+        HTTPException 500: Si une erreur se produit lors du traitement
+    """
+    # Vérifier que le RAG est initialisé
+    if rag_pipeline is None:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Le système RAG n'est pas encore initialisé. Veuillez réessayer dans quelques instants."
+        )
+
+    # Vérifier qu'un document_id est fourni
+    if not request.document_id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Aucun document_id spécifié pour le RAG sur un seul document."
+        )
+
+    try:
+        print(f"\n[{datetime.now().isoformat()}] Nouvelle requête single-doc RAG: {request.question}")
+        answer, retrieval_results, total_time, consumed_energy_Wh = await rag_pipeline.query_single_doc_rag(
+            prompt=request.question,
+            model=request.models[0],
+            k=request.k,
+            document_id=request.document_id,
+            reranking="bm25+" if request.use_reranking else None,
+            final_prompt=None,
+            sources=None
+        )
+    except Exception as e:
+        print(f"[{datetime.now().isoformat()}] ERREUR: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Erreur lors du traitement de la requête: {str(e)}"
+        )
+    response = _build_query_rag_response(request, answer, retrieval_results, total_time, consumed_energy_Wh)
+
+    return response
 
 @app.post("/api/sessions/init/{document_id}",
           response_model=SessionStatus)
@@ -863,3 +920,6 @@ if __name__ == "__main__":
         log_level="info",
         loop="asyncio"
     )
+
+
+

@@ -301,7 +301,11 @@ async def get_chunks_by_question_ids(question_ids: list[int], conn):
         ]
 
 
-async def get_top_k_similar_chunks_cossim(conn, embedding: list[float], model_name: str, k=3):
+async def get_top_k_similar_chunks_cossim(conn,
+                                          embedding: list[float],
+                                          model_name: str,
+                                          k=3,
+                                          specified_document_id: Optional[str] = None):
     """
     Récupère les k meilleurs documents en fonction de la similarité cosinus avec un embedding donné.
 
@@ -315,6 +319,7 @@ async def get_top_k_similar_chunks_cossim(conn, embedding: list[float], model_na
         list: Liste des k meilleurs documents avec leur score de similarité.
     """
     print("get_top_k_similar_chunks")
+    print(specified_document_id)
     async with conn.cursor() as cur:
         # Requête pour récupérer les k meilleurs documents
         query = """
@@ -330,12 +335,13 @@ async def get_top_k_similar_chunks_cossim(conn, embedding: list[float], model_na
                          JOIN \
                      chunks c ON ce.chunk_id = c.chunk_id
                 WHERE ce.model_name = %s
+                AND (%s::text IS NULL OR c.document_id = %s::text)
                 ORDER BY similarity DESC
                     LIMIT %s;
                 """
 
         # Exécuter la requête
-        await cur.execute(query, (embedding, model_name, k))
+        await cur.execute(query, (embedding, model_name, specified_document_id, specified_document_id, k))
         rows = await cur.fetchall()
 
         # Récupérer les noms des colonnes
