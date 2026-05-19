@@ -1,0 +1,28 @@
+# Dossiers de sessions
+rag_sessions/
+sessions_backup.json
+rag_sessions_backup.json
+
+# Exports générés par l'API
+exports/
+
+# Fichiers temporaires
+*.tmp
+*.swp
+
+# Cache Python
+__pycache__/
+*.py[cod]
+
+# Environnement
+.env
+
+# IDE
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# OS
+.DS_Store
+Thumbs.db

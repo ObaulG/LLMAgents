@@ -1,0 +1,49 @@
+interaction_id,timestamp,question,answer,model,k,use_reranking,total_time,consumed_energy_Wh,num_sources,document_id
+6fc5eb88-4596-40e8-84b6-7a928de8fa2b,2026-05-19T15:35:51.649174,Liens politiques entre clans et mafia ?,"Les extraits de documents révèlent des **liens étroits entre les clans politiques, le système clientéliste et les organisations mafieuses en Corse**, bien que les dynamiques diffèrent de celles de la mafia sicilienne. Voici une synthèse structurée :
+
+---
+
+### **1. Imbrication entre sphères politique, économique et criminelle**
+- **Système clanique et clientéliste** :
+  Les élus corses, souvent issus de réseaux forgés dans les cabinets ministériels, **contrôlent les nominations, les emplois et les ressources**, renforçant une clientèle dépendante. Ce système favorise les **alliances entre pouvoir politique et acteurs économiques/criminels** pour maintenir leur influence.
+  *Exemple* : Les ""accintances peu claires"" entre politiciennes, affairistes et mouvements corsistes ([Document 0]).
+  *Source* : [Document 1].
+
+- **Porosité avec le banditisme** :
+  Dès les années 1970, le **grand banditisme** (ex. : ""Brise de mer"", ""Petit Bar"") entre en conflit avec les nationalistes, mais des **collaborations émergent** via des mécanismes comme la levée de l’""impôt révolutionnaire"" par les clandestins. Ces liens sont symbolisés par des affaires comme celle de **Cavallo** ou du **golf de Sperone**, impliquant des franges nationalistes (Cuncolta Naziunalista) et des réseaux criminels.
+  *Source* : [Document 2].
+
+- **Corruption et trafics** :
+  Les **luttes pour le foncier et les projets immobiliers** (secteur clé de l’économie corse) sont infiltrées par des logiques mafieuses, avec des **assassinats ciblés** (ex. : président de la Chambre de commerce de Corse-du-Sud en 2012) révélant l’emprise des réseaux sur les institutions.
+  *Source* : [Document 0].
+
+---
+
+### **2. Spécificités corses vs. mafia sicilienne**
+- **Structure atomisée** :
+  Contrairement à la **mafia sicilienne** (hiérarchisée en ""coupole""), la criminalité corse est **fragmentée** en multiples groupes locaux (ex. : ""Bergers braqueurs"" du Niolu), reflétant une société plus égalitaire et un relief cloisonné. Cette dispersion rend le système **plus difficile à démanteler**, mais n’empêche pas les **imbrications systémiques** entre politique, économie et crime.
+  *Source* : [Document 0].
+
+- **Légitimité historique** :
+  Le banditisme corse, parfois **proche du pouvoir gaulliste** ([Document 2]), s’ancre dans des dynamiques locales (ex. : conflits fonciers), tandis que la mafia sicilienne découle d’une histoire féodale (grands domaines encadrés par les *gabellotti*).
+  *Source* : [Document 0].
+
+---
+
+### **3. Réactions institutionnelles et sociales**
+- **Outils juridiques** :
+  L’État français s’inspire de l’Italie (ex. : **loi Perben II**, juridictions interrégionales, statut de ""repenti"") pour cibler le **volet financier** des réseaux, mais la lutte reste complexe en raison de leur **caractère décentralisé**.
+  *Source* : [Document 0].
+- **Mobilisations citoyennes** :
+  Des collectifs comme **A Maffia Nò a Vita lè** (2020) montrent une prise de conscience croissante, mais le système persiste en raison de son ancrage historique et de la **complicité de certains élus**.
+  *Source* : [Document 0].
+
+---
+### **Conclusion**
+Les liens entre **clans politiques et mafia** en Corse reposent sur :
+1. Un **système clientéliste** où les élus contrôlent les ressources et entretiennent des alliances avec des acteurs économiques/criminels ([Document 1]).
+2. Des **collaborations ponctuelles** entre nationalistes et banditisme, notamment via des mécanismes financiers ([Document 2]).
+3. Une **infiltration des institutions** (assassinats de figures économiques, trafics) dans un contexte de **fragmentation des réseaux** ([Document 0]).
+
+Ces dynamiques diffèrent de la mafia sicilienne par leur **absence de structure unifiée**, mais leur **impact sur la société** (corruption, violences) est tout aussi profond.",mistral-medium,3,False,18.80589246749878,0.0,3,8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56
+9ee7e53e-c093-47ff-93f8-96bc22a110d2,2026-05-19T15:36:01.369103,Quels sont les autres sports pratiqués ?,Je n'ai pas assez d'informations pour répondre à cette question (les extraits de documents ne mentionnent pas les sports pratiqués en Corse).,mistral-medium,3,False,1.0219600200653076,0.0,3,8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56

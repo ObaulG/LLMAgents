@@ -246,7 +246,7 @@ async function sendMessage() {
     const sessionResponse = await response.json();
 
     /*
-    class SessionResponse(BaseModel):
+    class QuestionSessionResponse(BaseModel):
     session_status: SessionStatus
     computed_message_type: str
     # TODO: utiliser une structure pour indiquer les données de consommation
@@ -290,45 +290,33 @@ async function sendMessage() {
 
 
 // Fonction pour exporter les questions et réponses en CSV
-function exportToCSV() {
-    // Récupérer les données depuis localStorage
-    const questionsText = JSON.parse(localStorage.getItem('questionsText') || '[]');
-    const userMessages = []; // Nous allons collecter les messages de l'utilisateur
-    
-    // Récupérer tous les messages du chat pour extraire les réponses utilisateur
-    const chatMessages = document.querySelectorAll('.message.user');
-    chatMessages.forEach(msg => {
-        userMessages.push(msg.textContent.trim());
-    });
-    
-    // Créer le contenu CSV
-    let csvContent = "data:text/csv;charset=utf-8,";
-    csvContent += "Question,Réponse\n"; // En-tête
-    
-    // Ajouter chaque question et sa réponse correspondante
-    for (let i = 0; i < questionsText.length && i < userMessages.length; i++) {
-        const question = questionsText[i];
-        const answer = userMessages[i];
-        
-        // Échapper les guillemets et les retours à la ligne pour le CSV
-        const escapedQuestion = question ? `"${question.replace(/"/g, '""')}"` : '';
-        const escapedAnswer = answer ? `"${answer.replace(/"/g, '""')}"` : '';
-        
-        csvContent += `${escapedQuestion},${escapedAnswer}\n`;
+async function exportToCSV() {
+    const sessionId = localStorage.getItem('sessionId');
+    if (!sessionId) {
+        alert('Aucune session active trouvée');
+        return;
     }
     
-    // Créer un lien pour télécharger le fichier
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', 'questions_reponses.csv');
-    document.body.appendChild(link);
-    
-    // Déclencher le téléchargement
-    link.click();
-    
-    // Supprimer le lien
-    document.body.removeChild(link);
+    try {
+        const response = await fetch(`/api/sessions/export/${sessionId}`);
+        if (!response.ok) {
+            throw new Error('Erreur lors de l\'export');
+        }
+        
+        // Le serveur retourne un FileResponse, déclencher le téléchargement
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `session_${sessionId}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert('Erreur lors de l\'export CSV');
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

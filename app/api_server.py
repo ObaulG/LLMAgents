@@ -26,7 +26,7 @@ from starlette.responses import JSONResponse
 
 from rag_pipeline import RAGPipeline, RetrievalResult, RAGSource
 from question_session import (PREMADE_QUESTIONS_BY_DOCUMENT_ID,
-                              SessionManager,
+                              QuestionSessionManager,
                               EvaluateRequest,
                               UserResponse,
                               SessionStatus,
@@ -48,6 +48,9 @@ from agents.token_monitor import *
 
 from config import DOCUMENTS_PATH
 import asyncio
+
+from rag_session import RAGSessionManager, RAGSession, RAGInteraction
+
 if hasattr(asyncio, 'WindowsSelectorEventLoopPolicy'):
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
@@ -71,6 +74,7 @@ class QueryRequest(BaseModel):
     rag_monodocument_id: Optional[str]= Field(None, description="RAG sur un seul document dont on fournit l'identifiant")
     use_reranking: bool = Field(False, description="Utiliser le reranking pour améliorer les résultats")
     include_quantitative: bool = Field(True, description="Inclure les données quantitatives")
+    session_id: Optional[str] = Field(None, description="ID de session pour récupérer l'historique des messages")
 
     model_config = ConfigDict(
         json_schema_extra={
@@ -130,11 +134,11 @@ class LLMCallData(BaseModel):
     consumed_energy_Wh: Optional[float] = Field(None, description="Consommation estimée pour des modèles en local.")
     total_time: Optional[float]
 
-class SessionMessage(BaseModel):
+class QuestionSessionMessage(BaseModel):
     session_id: str
     user_message: str
 
-class SessionResponse(BaseModel):
+class QuestionSessionResponse(BaseModel):
     session_status: SessionStatus
     computed_message_type: str
     # TODO: utiliser une structure pour indiquer les données de consommation
@@ -158,7 +162,9 @@ qa_agent = get_qa_agent()
 evaluation_agent = get_evaluator_agent("mistral-small")
 final_evaluator = get_final_evaluator_agent("mistral-small")
 message_ev_agent = get_message_type_agent()
-session_manager = SessionManager()
+question_session_manager = QuestionSessionManager()
+rag_session_manager = RAGSessionManager()
+
 models_evaluator = ["ministral-8b-latest"]
 
 # Contient les instances d'agent effectuant les évaluations pour chaque modèle
@@ -175,8 +181,8 @@ async def lifespan(app: FastAPI):
     yield
     # Shutdown (si nécessaire)
     print("Arrêt du serveur : sauvegarde des sessions...")
-    for session_id in session_manager.sessions:
-        status = session_manager.get_session_status(session_id)
+    for session_id in question_session_manager.sessions:
+        status = question_session_manager.get_session_status(session_id)
         session_dict = session_status_to_dict(status)
         session_dict["metadata"] = {
             "llm_used": "mistral-7b",
@@ -451,7 +457,8 @@ async def query_compare(request: QueryRequest):
           tags=["Query"])
 async def query_single_doc_rag(request: QueryRequest):
     """
-    Pose une question au système en utilisant le RAG sur un seul document spécifique
+    Pose une question au système en utilisant le RAG sur un seul document spécifique.
+    Sauvegarde également l'historique d'une session utilisateur
 
     Args:
         request: QueryRequest contenant la question et les paramètres
@@ -471,19 +478,34 @@ async def query_single_doc_rag(request: QueryRequest):
         )
 
     # Vérifier qu'un document_id est fourni
-    if not request.document_id:
+    if not request.rag_monodocument_id:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Aucun document_id spécifié pour le RAG sur un seul document."
         )
 
+    # Récupérer l'historique de la session si session_id est fourni
+    session_messages = []
+    print("session_id:", request.session_id)
+    if request.session_id:
+        session = rag_session_manager.get_session(request.session_id)
+        #print(session.to_messages())
+        # list of {"role": "user"|"assistant", "content": "..."}
+        session_messages.extend(session.to_messages())
     try:
         print(f"\n[{datetime.now().isoformat()}] Nouvelle requête single-doc RAG: {request.question}")
-        answer, retrieval_results, total_time, consumed_energy_Wh = await rag_pipeline.query_single_doc_rag(
-            prompt=request.question,
+        # Ajouter l'historique au prompt si disponible
+        prompt_with_history = request.question
+        if session_messages:
+            history_text = "\n\n".join([message["content"] for message in session_messages])
+            #print(history_text)
+            prompt_with_history = f"Historique de la session:\n{history_text}\n\nNouvelle question: {request.question}"
+            print(f"{len(session_messages)} messages dans la session")
+        answer, retrieval_results, total_time, consumed_energy_Wh = await rag_pipeline.query_rag(
+            prompt=prompt_with_history,
             model=request.models[0],
             k=request.k,
-            document_id=request.document_id,
+            specified_document_id=request.rag_monodocument_id,
             reranking="bm25+" if request.use_reranking else None,
             final_prompt=None,
             sources=None
@@ -494,20 +516,35 @@ async def query_single_doc_rag(request: QueryRequest):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Erreur lors du traitement de la requête: {str(e)}"
         )
+
+    print("creating RAGInteraction")
+
+    rag_interaction = RAGInteraction(
+        question=request.question,
+        answer=answer.content,
+        sources=retrieval_results,
+        model=request.models[0],
+        k=request.k,
+        use_reranking=request.use_reranking,
+        total_time=total_time,
+        consumed_energy_Wh=consumed_energy_Wh)
+    #print(rag_interaction)
+    rag_session_manager.add_interaction(session_id=request.session_id,
+                                        interaction=rag_interaction)
     response = _build_query_rag_response(request, answer, retrieval_results, total_time, consumed_energy_Wh)
 
     return response
 
-@app.post("/api/sessions/init/{document_id}",
+@app.post("/api/sessions/questions/init/{document_id}",
           response_model=SessionStatus)
-async def init_session(document_id: str,
-                       premade_session: bool = True):
+async def init_question_session(document_id: str,
+                                premade_session: bool = True):
     """
-    Initialise une nouvelle session pour un document donné.
+    Initialise une nouvelle session de questions/réponses pour un document donné.
     Retourne l'ID de la session et les questions générées.
     """
 
-    session_id = session_manager.create_session(document_id, premade_session)
+    session_id = question_session_manager.create_session(document_id, premade_session)
     if not premade_session:
         # TODO: pour plus tard, en récupérant l'historique de l'utilisateur
         #       et éventuellement ses préférences. Suite de questions recommandées
@@ -531,14 +568,14 @@ async def init_session(document_id: str,
 
     print(questions_texts)
     print(question_pages)
-    session_manager.add_questions(session_id, questions_ids, questions_texts, question_pages)
+    question_session_manager.add_questions(session_id, questions_ids, questions_texts, question_pages)
 
-    return session_manager.get_session_status(session_id)
+    return question_session_manager.get_session_status(session_id)
 
 
 @app.post("/api/sessions/message",
-          response_model=SessionResponse)
-async def submit_message(request: SessionMessage):
+          response_model=QuestionSessionResponse)
+async def submit_message(request: QuestionSessionMessage):
     """
     Ajoute un message à la conversation d'une session. L'agent analyse la réponse pour vérifier
     si c'est la réponse à la question en cours, ou une demande de contexte supplémentaire.
@@ -550,7 +587,7 @@ async def submit_message(request: SessionMessage):
     session_id = request.session_id
     user_message = request.user_message
 
-    session = session_manager.get_session(session_id)
+    session = question_session_manager.get_session(session_id)
     if not session:
         raise HTTPException(status_code=404, detail="Session non trouvée")
 
@@ -558,7 +595,7 @@ async def submit_message(request: SessionMessage):
         logging.error("Evaluateurs non initialisés")
         raise HTTPException(status_code=500, detail="Evaluateurs non initialisés")
 
-    current_question_id = session_manager.get_current_question_id(session_id)
+    current_question_id = question_session_manager.get_current_question_id(session_id)
     if not current_question_id:
         raise HTTPException(status_code=500, detail="Erreur détectée lors du traitement de la session")
 
@@ -583,6 +620,14 @@ async def submit_message(request: SessionMessage):
     new_question = False
     is_finished = False
     message = ""
+    user_response = UserResponse(
+        question_id=current_question_id,
+        question_text=question['content'],
+        user_answer=user_message,
+        date_sent=datetime.now(),
+        evaluation=None,
+        message_type=message_type
+    )
     match message_type:
         case "réponse":
             if not question["answers"]:
@@ -638,22 +683,12 @@ async def submit_message(request: SessionMessage):
                 final_evaluation = evaluations[0]
 
             evaluation_result = from_AgentEvaluationResult_to_EvaluationResult(final_evaluation)
-            user_response = UserResponse(
-                question_id=current_question_id,
-                question_text=question['content'],
-                user_answer=user_message,
-                date_sent=datetime.now(),
-                evaluation=evaluation_result
-            )
-
-            #mettre à jour la session
-            session_manager.add_response(session_id, user_response)
-
+            user_response.evaluation = evaluation_result
             if evaluation_result.score >= 7:
                 # Si le score est suffisant, passer à la question suivante
                 # peut également marquer la fin de la session si c'était la dernière qst
-                session_manager.increment_current_index(session_id)
-                is_finished = session_manager.is_finished(session_id)
+                question_session_manager.increment_current_index(session_id)
+                is_finished = question_session_manager.is_finished(session_id)
 
                 if not is_finished:
                     new_question = True
@@ -675,8 +710,13 @@ async def submit_message(request: SessionMessage):
             pass
 
     total_time = time.time() - start_time
-    session_response = SessionResponse(
-        session_status=session_manager.get_session_status(session_id),
+
+    print("user response: ", user_response)
+    # mettre à jour la session
+    question_session_manager.add_response(session_id, user_response)
+
+    session_response = QuestionSessionResponse(
+        session_status=question_session_manager.get_session_status(session_id),
         computed_message_type=message_type,
         message=message,
         new_question=new_question,
@@ -691,19 +731,29 @@ async def submit_message(request: SessionMessage):
     )
     return session_response
 
-@app.get("/api/sessions/{session_id}")
-async def get_session(session_id: str) -> SessionStatus:
+@app.get("/api/sessions/rag/init/{document_id}")
+async def create_rag_session(document_id: str) -> dict:
     """
-    Récupère l'état actuel d'une session.
+    Créée un session_id de RAG retourné à l'utilisateur
     """
-    return
+    session_id = rag_session_manager.create_session(document_id)
+    print("session created : ", session_id)
+    return {"session_id": session_id}
 
-@app.get("/api/sessions/export/{session_id}")
-async def export_session(session_id: str):
+@app.get("/api/sessions/rag/{rag_session_id}")
+async def get_rag_session(rag_session_id: str) -> RAGSession:
+    """
+    Récupère l'état actuel d'une RAGSession.
+    """
+    print("retrieving session: ", rag_session_id)
+    session = rag_session_manager.get_session(rag_session_id)
+    return session
+@app.get("/api/sessions/questions/export/{session_id}")
+async def export_question_session(session_id: str):
     """
     Exporte les réponses d'une session au format CSV.
     """
-    session = session_manager.get_session(session_id)
+    session = question_session_manager.get_session(session_id)
     if not session:
         raise HTTPException(status_code=404, detail="Session non trouvée")
 
@@ -718,24 +768,49 @@ async def export_session(session_id: str):
     # Écrire le CSV
     with open(filepath, mode="w", newline="", encoding="utf-8") as csvfile:
         fieldnames = [
-            "timestamp",
-            "question",
-            "expected_answer",
+            "date_sent",
+            "question_text",
             "user_answer",
+            "question_id",
+            "message_type",
             "score",
             "feedback",
-            "cosine_similarity",
+            "model",
         ]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
+        prev_question = None
         for response in session["responses"]:
-            writer.writerow(response.dict())
+            row = {
+                "date_sent": response.date_sent.isoformat() if hasattr(response, "date_sent") and response.date_sent else "",
+                "question_text": response.question_text if hasattr(response, "question_text") else "",
+                "user_answer": response.user_answer if hasattr(response, "user_answer") else "",
+                "question_id": response.question_id if hasattr(response, "question_id") else "",
+                "message_type": response.message_type if hasattr(response, "message_type") else "",
+                "score": response.evaluation.score if hasattr(response, "evaluation") and response.evaluation and hasattr(response.evaluation, "score") else "",
+                "feedback": response.evaluation.feedback if hasattr(response, "evaluation") and response.evaluation and hasattr(response.evaluation, "feedback") else "",
+                "model": response.evaluation.model if hasattr(response, "evaluation") and response.evaluation and hasattr(response.evaluation, "model") else "",
+            }
+            if row["question_text"] == prev_question:
+                row["question_text"] = ""
+            else:
+                prev_question = row["question_text"]
+            writer.writerow(row)
 
-    return JSONResponse(
-        content={"message": "Export réussi", "filename": filename},
-        headers={"Location": f"/static/exports/{filename}"},
-    )
+    return FileResponse(filepath, media_type="text/csv", filename=filename)
+@app.get("/api/sessions/rag/export/{session_id}")
+async def export_rag_session(session_id: str):
+
+    # writes the csv
+    file_path = "rag_sessions_csv/{session_id}.csv".format(session_id=session_id)
+    print("creating file at", file_path)
+
+    success = rag_session_manager.export_session_to_csv(session_id)
+    if not success:
+        raise HTTPException(status_code=500, detail="Erreur lors de la création du fichier CSV. Veuillez réessayer plus tard.")
+
+    return FileResponse(file_path, media_type="text/csv", filename=file_path)
 
 @app.get("/get_pdf")
 async def get_pdf(document_id: str):
@@ -910,6 +985,11 @@ if __name__ == "__main__":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     print("Event loop policy:", asyncio.get_event_loop_policy())
     print("Event loop type:", type(asyncio.get_event_loop()))
+
+    print("cwd =", os.getcwd())
+    print("exists =", os.path.exists("rag_sessions_csv"))
+    print("absolute =", os.path.abspath("rag_sessions_csv"))
+
     print("=" * 60 + "\n")
     print(torch.cuda.is_available())
     uvicorn.run(
@@ -920,6 +1000,7 @@ if __name__ == "__main__":
         log_level="info",
         loop="asyncio"
     )
+
 
 
 

@@ -1,0 +1,261 @@
+[
+  {
+    "session_id": "75980de1-55af-4775-aaab-b00458459c24",
+    "document_id": "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56",
+    "current_index": 0,
+    "completed": false,
+    "created_at": "2026-05-16T16:48:12.944419",
+    "time_elapsed_secs": 2960,
+    "responses": [],
+    "questions_ids": [
+      9158,
+      9235,
+      9389,
+      10040
+    ],
+    "questions_text": [
+      "Pourquoi peut-on dire que le racisme évoqué dans le texte est à la fois normalisé et décomplexé en Corse ?",
+      "Pourquoi la lutte contre le système mafieux en Corse est-elle décrite comme plus difficile qu'en Sicile ? Expliquez en vous appuyant sur les différences structurelles entre les deux régions.",
+      "Pourquoi le football, malgré son histoire conflictuelle, reste-t-il un pilier identitaire pour les Corses selon le texte ? Citez deux éléments clés mentionnés dans le document qui illustrent cette affirmation.",
+      "Pourquoi la création du GR20 est-elle considérée comme emblématique dans la stratégie de diversification touristique de la Corse ?"
+    ],
+    "pages": [
+      43,
+      46,
+      53,
+      81
+    ],
+    "metadata": {
+      "llm_used": "mistral-7b",
+      "number_of_agents": 3,
+      "server_shutdown_at": "2026-05-16T17:37:33.691313"
+    }
+  },
+  {
+    "session_id": "8387c856-2807-4837-8d70-0b132cf956a4",
+    "document_id": "dbd5f14a9e6545880b0cd505583ea7d1fe1e8b3d",
+    "current_index": 0,
+    "completed": false,
+    "created_at": "2026-05-16T16:48:18.341860",
+    "time_elapsed_secs": 2955,
+    "responses": [],
+    "questions_ids": [
+      249,
+      370,
+      737,
+      786,
+      115
+    ],
+    "questions_text": [
+      "Pourquoi le col de Teghime est-il considéré comme un lieu symbolique pour les Bastiais ?",
+      "Comment le mouvement de revitalisation culturelle corse, appelé 'Riacquistu', s'est-il manifesté dans les années 1970, notamment à travers la musique ?",
+      "En quoi le collège Simon-Jean Vinciguerra est-il considéré comme un 'monument vivant' selon le texte ?",
+      "Pourquoi la ville de Bastia a-t-elle pu ressentir un sentiment d'injustice envers Ajaccio en 1811 ?",
+      "Pourquoi peut-on dire que Sermanu est un symbole de résistance dans le contexte du chant corse ?"
+    ],
+    "pages": [
+      16,
+      31,
+      76,
+      82,
+      32
+    ],
+    "metadata": {
+      "llm_used": "mistral-7b",
+      "number_of_agents": 3,
+      "server_shutdown_at": "2026-05-16T17:37:33.693207"
+    }
+  },
+  {
+    "session_id": "7a966b8b-d87f-4098-a7aa-4d49efd6f877",
+    "document_id": "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56",
+    "current_index": 0,
+    "completed": false,
+    "created_at": "2026-05-16T18:13:05.585868",
+    "time_elapsed_secs": 1468,
+    "responses": [],
+    "questions_ids": [
+      9158,
+      9235,
+      9389,
+      10040
+    ],
+    "questions_text": [
+      "Pourquoi peut-on dire que le racisme évoqué dans le texte est à la fois normalisé et décomplexé en Corse ?",
+      "Pourquoi la lutte contre le système mafieux en Corse est-elle décrite comme plus difficile qu'en Sicile ? Expliquez en vous appuyant sur les différences structurelles entre les deux régions.",
+      "Pourquoi le football, malgré son histoire conflictuelle, reste-t-il un pilier identitaire pour les Corses selon le texte ? Citez deux éléments clés mentionnés dans le document qui illustrent cette affirmation.",
+      "Pourquoi la création du GR20 est-elle considérée comme emblématique dans la stratégie de diversification touristique de la Corse ?"
+    ],
+    "pages": [
+      43,
+      46,
+      53,
+      81
+    ],
+    "metadata": {
+      "llm_used": "mistral-7b",
+      "number_of_agents": 3,
+      "server_shutdown_at": "2026-05-16T18:37:33.945448"
+    }
+  },
+  {
+    "session_id": "e1b4f426-a018-457d-b3a3-100207dda6a8",
+    "document_id": "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56",
+    "current_index": 0,
+    "completed": false,
+    "created_at": "2026-05-17T13:50:06.147663",
+    "time_elapsed_secs": 1238,
+    "responses": [],
+    "questions_ids": [
+      9158,
+      9235,
+      9389,
+      10040
+    ],
+    "questions_text": [
+      "Pourquoi peut-on dire que le racisme évoqué dans le texte est à la fois normalisé et décomplexé en Corse ?",
+      "Pourquoi la lutte contre le système mafieux en Corse est-elle décrite comme plus difficile qu'en Sicile ? Expliquez en vous appuyant sur les différences structurelles entre les deux régions.",
+      "Pourquoi le football, malgré son histoire conflictuelle, reste-t-il un pilier identitaire pour les Corses selon le texte ? Citez deux éléments clés mentionnés dans le document qui illustrent cette affirmation.",
+      "Pourquoi la création du GR20 est-elle considérée comme emblématique dans la stratégie de diversification touristique de la Corse ?"
+    ],
+    "pages": [
+      43,
+      46,
+      53,
+      81
+    ],
+    "metadata": {
+      "llm_used": "mistral-7b",
+      "number_of_agents": 3,
+      "server_shutdown_at": "2026-05-17T14:10:44.917729"
+    }
+  },
+  {
+    "session_id": "5d075e51-722b-4b9b-b8ad-0e711ee8d68c",
+    "document_id": "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56",
+    "current_index": 0,
+    "completed": false,
+    "created_at": "2026-05-17T14:13:40.999493",
+    "time_elapsed_secs": 0,
+    "responses": [],
+    "questions_ids": [
+      9158,
+      9235,
+      9389,
+      10040
+    ],
+    "questions_text": [
+      "Pourquoi peut-on dire que le racisme évoqué dans le texte est à la fois normalisé et décomplexé en Corse ?",
+      "Pourquoi la lutte contre le système mafieux en Corse est-elle décrite comme plus difficile qu'en Sicile ? Expliquez en vous appuyant sur les différences structurelles entre les deux régions.",
+      "Pourquoi le football, malgré son histoire conflictuelle, reste-t-il un pilier identitaire pour les Corses selon le texte ? Citez deux éléments clés mentionnés dans le document qui illustrent cette affirmation.",
+      "Pourquoi la création du GR20 est-elle considérée comme emblématique dans la stratégie de diversification touristique de la Corse ?"
+    ],
+    "pages": [
+      43,
+      46,
+      53,
+      81
+    ],
+    "metadata": {
+      "llm_used": "mistral-7b",
+      "number_of_agents": 3,
+      "server_shutdown_at": "2026-05-17T14:13:41.121676"
+    }
+  },
+  {
+    "session_id": "86cd9ce1-660e-4bad-9756-bcc9a7c30d16",
+    "document_id": "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56",
+    "current_index": 0,
+    "completed": false,
+    "created_at": "2026-05-17T14:16:56.657092",
+    "time_elapsed_secs": 28,
+    "responses": [],
+    "questions_ids": [
+      9158,
+      9235,
+      9389,
+      10040
+    ],
+    "questions_text": [
+      "Pourquoi peut-on dire que le racisme évoqué dans le texte est à la fois normalisé et décomplexé en Corse ?",
+      "Pourquoi la lutte contre le système mafieux en Corse est-elle décrite comme plus difficile qu'en Sicile ? Expliquez en vous appuyant sur les différences structurelles entre les deux régions.",
+      "Pourquoi le football, malgré son histoire conflictuelle, reste-t-il un pilier identitaire pour les Corses selon le texte ? Citez deux éléments clés mentionnés dans le document qui illustrent cette affirmation.",
+      "Pourquoi la création du GR20 est-elle considérée comme emblématique dans la stratégie de diversification touristique de la Corse ?"
+    ],
+    "pages": [
+      43,
+      46,
+      53,
+      81
+    ],
+    "metadata": {
+      "llm_used": "mistral-7b",
+      "number_of_agents": 3,
+      "server_shutdown_at": "2026-05-17T14:17:24.937327"
+    }
+  },
+  {
+    "session_id": "1b0ce877-ecf6-4c5d-8e6a-a769b021c422",
+    "document_id": "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56",
+    "current_index": 0,
+    "completed": false,
+    "created_at": "2026-05-17T14:20:54.871885",
+    "time_elapsed_secs": 484,
+    "responses": [],
+    "questions_ids": [
+      9158,
+      9235,
+      9389,
+      10040
+    ],
+    "questions_text": [
+      "Pourquoi peut-on dire que le racisme évoqué dans le texte est à la fois normalisé et décomplexé en Corse ?",
+      "Pourquoi la lutte contre le système mafieux en Corse est-elle décrite comme plus difficile qu'en Sicile ? Expliquez en vous appuyant sur les différences structurelles entre les deux régions.",
+      "Pourquoi le football, malgré son histoire conflictuelle, reste-t-il un pilier identitaire pour les Corses selon le texte ? Citez deux éléments clés mentionnés dans le document qui illustrent cette affirmation.",
+      "Pourquoi la création du GR20 est-elle considérée comme emblématique dans la stratégie de diversification touristique de la Corse ?"
+    ],
+    "pages": [
+      43,
+      46,
+      53,
+      81
+    ],
+    "metadata": {
+      "llm_used": "mistral-7b",
+      "number_of_agents": 3,
+      "server_shutdown_at": "2026-05-17T14:28:59.279012"
+    }
+  },
+  {
+    "session_id": "61b926d7-86ac-40ee-aa71-bfe30ec15f28",
+    "document_id": "8a672d2ae6f2abfa4434e0f4145a9aa77bbc6d56",
+    "current_index": 0,
+    "completed": false,
+    "created_at": "2026-05-17T17:49:04.297866",
+    "time_elapsed_secs": 468,
+    "responses": [],
+    "questions_ids": [
+      9158,
+      9235,
+      9389,
+      10040
+    ],
+    "questions_text": [
+      "Pourquoi peut-on dire que le racisme évoqué dans le texte est à la fois normalisé et décomplexé en Corse ?",
+      "Pourquoi la lutte contre le système mafieux en Corse est-elle décrite comme plus difficile qu'en Sicile ? Expliquez en vous appuyant sur les différences structurelles entre les deux régions.",
+      "Pourquoi le football, malgré son histoire conflictuelle, reste-t-il un pilier identitaire pour les Corses selon le texte ? Citez deux éléments clés mentionnés dans le document qui illustrent cette affirmation.",
+      "Pourquoi la création du GR20 est-elle considérée comme emblématique dans la stratégie de diversification touristique de la Corse ?"
+    ],
+    "pages": [
+      43,
+      46,
+      53,
+      81
+    ],
+    "metadata": {
+      "llm_used": "mistral-7b",
+      "number_of_agents": 3,
+      "server_shutdown_at": "2026-05-17T17:56:52.699541"
+    }
+  }
+]

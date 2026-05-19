@@ -101,7 +101,13 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
                 - float: The processing time (in seconds) taken by the LLM to generate the response.
                 - float: The estimated energy consumption of the LLM request (local only) in Wh.
         """
-        answer, total_time, consumed_energy_Wh = await self._invoke_llm(model, prompt)
+        # Si chat_history est fourni, construire la liste complète des messages
+        if 'chat_history' in kwargs and kwargs['chat_history']:
+            messages = kwargs.pop('chat_history')
+            messages.append({"role": "user", "content": prompt})
+            answer, total_time, consumed_energy_Wh = await self._invoke_llm(model, messages)
+        else:
+            answer, total_time, consumed_energy_Wh = await self._invoke_llm(model, prompt)
 
         return answer, total_time, consumed_energy_Wh
 
@@ -111,7 +117,7 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
                         model:str,
                         reranking: Optional[str],
                         final_prompt: Optional[str],
-                        sources:Optional[List[RAGSource]],
+                        sources: Optional[List[RAGSource]],
                         k: int = 3,
                         specified_document_id: Optional[str]=None,
                         **kwargs) -> tuple[BaseMessage, List[RAGSource], float]:
@@ -122,7 +128,9 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
         If specified_document_id exists, then the RAG will operate only on chunks from this
         document.
         """
+        print("query_rag")
         if not (final_prompt or sources):
+            print("before rag_preprocess")
             final_prompt, sources = await self.rag_preprocess(prompt, reranking, k, specified_document_id)
             print("preprocess done")
         answer, total_time, consumed_energy_Wh = await self.query_simple(final_prompt, model, **kwargs)
@@ -168,7 +176,6 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
                 print(f"Modèle Ollama '{model_name}' initialisé avec succès.")
             except Exception as e:
                 print(f"Erreur lors de l'initialisation du modèle Ollama '{model_name}': {e}")
-        print(self.dict_llm)
 
     def _get_prompt_embeddings(self, prompt: str) -> list[float]:
         """
@@ -343,16 +350,16 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
             print("reranking: {}".format(reranking))
             if reranking:
                 self.rerank(top_k_chunks, prompt, k, method=reranking)
-                print(top_k_chunks)
             print("reranking done")
             augmented_prompt = self._build_augmented_prompt(prompt, top_k_chunks[:k])
             return augmented_prompt, top_k_chunks[:k]
         except Exception as e:
             raise ValueError(f"Erreur lors du prétraitement RAG : {e}")
 
-    async def _invoke_llm(self, model: str, prompt: str) -> tuple[AIMessage, float]:
+    async def _invoke_llm(self, model: str, prompt) -> tuple[AIMessage, float]:
         """
         Encapsule ainvoke, en ajoutant le temps d'execution.
+        Accepte soit un prompt string, soit une liste de messages (pour l'historique).
         """
         print("calling", model)
         consumed_energy = 0
@@ -363,7 +370,14 @@ Votre tâche est de répondre aux questions de manière précise, claire et dét
             power = pynvml.nvmlDeviceGetPowerUsage(handle)
             # en mJ
             start_energy = pynvml.nvmlDeviceGetTotalEnergyConsumption(handle)
-        answer = await self.dict_llm[model].ainvoke(prompt)
+        
+        # Si prompt est une liste (messages avec historique), l'utiliser directement
+        # Sinon, traiter comme un simple prompt string
+        if isinstance(prompt, list):
+            answer = await self.dict_llm[model].ainvoke(prompt)
+        else:
+            answer = await self.dict_llm[model].ainvoke(prompt)
+        
         elapsed_time = time.time() - start
         if model in OLLAMA_MODELS:
             torch.cuda.synchronize()

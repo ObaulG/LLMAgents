@@ -73,6 +73,7 @@ class UserResponse(BaseModel):
     user_answer: str
     date_sent: datetime
     evaluation: Optional[EvaluationResult]
+    message_type: Optional[str] = None  # "réponse", "demande_renseignement", "hors_sujet", "autre"
 
 class SessionStatus(BaseModel):
     """
@@ -122,6 +123,7 @@ def session_status_to_dict(session_status: SessionStatus) -> Dict[str, Any]:
             "user_answer": response.user_answer,
             "date_sent": response.date_sent.isoformat(),
             "evaluation": serialize_evaluation_result(response.evaluation),
+            "message_type": response.message_type,
         }
 
     return {
@@ -160,7 +162,7 @@ def export_session_status_to_json(session_status: SessionStatus, file_path: str 
         return json_str
 
 
-class SessionManager:
+class QuestionSessionManager:
     def __init__(self):
         self.sessions: Dict[str, Dict] = {}
 
@@ -247,3 +249,5 @@ class SessionManager:
 
     def is_finished(self, session_id: str) -> bool:
         return self.sessions[session_id]["completed"]
+
+

@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 # Import des dépendances locales
 from question_session import (
     PREMADE_QUESTIONS_BY_DOCUMENT_ID,
-    SessionManager,
+    QuestionSessionManager,
     UserResponse,
     SessionStatus,
     EvaluationResult,
@@ -141,7 +141,7 @@ class MediationSessionEvaluator:
         self.user_answers = self._load_user_answers()
         
         # Initialiser le gestionnaire de sessions
-        self.session_manager = SessionManager()
+        self.session_manager = QuestionSessionManager()
         
         # Initialiser les agents
         self.message_type_agent = get_message_type_agent()

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot RAG v3 - Interface de test</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+
+    <script src="chatFunctions.js"></script>
+    <script src="m3c-chatbot.js"></script>
+</head>
+
+<body>
+<div class="main_container">
+    <div class="container">
+        <div class="header">
+            <div class="header-main">
+                <h1>🤖 Chatbot RAG M3C</h1>
+                <p class="subtitle">Système de Questions/Réponses sur documents</p>
+            </div>
+             <div class="header-nav">
+                <a href="m3c-chatbot.html" class="nav-link">Interface Standard</a>
+                <span class="nav-separator">|</span>
+                <a href="question_session.html" class="nav-link">Interface PDF+Chat</a>
+                <span class="nav-separator">|</span>
+            </div>
+        </div>
+
+        <div class="settings">
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <label class="setting-checkbox">
+                        <input type="checkbox" id="useRAG" checked>
+                        <span class="setting-label">RAG</span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label class="setting-checkbox">
+                        <input type="checkbox" id="useReranking" checked>
+                        <span class="setting-label">Reranking</span>
+                    </label>
+                </div>
+
+                <div class="setting-item">
+                    <label class="setting-label">
+                        Nb sources:
+                        <input type="number" id="numSources" value="3" min="1" max="10" class="setting-input">
+                    </label>
+                </div>
+            </div>
+
+            <!-- Sélecteur de document pour RAG -->
+            <div class="document-selector-container">
+                <label class="setting-label">
+                    <input type="checkbox" id="useSingleDocument" onchange="toggleDocumentSelector()">
+                    <span>RAG sur un document spécifique</span>
+                </label>
+                <div id="documentSelector" style="display: none; margin-top: 10px;">
+                    <select id="selectedDocumentRAG" class="document-select">
+                        <option value="">Chargement des documents...</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="model-selector">
+                <label for="model-select" class="model-selector-label">Modèle de langage</label>
+                <div class="model-select-container">
+                    <select id="model-select" name="models" multiple class="model-select">
+                    <optgroup label="Local">
+                        <option value="ministral-3:3b">ministral-3b</option>
+                        <option value="cas/ministral-8b-instruct-2410_q4km">ministral-8b-q4km</option>
+                    </optgroup>
+                    <optgroup label="Mistral">
+                        <option value="ministral-3b-2410">ministral-3b-2410</option>
+                        <option value="ministral-8b-2410">ministral-8b-2410</option>
+                        <option value="open-mistral-7b">open-mistral-7b</option>
+                        <option value="open-mistral-nemo">open-mistral-nemo</option>
+                        <option value="mistral-tiny">mistral-tiny</option>
+                        <option value="mistral-small">mistral-small</option>
+                        <option value="mistral-medium">mistral-medium</option>
+                        <option value="mistral-large-2411">mistral-large-2411</option>
+                    </optgroup>
+                    <optgroup label="Gemini">
+                        <option value="gemini-2.0-flash-lite">gemini-2.0-flash-lite</option>
+                        <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite</option>
+                    </optgroup>
+                    <optgroup label="Gemma">
+                        <option value="gemma-3-1b-it">gemma-3-1b-it</option>
+                        <option value="gemma-3-4b-it">gemma-3-4b-it</option>
+                        <option value="gemma-3-12b-it">gemma-3-12b-it</option>
+                        <option value="gemma-3-27b-it">gemma-3-27b-it</option>
+                    </optgroup>
+                    </select>
+                    <div class="selected-models" id="selectedModels">
+                        <span class="selected-model-badge">Aucun modèle sélectionné</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-container" id="chatContainer">
+            <div class="message bot">
+                <div class="message-content">
+                    👋 Bonjour ! Je suis votre assistant M3C. Veuillez écrire votre requête<br><br>
+                </div>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Recherche en cours...</p>
+        </div>
+
+        <div class="input-container">
+            <input
+                type="text"
+                id="questionInput"
+                placeholder="Posez votre question ici..."
+                onkeypress="if(event.key==='Enter') sendQuestion()"
+            >
+            <button id="sendButton" onclick="sendQuestion()">Envoyer</button>
+        </div>
+    </div>
+
+    <div class="pdf-display" id="pdf-display">
+        <iframe>
+
+        </iframe>
+    </div>
+</div>
+</body>
+</html>
